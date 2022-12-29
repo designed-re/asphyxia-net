@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "asphyxia", "asphyxia\asphyxia.csproj", "{EFB1F164-9E2F-47A7-BF48-11B7FA988231}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFB1F164-9E2F-47A7-BF48-11B7FA988231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFB1F164-9E2F-47A7-BF48-11B7FA988231}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFB1F164-9E2F-47A7-BF48-11B7FA988231}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFB1F164-9E2F-47A7-BF48-11B7FA988231}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B302DA3-CE5F-4CCB-ADF9-DC2110741102}
+	EndGlobalSection
+EndGlobal
