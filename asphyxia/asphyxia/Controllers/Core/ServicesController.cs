@@ -21,7 +21,8 @@ namespace asphyxia.Controllers.Core
         [HttpPost, XrpcCall("services.get")]
         public ActionResult<EamuseXrpcData> Get([FromBody] EamuseXrpcData data, [FromQuery] string model)
         {
-            string url = Request.Scheme + "://" + Request.Host.Host + ":" + (Request.Host.Port ?? 8083);
+            string url = "http://localhost:8083";
+            // string url = Request.Scheme + "://" + Request.Host.Host + ":" + (Request.Host.Port ?? 8083);
             string coreUrl = url + "/core";
             string modelUrl;
             string[] modelItems;
@@ -40,22 +41,36 @@ namespace asphyxia.Controllers.Core
                 "userdata",
                 "userid",
                 "eacoin",
-            }; 
+            };
             if (model.StartsWith("KFC"))
             {
-                modelItems = HandlerGenerator.GenerateHandlers("game.sv6_",
+                modelItems = HandlerGenerator.GenerateHandlers("",
+                    new[]
+                    {
+                        "local", "local2", "lobby", "lobby2"
+                    });
+                modelItems = modelItems.Concat(HandlerGenerator.GenerateHandlers("game.sv6_",
                     new[]
                     {
                         "common", "new", "load", "load_m", "save", "save_m", "save_c", "frozen", "buy", "print",
                         "hiscore", "load_r", "save_ap", "load_ap", "lounge", "shop", "save_e", "save_mega", "play_e",
                         "play_s", "entry_s", "entry_e", "exception"
-                    });
-                modelUrl = url + "/KFC/6";
+                    })).ToArray();
+                modelItems = modelItems.Concat(HandlerGenerator.GenerateHandlers("sv6_",
+                    new[]
+                    {
+                        "common", "new", "load", "load_m", "save", "save_m", "save_c", "frozen", "buy", "print",
+                        "hiscore", "load_r", "save_ap", "load_ap", "lounge", "shop", "save_e", "save_mega", "play_e",
+                        "play_s", "entry_s", "entry_e", "exception"
+                    })).ToArray();
+
+                // modelItems = new string[] { };
+                modelUrl = url + "/kfc/6";
             }
             else return NotFound();
 
             XElement servicesElement = new XElement("services",
-                new XAttribute("expire", "30"),
+                new XAttribute("expire", "600"),
                 new XAttribute("method", "get"),
                 new XAttribute("mode", "operation"),
                 new XAttribute("status", "0"));
@@ -63,14 +78,14 @@ namespace asphyxia.Controllers.Core
             foreach (string coreItem in coreItems)
                 servicesElement.Add(new XElement("item", new XAttribute("name", coreItem), new XAttribute("url", coreUrl)));
 
-            foreach (string modelItem in modelItems)
+            foreach (string modelItem in modelItems)    
                 servicesElement.Add(new XElement("item", new XAttribute("name", modelItem), new XAttribute("url", modelUrl)));
 
             servicesElement.Add(new XElement("item", new XAttribute("name", "ntp"), new XAttribute("url", "ntp://pool.ntp.org/")));
-            servicesElement.Add(new XElement("item", new XAttribute("name", "keepalive"), new XAttribute("url", $"http://{_config.KeepAlive}/keepalive?pa={_config.KeepAlive}&ia={_config.KeepAlive}&ga={_config.KeepAlive}&ma={_config.KeepAlive}&t1=2&t2=10")));
+            servicesElement.Add(new XElement("item", new XAttribute("name", "keepalive"), new XAttribute("url", $"http://127.0.0.1/keepalive?pa=127.0.0.1&ia=127.0.0.1&ga=127.0.0.1&ma=127.0.0.1&t1=2&t2=10")));
 
             data.Document = new XDocument(new XElement("response", servicesElement));
-
+            Console.WriteLine(data.Document);
             return data;
         }
     }

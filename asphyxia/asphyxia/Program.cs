@@ -1,6 +1,7 @@
 using asphyxia;
 using asphyxia.Formatters;
 using Formatters.Formatters;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -47,8 +48,16 @@ if (app.Environment.IsDevelopment())
 
 app.Use(async (context, next) =>
 {
-    Console.WriteLine($"[{context.Connection.RemoteIpAddress}] | {context.Request.Path}{context.Request.QueryString}");
+    Console.WriteLine($"[{context.Connection.RemoteIpAddress}] | {context.Request.Method} | {context.Request.Path}{context.Request.QueryString}");
     await next.Invoke();
 });
+
+app.UseStatusCodePages(async (StatusCodeContext context) => {
+    var response = context.HttpContext.Response;
+    var request = context.HttpContext.Request;
+
+    Console.WriteLine($"[{context.HttpContext.Connection.RemoteIpAddress}] | {request.Method} | {request.Path}{request.QueryString} - {response.StatusCode}");
+});
+
 app.UseMvc();
 app.Run();
