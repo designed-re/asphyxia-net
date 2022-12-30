@@ -32,7 +32,7 @@ namespace asphyxia.Controllers.KFC._6
             "FAVORITE_APPEALCARD_MAX	200",
             "FAVORITE_MUSIC_MAX	200",
             "EVENTDATE_APRILFOOL",
-            "KONAMI_50TH_LOGO",
+            //"KONAMI_50TH_LOGO",
             "OMEGA_ARS_ENABLE",
             "DISABLE_MONITOR_ID_CHECK",
             "SKILL_ANALYZER_ABLE",

@@ -21,8 +21,9 @@ namespace asphyxia.Controllers.Core
         [HttpPost, XrpcCall("services.get")]
         public ActionResult<EamuseXrpcData> Get([FromBody] EamuseXrpcData data, [FromQuery] string model)
         {
-            string url = "http://localhost:8083";
-            // string url = Request.Scheme + "://" + Request.Host.Host + ":" + (Request.Host.Port ?? 8083);
+            Console.WriteLine(data.Document);
+            // string url = "http://localhost:8083";
+            string url = Request.Scheme + "://" + Request.Host.Host + ":" + (Request.Host.Port ?? 8083);
             string coreUrl = url + "/core";
             string modelUrl;
             string[] modelItems;
@@ -50,13 +51,6 @@ namespace asphyxia.Controllers.Core
                         "local", "local2", "lobby", "lobby2"
                     });
                 modelItems = modelItems.Concat(HandlerGenerator.GenerateHandlers("game.sv6_",
-                    new[]
-                    {
-                        "common", "new", "load", "load_m", "save", "save_m", "save_c", "frozen", "buy", "print",
-                        "hiscore", "load_r", "save_ap", "load_ap", "lounge", "shop", "save_e", "save_mega", "play_e",
-                        "play_s", "entry_s", "entry_e", "exception"
-                    })).ToArray();
-                modelItems = modelItems.Concat(HandlerGenerator.GenerateHandlers("sv6_",
                     new[]
                     {
                         "common", "new", "load", "load_m", "save", "save_m", "save_c", "frozen", "buy", "print",
