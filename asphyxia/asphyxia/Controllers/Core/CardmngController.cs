@@ -35,7 +35,7 @@ namespace asphyxia.Controllers.Core
             {
                 data.Document = new XDocument(new XElement("response", new XElement("cardmng",
                     new XAttribute("binded", "1"),
-                    new XAttribute("dataid", card.DataId),
+                    new XAttribute("dataid", card.RefId),
                     new XAttribute("ecflag", "1"),
                     new XAttribute("newflag", "0"),
                     new XAttribute("expired", "0"),
@@ -61,11 +61,10 @@ namespace asphyxia.Controllers.Core
             string refId = cardmng.Attribute("refid").Value.ToUpper();
             
             Card card = await ctx.Cards
-                .Include(c => c.Player)
                 .SingleOrDefaultAsync(c => c.RefId == refId);
 
             int status;
-            if (card != null && card.Player != null && card.Player.Passwd == pass)
+            if (card != null && card.Pass == pass)
                 status = 0;
             else
                 status = 116;
@@ -97,27 +96,20 @@ namespace asphyxia.Controllers.Core
             byte[] refId = new byte[8];
             rng.NextBytes(dataId);
             rng.NextBytes(refId);
-
-            Player player = new Player()
-            {
-                Passwd = passwd
-            };
-
+            
             Card card = new Card()
             {
                 CardId = cardId,
-                DataId = dataId.ToHexString(),
                 RefId = refId.ToHexString(),
-                Player = player
+                CardNo = cardId,
+                Pass = passwd
             };
-            
-            ctx.Players.Add(player);
             ctx.Cards.Add(card);
-            
+
             await ctx.SaveChangesAsync();
 
             data.Document = new XDocument(new XElement("response", new XElement("cardmng",
-                    new XAttribute("dataid", card.DataId),
+                    new XAttribute("dataid", card.RefId),
                     new XAttribute("refid", card.RefId)
             )));
 

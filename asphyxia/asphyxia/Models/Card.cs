@@ -1,28 +1,29 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
+namespace asphyxia.Models;
 
-namespace asphyxia.Models
+/// <summary>
+/// Stores e-amusement cards
+/// </summary>
+public partial class Card
 {
-    public class Card
-    {
-        public int ID { get; set; }
+    public int Id { get; set; }
 
-        public Player Player { get; set; }
-        public int PlayerID { get; set; }
+    public string CardId { get; set; } = null!;
 
-        [Required]
-        [MaxLength(16), MinLength(16)]
-        public string CardId { get; set; }
+    public string CardNo { get; set; } = null!;
 
-        [Required]
-        [MaxLength(16), MinLength(16)]
-        public string DataId { get; set; }
+    /// <summary>
+    /// same with dataid
+    /// </summary>
+    public string RefId { get; set; } = null!;
 
-        [Required]
-        [MaxLength(16), MinLength(16)]
-        public string RefId { get; set; }
-    }
+    public string Pass { get; set; } = null!;
+
+    public int Paseli { get; set; }
+
+    public string? PaseliSession { get; set; }
+
+    public virtual SvProfile? SvProfile { get; set; }
 }

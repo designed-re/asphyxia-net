@@ -1,5 +1,6 @@
 using asphyxia;
 using asphyxia.Formatters;
+using asphyxia.Models;
 using Formatters.Formatters;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,6 @@ builder.Services.Configure<HostConfig>(builder.Configuration.GetSection("asphyxi
 builder.Services.AddDbContext<AsphyxiaContext>(options =>
 {
     options.EnableSensitiveDataLogging();
-    options.UseSqlite("Data Source=asphyxia.db");
 });
 builder.Services.AddMvc(options =>
 {
