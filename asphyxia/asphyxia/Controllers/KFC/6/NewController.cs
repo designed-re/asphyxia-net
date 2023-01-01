@@ -19,7 +19,7 @@ namespace asphyxia.Controllers.KFC._6
             this.ctx = ctx;
         }
 
-        [HttpPost, XrpcCall("game.sv6_new")] //todo rewrite this everything
+        [HttpPost, XrpcCall("game.sv6_new")]
         public async Task<ActionResult<EamuseXrpcData>> New([FromBody] EamuseXrpcData data)
         {
             Console.WriteLine(data.Document);
@@ -37,6 +37,7 @@ namespace asphyxia.Controllers.KFC._6
                 Card = card.Id,
                 Name = gameElement.Element("name").Value,
                 Code = CodeGenerator.GetCode(ctx),
+                KacId = gameElement.Element("name").Value
             };
 
             card.SvProfile = profile;

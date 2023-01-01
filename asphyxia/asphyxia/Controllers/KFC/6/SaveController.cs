@@ -19,7 +19,6 @@ namespace asphyxia.Controllers.KFC._6
         }
 
         [HttpPost, XrpcCall("game.sv6_save_m")] //for score saving
-        //todo something broken here.
         public async Task<ActionResult<EamuseXrpcData>> SaveM([FromBody] EamuseXrpcData data)
         {
             XElement gameElement = data.Document.Element("call").Element("game");
@@ -64,7 +63,7 @@ namespace asphyxia.Controllers.KFC._6
             if (exscore > record.Exscore) record.Exscore = exscore;
 
             record.Clear = Math.Max(clear_type, record.Clear);
-            record.Clear = Math.Max(score_grade, record.Grade);
+            record.Grade = Math.Max(score_grade, record.Grade);
             _context.SvScores.Add(record);
             await _context.SaveChangesAsync();
 
