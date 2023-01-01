@@ -15,7 +15,7 @@ This project inspired by <a href="https://github.com/asphyxia-core">asphyxia-cor
     <tr>
         <td>Sound Voltex Exceed Gear</td>
         <td>6</td>
-        <td>KFC-2022-06-21</td>
+        <td>KFC-2022-12-20</td>
     </tr>
   </table>
 </details>
