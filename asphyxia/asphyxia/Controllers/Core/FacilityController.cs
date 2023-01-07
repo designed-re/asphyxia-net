@@ -63,7 +63,7 @@ namespace asphyxia.Controllers.Core
             }
             else
             {
-                Console.WriteLine("Unknown encoding requested, ignoring.");
+                Console.WriteLine($"Unknown encoding requested, ignoring. {requestedEncoding}");
             }
 
             return data;
