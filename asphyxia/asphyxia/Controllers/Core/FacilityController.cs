@@ -48,11 +48,11 @@ namespace asphyxia.Controllers.Core
                         new KS32("supplylimit", 100000)
                     ),
                     new XElement("url",
-                        new KStr("eapass", "http://1eagate.573.jp/"),
-                        new KStr("arcadefan", "http://1eagate.573.jp/"),
-                        new KStr("konaminetdx", "http://1eagate.573.jp/"),
-                        new KStr("konamiid", "http://1eagate.573.jp/"),
-                        new KStr("eagate", "http://1eagate.573.jp/")
+                        new KStr("eapass", "http://p.eagate.573.jp/"),
+                        new KStr("arcadefan", "http://p.eagate.573.jp/"),
+                        new KStr("konaminetdx", "http://p.eagate.573.jp/"),
+                        new KStr("konamiid", "http://p.eagate.573.jp/"),
+                        new KStr("eagate", "http://p.eagate.573.jp/")
                     )
                 )
             ))); ;
