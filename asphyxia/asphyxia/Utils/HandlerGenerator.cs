@@ -1,4 +1,6 @@
-﻿namespace asphyxia.Utils
+﻿using asphyxia.Models;
+
+namespace asphyxia.Utils
 {
     public class HandlerGenerator
     {
