@@ -20,9 +20,9 @@ namespace asphyxia.Controllers.Core
 
             data.Document = new XDocument(new XElement("response", new XElement("facility",
                 new XElement("location",
-                    new KStr("id", "A"),//"53BDC526"),
-                    new KStr("country", "KR"),
-                    new KStr("region", "1"),
+                    new KStr("id", "53BDC526"),//"53BDC526"),
+                    new KStr("country", "JP"),
+                    new KStr("region", "JP"),
                     new KStr("name", "TestDesigned"),
                     new KU8("type", 0)
                 ),
@@ -36,7 +36,7 @@ namespace asphyxia.Controllers.Core
                     new KU16("privateport", 5700)
                 ),
                 new XElement("public",
-                    new KU8("flag", 0),
+                    new KU8("flag", 1),
                     new KStr("name", "TestDesigned"),
                     new KStr("latitude", "127.3"),
                     new KStr("longitude", "36.3")
