@@ -2,6 +2,7 @@
 using asphyxia.Formatters;
 using asphyxia.Models;
 using asphyxia.Utils;
+using eAmuseCore.KBinXML;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,7 @@ namespace asphyxia.Controllers.KFC._6
                 x.RefId == gameElement.Element("refid").Value);
             if (card.SvProfile?.Name is not null)
             {
-                data.Document = new XDocument(new XElement("response", new XElement("game", new XAttribute("status", "0"), new XElement("result", new XAttribute("__type", "u8"), 1))));
+                data.Document = new XDocument(new XElement("response", new XElement("game", new XAttribute("status", "0"), new KU8("result", 1))));
                 return data;
             }
 
@@ -45,7 +46,7 @@ namespace asphyxia.Controllers.KFC._6
             ctx.Cards.Update(card);
             await ctx.SaveChangesAsync();
 
-            data.Document = new XDocument(new XElement("response", new XElement("game", new XAttribute("status", "0"), new XElement("result", new XAttribute("__type", "u8"), 0))));
+            data.Document = new XDocument(new XElement("response", new XElement("game", new XAttribute("status", "0"), new KU8("result", 0))));
 
             return data;
         }

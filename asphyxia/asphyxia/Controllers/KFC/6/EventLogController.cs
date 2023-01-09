@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
+using eAmuseCore.KBinXML;
 
 namespace asphyxia.Controllers.Core
 {
@@ -13,10 +14,10 @@ namespace asphyxia.Controllers.Core
         public ActionResult<EamuseXrpcData> List([FromBody] EamuseXrpcData data)
         {
             data.Document = new(new XElement("response", new XElement("eventlog",
-                new XElement("gamesession", new XAttribute("__type", "s64"), 1),
-                new XElement("logsendflg", new XAttribute("__type", "s32"), 0),
-                new XElement("loggerrlevel", new XAttribute("__type", "s32"), 0),
-                new XElement("evtidnosendflg", new XAttribute("__type", "s32"), 0))));
+                new KS64("gamesession", 1),
+                new KS32("logsendflg", 0),
+                new KS32("loggerrlevel", 0),
+                new KS32("evtidnosendflg", 0))));
             return data;
         }
     }

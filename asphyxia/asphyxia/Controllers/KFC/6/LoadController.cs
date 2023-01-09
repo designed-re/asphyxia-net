@@ -1,6 +1,7 @@
 ﻿using System.Xml.Linq;
 using asphyxia.Formatters;
 using asphyxia.Models;
+using eAmuseCore.KBinXML;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,59 +31,59 @@ namespace asphyxia.Controllers.KFC._6
             if (card.SvProfile?.Name is null)
             {
                 Console.WriteLine($"no card data for RefId: {refid}");
-                data.Document = new XDocument(new XElement("response", new XElement("game", new XAttribute("status", "0"), new XElement("result", new XAttribute("__type", "u8"), 1))));
+                data.Document = new XDocument(new XElement("response", new XElement("game", new XAttribute("status", "0"), new KU8("result", 1))));
                 return data;
             }
 
             data.Document = new XDocument(new XElement("response",
                 new XElement("game", new XAttribute("status", 0),
-                    new XElement("result", new XAttribute("__type", "u8"), 0),
-                    new XElement("name", new XAttribute("__type", "str"), card.SvProfile.Name),
-                    new XElement("code", new XAttribute("__type", "str"), card.SvProfile.Code),
-                    new XElement("sdvx_id", new XAttribute("__type", "str"), card.SvProfile.Code),
-                    new XElement("gamecoin_packet", new XAttribute("__type", "u32"), 0),
-                    new XElement("gamecoin_block", new XAttribute("__type", "u32"), 0),
-                    new XElement("appeal_id", new XAttribute("__type", "u16"), card.SvProfile.AppealId),
-                    new XElement("last_music_id", new XAttribute("__type", "s32"), card.SvProfile.LastMusicId),
-                    new XElement("last_music_type", new XAttribute("__type", "u8"), card.SvProfile.LastMusicType),
-                    new XElement("sort_type", new XAttribute("__type", "u8"), card.SvProfile.SortType),
-                    new XElement("headphone", new XAttribute("__type", "u8"), card.SvProfile.Headphone),
-                    new XElement("blaster_energy", new XAttribute("__type", "u32"), card.SvProfile.BlasterEnergy),
-                    new XElement("blaster_count", new XAttribute("__type", "u32"), card.SvProfile.BlasterCount),
-                    new XElement("extrack_energy", new XAttribute("__type", "u16"), card.SvProfile.ExtrackEnergy),
-                    new XElement("hispeed", new XAttribute("__type", "s32"), card.SvProfile.Hispeed),
-                    new XElement("lanespeed", new XAttribute("__type", "u32"), card.SvProfile.Lanespeed),
-                    new XElement("gauge_option", new XAttribute("__type", "u8"), card.SvProfile.GaugeOption),
-                    new XElement("ars_option", new XAttribute("__type", "u8"), card.SvProfile.ArsOption),
-                    new XElement("notes_option", new XAttribute("__type", "u8"), card.SvProfile.NotesOption),
-                    new XElement("early_late_disp", new XAttribute("__type", "u8"), card.SvProfile.EarlyLateDisp),
-                    new XElement("draw_adjust", new XAttribute("__type", "s32"), card.SvProfile.DrawAdjust),
-                    new XElement("eff_c_left", new XAttribute("__type", "u8"), card.SvProfile.EffCLeft),
-                    new XElement("eff_c_right", new XAttribute("__type", "u8"), card.SvProfile.EffCRight),
-                    new XElement("narrow_down", new XAttribute("__type", "u8"), 0), //todo find it out on db
-                    new XElement("kac_id", new XAttribute("__type", "str"), card.SvProfile.Name),
-                    new XElement("skill_level", new XAttribute("__type", "s16"), card.SvProfile.SkillLevel),
-                    new XElement("skill_base_id", new XAttribute("__type", "s16"), card.SvProfile.SkillBaseId),
-                    new XElement("skill_name_id", new XAttribute("__type", "s16"), card.SvProfile.SkillNameId),
-                    new XElement("ea_shop", new XElement("packet_booster", new XAttribute("__type", "s32"), 1), new XElement("blaster_pass_enable", new XAttribute("__type", "bool"), card.SvProfile.BlasterPassEnable), new XElement("blaster_pass_limit_date", new XAttribute("__type", "u64"), card.SvProfile.BlasterPassLimitDate)),
-                    new XElement("eaappli", new XElement("relation", new XAttribute("__type", "s8"), 1)),
-                    new XElement("cloud", new XElement("relation", new XAttribute("__type", "s8"), 1)),
-                    new XElement("block_no", new XAttribute("__type", "s32"), card.SvProfile.Pcb),
+                    new KU8("result", 0),
+                    new KStr("name", card.SvProfile.Name),
+                    new KStr("code", card.SvProfile.Code),
+                    new KStr("sdvx_id", card.SvProfile.Code),
+                    new KU32("gamecoin_packet", 0),
+                    new KU32("gamecoin_block", 0),
+                    new KU16("appeal_id", card.SvProfile.AppealId),
+                    new KS32("last_music_id", card.SvProfile.LastMusicId),
+                    new KU8("last_music_type", card.SvProfile.LastMusicType),
+                    new KU8("sort_type", card.SvProfile.SortType),
+                    new KU8("headphone", card.SvProfile.Headphone),
+                    new KU32("blaster_energy", card.SvProfile.BlasterEnergy),
+                    new KU32("blaster_count", card.SvProfile.BlasterCount),
+                    new KU16("extrack_energy", card.SvProfile.ExtrackEnergy),
+                    new KS32("hispeed", card.SvProfile.Hispeed),
+                    new KU32("lanespeed", card.SvProfile.Lanespeed),
+                    new KU8("gauge_option", card.SvProfile.GaugeOption),
+                    new KU8("ars_option", card.SvProfile.ArsOption),
+                    new KU8("notes_option", card.SvProfile.NotesOption),
+                    new KU8("early_late_disp", card.SvProfile.EarlyLateDisp),
+                    new KS32("draw_adjust", card.SvProfile.DrawAdjust),
+                    new KU8("eff_c_left", card.SvProfile.EffCLeft),
+                    new KU8("eff_c_right", card.SvProfile.EffCRight),
+                    new KU8("narrow_down", 0), //todo find it out on db
+                    new KStr("kac_id",  card.SvProfile.Name),
+                    new KS16("skill_level", card.SvProfile.SkillLevel),
+                    new KS16("skill_base_id", card.SvProfile.SkillBaseId),
+                    new KS16("skill_name_id", card.SvProfile.SkillNameId),
+                    new XElement("ea_shop", new KS32("packet_booster", 1), new KBool("blaster_pass_enable", Convert.ToBoolean(card.SvProfile.BlasterPassEnable)), new KU64("blaster_pass_limit_date", card.SvProfile.BlasterPassLimitDate)),
+                    new XElement("eaappli", new KS8("relation", 1)),
+                    new XElement("cloud", new KS8("relation", 1)),
+                    new KS32("block_no", card.SvProfile.Pcb),
                     new XElement("skill"),
                     new XElement("item"), //idk what is this, but maybe in-game items.. like crew? //todo get in db
-                    new XElement("param", new XElement("info", new XElement("type", new XAttribute("__type", "s32"), 2), new XElement("id", new XAttribute("__type", "s32"), 2), new XElement("param", new XAttribute("__type", "s32"),new XAttribute("__count",7), "0 0 0 0 0 0 0")),
-                        new XElement("info", new XElement("type", new XAttribute("__type", "s32"), 6), new XElement("id", new XAttribute("__type", "s32"), 0), new XElement("param", new XAttribute("__type", "s32"), new XAttribute("__count", 1), 0)),
-                        new XElement("info", new XElement("type", new XAttribute("__type", "s32"), 6), new XElement("id", new XAttribute("__type", "s32"), 1), new XElement("param", new XAttribute("__type", "s32"), new XAttribute("__count", 1), 0)),
-                        new XElement("info", new XElement("type", new XAttribute("__type", "s32"), 6), new XElement("id", new XAttribute("__type", "s32"), 2), new XElement("param", new XAttribute("__type", "s32"), new XAttribute("__count", 1), 0))), //same with up but i dont know what is this really
-                    new XElement("play_count", new XAttribute("__type", "u32"), card.SvProfile.PlayCount),
-                    new XElement("day_count", new XAttribute("__type", "u32"), card.SvProfile.DayCount),
-                    new XElement("today_count", new XAttribute("__type", "u32"), card.SvProfile.TodayCount),
-                    new XElement("play_chain", new XAttribute("__type", "u32"), card.SvProfile.PlayChain),
-                    new XElement("max_play_chain", new XAttribute("__type", "u32"), card.SvProfile.MaxPlayChain),
-                    new XElement("week_count", new XAttribute("__type", "u32"), card.SvProfile.WeekCount),
-                    new XElement("week_play_count", new XAttribute("__type", "u32"), card.SvProfile.WeekPlayCount),
-                    new XElement("week_chain", new XAttribute("__type", "u32"), card.SvProfile.WeekChain),
-                    new XElement("max_week_chain", new XAttribute("__type", "u32"), card.SvProfile.MaxWeekChain)
+                    new XElement("param", new KS32("info", 2), new KS32("id", 2), new XElement("param", new XAttribute("__type", "s32"),new XAttribute("__count",7), "0 0 0 0 0 0 0")),
+                        new XElement("info", new KS32("type", 6), new KS32("id", 0), new XElement("param", new XAttribute("__type", "s32"), new XAttribute("__count", 1), 0)),
+                        new XElement("info", new KS32("type", 6), new KS32("id", 1), new XElement("param", new XAttribute("__type", "s32"), new XAttribute("__count", 1), 0)),
+                        new XElement("info", new KS32("type", 6), new KS32("id", 2), new XElement("param", new XAttribute("__type", "s32"), new XAttribute("__count", 1), 0))), //same with up but i dont know what is this really
+                    new KU32("play_count", card.SvProfile.PlayCount),
+                    new KU32("day_count", card.SvProfile.DayCount),
+                    new KU32("today_count", card.SvProfile.TodayCount),
+                    new KU32("play_chain", card.SvProfile.PlayChain),
+                    new KU32("max_play_chain", card.SvProfile.MaxPlayChain),
+                    new KU32("week_count", card.SvProfile.WeekCount),
+                    new KU32("week_play_count", card.SvProfile.WeekPlayCount),
+                    new KU32("week_chain", card.SvProfile.WeekChain),
+                    new KU32("max_week_chain", card.SvProfile.MaxWeekChain)
                 )));
             return data;
         }
