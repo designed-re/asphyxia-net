@@ -2,12 +2,14 @@
 <div align="center">
   <img src="https://img.shields.io/badge/Language-C%23-brightgreen">
   <img src="https://img.shields.io/badge/Supports-KFC-brightgreen">
-<br>
+<br/>
 This project inspired by <a href="https://github.com/asphyxia-core">asphyxia-core</a>
+deveploment paused for study
 </div>
-<br>
+<br/>
 <details>
   <summary>Supported Games</summary>
+  <br/>
   <table>
     <th>Game</th>
     <th>Version</th>
