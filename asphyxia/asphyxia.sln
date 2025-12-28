@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.4.33122.133
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "asphyxia", "asphyxia\asphyxia.csproj", "{EFB1F164-9E2F-47A7-BF48-11B7FA988231}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proxy", "Proxy\Proxy.csproj", "{D4350C7E-7B57-4F23-8DAF-A9459AAEE908}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicDB", "MusicDB\MusicDB.csproj", "{36ED3E3C-EC50-490F-B5CB-6C8C6B5DF512}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore.MySql", "Pomelo.EntityFrameworkCore.MySql\src\EFCore.MySql\EFCore.MySql.csproj", "{54FE5C25-9D00-5761-AB87-DF4614CB0A9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{36ED3E3C-EC50-490F-B5CB-6C8C6B5DF512}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36ED3E3C-EC50-490F-B5CB-6C8C6B5DF512}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36ED3E3C-EC50-490F-B5CB-6C8C6B5DF512}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54FE5C25-9D00-5761-AB87-DF4614CB0A9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54FE5C25-9D00-5761-AB87-DF4614CB0A9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54FE5C25-9D00-5761-AB87-DF4614CB0A9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54FE5C25-9D00-5761-AB87-DF4614CB0A9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

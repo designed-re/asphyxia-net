@@ -84,7 +84,7 @@ namespace asphyxia.Controllers.KFC._6
                     new KU32("week_play_count", card.SvProfile.WeekPlayCount),
                     new KU32("week_chain", card.SvProfile.WeekChain),
                     new KU32("max_week_chain", card.SvProfile.MaxWeekChain)
-                )));
+                ));
             return data;
         }
 

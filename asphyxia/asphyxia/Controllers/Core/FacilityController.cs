@@ -23,7 +23,7 @@ namespace asphyxia.Controllers.Core
                     new KStr("id", "53BDC526"),//"53BDC526"),
                     new KStr("country", "JP"),
                     new KStr("region", "JP"),
-                    new KStr("name", "TestDesigned"),
+                    new KStr("name", "Test"),
                     new KU8("type", 0)
                 ),
                 new XElement("line",
@@ -37,7 +37,7 @@ namespace asphyxia.Controllers.Core
                 ),
                 new XElement("public",
                     new KU8("flag", 1),
-                    new KStr("name", "TestDesigned"),
+                    new KStr("name", "Test"),
                     new KStr("latitude", "127.3"),
                     new KStr("longitude", "36.3")
                 ),
