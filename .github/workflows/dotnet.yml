@@ -20,9 +20,12 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 10.0.x
+    - name: test
+      run: pwd
+    - name: test1
+      run: ls
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: /home/runner/work/asphyxia-net/asphyxia-net
     - name: Build
       run: dotnet build --no-restore
       working-directory: /home/runner/work/asphyxia-net/asphyxia-net
