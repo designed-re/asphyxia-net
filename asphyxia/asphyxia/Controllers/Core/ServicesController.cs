@@ -25,8 +25,8 @@ namespace asphyxia.Controllers.Core
             // string url = "http://localhost:8083";
             string url = Request.Scheme + "://" + Request.Host.Host + ":" + (Request.Host.Port ?? 8083);
             string coreUrl = url + "/core";
-            string modelUrl;
-            string[] modelItems;
+            string modelUrl = url + "/core";
+            string[] modelItems = new string[]{};
 
             string[] coreItems = new[]
 {
@@ -42,6 +42,10 @@ namespace asphyxia.Controllers.Core
                 "userdata",
                 "userid",
                 "eacoin",
+                "dlstatus",
+                "netlog",
+                "sidmgr",
+                "globby" //maybe this thing important to run game
             };
             if (model.StartsWith("KFC"))
             {
@@ -57,11 +61,11 @@ namespace asphyxia.Controllers.Core
                         "hiscore", "load_r", "save_ap", "load_ap", "lounge", "shop", "save_e", "save_mega", "play_e",
                         "play_s", "entry_s", "entry_e", "exception"
                     })).ToArray();
-
+            
                 // modelItems = new string[] { };
                 modelUrl = url + "/kfc/6";
             }
-            else return NotFound();
+            // else return NotFound();
 
             XElement servicesElement = new XElement("services",
                 new XAttribute("expire", "600"),
@@ -72,11 +76,14 @@ namespace asphyxia.Controllers.Core
             foreach (string coreItem in coreItems)
                 servicesElement.Add(new XElement("item", new XAttribute("name", coreItem), new XAttribute("url", coreUrl)));
 
-            foreach (string modelItem in modelItems)    
-                servicesElement.Add(new XElement("item", new XAttribute("name", modelItem), new XAttribute("url", modelUrl)));
+            if (model.StartsWith("KFC"))
+            {
+                foreach (string modelItem in modelItems)
+                    servicesElement.Add(new XElement("item", new XAttribute("name", modelItem), new XAttribute("url", modelUrl)));
+            }
 
             servicesElement.Add(new XElement("item", new XAttribute("name", "ntp"), new XAttribute("url", "ntp://pool.ntp.org/")));
-            servicesElement.Add(new XElement("item", new XAttribute("name", "keepalive"), new XAttribute("url", $"http://127.0.0.1/keepalive?pa=127.0.0.1&ia=127.0.0.1&ga=127.0.0.1&ma=127.0.0.1&t1=2&t2=10")));
+            servicesElement.Add(new XElement("item", new XAttribute("name", "keepalive"), new XAttribute("url", "http://127.0.0.1/keepalive?pa=127.0.0.1&ia=127.0.0.1&ga=127.0.0.1&ma=127.0.0.1&t1=2&t2=10")));
 
             data.Document = new XDocument(new XElement("response", servicesElement));
             Console.WriteLine(data.Document);

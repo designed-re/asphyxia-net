@@ -13,11 +13,12 @@ namespace asphyxia.Controllers.Core
         [HttpPost, XrpcCall("eventlog.write")]
         public ActionResult<EamuseXrpcData> List([FromBody] EamuseXrpcData data)
         {
-            data.Document = new(new XElement("response", new XElement("eventlog",
-                new KS64("gamesession", 1),
-                new KS32("logsendflg", 0),
-                new KS32("loggerrlevel", 0),
-                new KS32("evtidnosendflg", 0))));
+            XElement logElement = new XElement("eventlog", new XAttribute("status", "0"));
+            logElement.Add(new XElement("gamesession", "1", new XAttribute("__type", "s64")));
+            logElement.Add(new XElement("logsendflg", "0", new XAttribute("__type", "s32")));
+            logElement.Add(new XElement("loggerrlevel", "0", new XAttribute("__type", "s32")));
+            logElement.Add(new XElement("evtidnosendflg", "0", new XAttribute("__type", "s32")));
+            data.Document = new XDocument(new XElement("response", logElement));
             return data;
         }
     }
