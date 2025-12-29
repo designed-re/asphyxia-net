@@ -49,7 +49,6 @@ namespace asphyxia.Controllers.Core
                     new KS32("latitude", 1273),
                     new KS32("longitude", 363),
                     new KU8("accuracy", 0)
-
                 ),
                 new XElement("line",
                     new KStr("id", "F"),
