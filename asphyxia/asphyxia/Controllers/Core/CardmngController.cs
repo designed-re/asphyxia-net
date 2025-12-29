@@ -23,7 +23,8 @@ namespace asphyxia.Controllers.Core
         [HttpPost, XrpcCall("cardmng.inquire")]
         public ActionResult<EamuseXrpcData> Inquire([FromBody] EamuseXrpcData data)
         {
-            XElement cardmng = data.Document.Element("call").Element("cardmng");
+
+            XElement cardmng = data.Document.Element("call")?.Element("cardmng");
 
             string cardId = cardmng.Attribute("cardid").Value.ToUpper();
             string cardType = cardmng.Attribute("cardtype").Value;

@@ -1,0 +1,3 @@
+[submodule "asphyxia/Pomelo.EntityFrameworkCore.MySql"]
+	path = asphyxia/Pomelo.EntityFrameworkCore.MySql
+	url = https://github.com/microting/Pomelo.EntityFrameworkCore.MySql
