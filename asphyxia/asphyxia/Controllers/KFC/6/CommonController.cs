@@ -35,7 +35,7 @@ namespace asphyxia.Controllers.KFC._6
             "KONAMI_50TH_LOGO",
             "OMEGA_ARS_ENABLE",
             "DISABLE_MONITOR_ID_CHECK",
-            //"SKILL_ANALYZER_ABLE",
+            "SKILL_ANALYZER_ABLE", //DISABLED FOR WHAT
             "BLASTER_ABLE",
             "STANDARD_UNLOCK_ENABLE",
             "PLAYERJUDGEADJ_ENABLE",
@@ -46,7 +46,7 @@ namespace asphyxia.Controllers.KFC._6
             "CREW_SELECT_ABLE",
             "PREMIUM_TIME_ENABLE",
             "OMEGA_ENABLE	1,2,3,4,5,6,7,8,9",
-            "HEXA_ENABLE	1,2,3",
+            "HEXA_ENABLE	1,2,3,4,5",
             "MEGAMIX_ENABLE",
             "VALGENE_ENABLE",
             "ARENA_ENABLE",
