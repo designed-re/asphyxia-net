@@ -22,5 +22,6 @@ public partial class Facility
     public string RegionJName { get; set; } = null!;
     public string CustomerCode { get; set; } = null!;
     public string CompanyCode { get; set; } = null!;
+    public string FacilityId { get; set; } = null!;
 
 }

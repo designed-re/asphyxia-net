@@ -108,6 +108,8 @@ public partial class AsphyxiaContext : DbContext
                 .HasColumnName("customer_code");
             entity.Property(e => e.CompanyCode)
                 .HasColumnName("company_code");
+            entity.Property(e => e.FacilityId)
+                .HasColumnName("facility_id");
 
         });
 
