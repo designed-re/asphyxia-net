@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 using asphyxia.Formatters;
+using asphyxia.Models;
 using asphyxia.Utils;
 using Microsoft.Extensions.Options;
 
@@ -13,15 +12,21 @@ namespace asphyxia.Controllers.Core
     public class ServicesController : ControllerBase
     {
         private readonly HostConfig _config;
-        public ServicesController(IOptions<HostConfig> config)
+        private readonly AsphyxiaContext _context;
+        public ServicesController(IOptions<HostConfig> config, AsphyxiaContext context)
         {
             _config = config.Value;
+            _context = context;
         }
 
         [HttpPost, XrpcCall("services.get")]
         public ActionResult<EamuseXrpcData> Get([FromBody] EamuseXrpcData data, [FromQuery] string model)
         {
             Console.WriteLine(data.Document);
+
+            var req = data.Document.Element("call");
+            var pcbId = req.Attribute("srcid");
+
             // string url = "http://localhost:8083";
             string url = Request.Scheme + "://" + Request.Host.Host + ":" + (Request.Host.Port ?? 8083);
             string coreUrl = url + "/core";
@@ -67,11 +72,27 @@ namespace asphyxia.Controllers.Core
             }
             // else return NotFound();
 
+            bool isAuthed;
+
+            var fact = _context.Facilities.SingleOrDefault(x=> x.PCBId == pcbId.Value);
+
+            isAuthed = fact is not null;
+
             XElement servicesElement = new XElement("services",
                 new XAttribute("expire", "600"),
                 new XAttribute("method", "get"),
                 new XAttribute("mode", "operation"),
-                new XAttribute("status", "0"));
+                new XAttribute("status", isAuthed ? "0" : "400"));
+
+            servicesElement.Add(new XElement("item", new XAttribute("name", "ntp"), new XAttribute("url", "ntp://pool.ntp.org/")));
+            servicesElement.Add(new XElement("item", new XAttribute("name", "keepalive"), new XAttribute("url", $"http://127.0.0.1/keepalive?pa=127.0.0.1&ia=127.0.0.1&ga=127.0.0.1&ma=127.0.0.1&t1=2&t2=10")));
+
+            if (!isAuthed)
+            {
+                data.Document = new XDocument(new XElement("response", servicesElement));
+                Console.WriteLine(data.Document);
+                return data;
+            }
 
             foreach (string coreItem in coreItems)
                 servicesElement.Add(new XElement("item", new XAttribute("name", coreItem), new XAttribute("url", coreUrl)));
@@ -82,9 +103,7 @@ namespace asphyxia.Controllers.Core
                     servicesElement.Add(new XElement("item", new XAttribute("name", modelItem), new XAttribute("url", modelUrl)));
             }
 
-            servicesElement.Add(new XElement("item", new XAttribute("name", "ntp"), new XAttribute("url", "ntp://pool.ntp.org/")));
-            servicesElement.Add(new XElement("item", new XAttribute("name", "keepalive"), new XAttribute("url", "http://127.0.0.1/keepalive?pa=127.0.0.1&ia=127.0.0.1&ga=127.0.0.1&ma=127.0.0.1&t1=2&t2=10")));
-
+            
             data.Document = new XDocument(new XElement("response", servicesElement));
             Console.WriteLine(data.Document);
             return data;

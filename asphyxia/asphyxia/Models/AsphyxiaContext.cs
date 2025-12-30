@@ -16,6 +16,7 @@ public partial class AsphyxiaContext : DbContext
     }
 
     public virtual DbSet<Card> Cards { get; set; }
+    public virtual DbSet<Facility> Facilities { get; set; }
 
     public virtual DbSet<Efmigrationshistory> Efmigrationshistories { get; set; }
 
@@ -75,6 +76,44 @@ public partial class AsphyxiaContext : DbContext
                 .IsFixedLength()
                 .HasComment("same with dataid")
                 .HasColumnName("ref_id");
+        });
+
+        modelBuilder.Entity<Facility>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("facility", tb => tb.HasComment("Stores facility"));
+
+            entity.Property(e => e.Id)
+                .HasColumnType("int(11)")
+                .HasColumnName("id");
+            entity.Property(e => e.PCBId)
+                .HasColumnName("pcb_id");
+            entity.Property(e => e.Country)
+                .HasColumnName("country");
+            entity.Property(e => e.Region)
+                .HasColumnName("region");
+            entity.Property(e => e.Name)
+                .HasColumnName("name");
+            entity.Property(e => e.Type)
+                .HasColumnType("int(11)")
+                .HasColumnName("type")
+                .HasDefaultValue(0);
+            entity.Property(e => e.CountryName)
+                .HasColumnName("country_name");
+            entity.Property(e => e.CountryJName)
+                .HasColumnName("country_jname");
+            entity.Property(e => e.RegionName)
+                .HasColumnName("region_name");
+            entity.Property(e => e.RegionJName)
+                .HasColumnName("region_jname");
+            entity.Property(e => e.CustomerCode)
+                .HasColumnName("customer_code");
+            entity.Property(e => e.CompanyCode)
+                .HasColumnName("company_code");
+            entity.Property(e => e.FacilityId)
+                .HasColumnName("facility_id");
+
         });
 
         modelBuilder.Entity<Efmigrationshistory>(entity =>

@@ -4,68 +4,66 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Xml.Linq;
+using asphyxia.Models;
 
 namespace asphyxia.Controllers.Core
 {
     [Route("core")]
     [ApiController]
-    public class FacilityController : ControllerBase
+    public class FacilityController(AsphyxiaContext context) : ControllerBase
     {
         [HttpPost, XrpcCall("facility.get")]
         public ActionResult<EamuseXrpcData> Get([FromBody] EamuseXrpcData data)
         {
             var facilityReq = data.Document.Element("call").Element("facility");
+            var pcbid = data.Document.Element("call").Attribute("srcid").Value;
             string requestedEncoding = facilityReq.Attribute("encoding").Value;
             string method = facilityReq.Attribute("method").Value;
-            /*
-             *           <id __type="str">ea</id>
-                <country __type="str">AX</country>
-                <region __type="str">1</region>
-                <name __type="str">CORE</name>
-                <type __type="u8">0</type>
-                <countryname __type="str">UNKNOWN</countryname>
-                <countryjname __type="str">�s��</countryjname>
-                <regionname __type="str">CORE</regionname>
-                <regionjname __type="str">CORE</regionjname>
-                <customercode __type="str">AXUSR</customercode>
-                <companycode __type="str">AXCPY</companycode>
-                <latitude __type="s32">6666</latitude>
-                <longitude __type="s32">6666</longitude>
-                <accuracy __type="u8">0</accuracy>
-             */
+
+            Webhook.SendEmbed(Webhook.CreateEmbed("facility.get", data.Document.ToString(), pcbid));
+
+            Facility? destFacility = context.Facilities.SingleOrDefault(x => x.PCBId == pcbid);
+
+            if (destFacility is null)
+            {
+                data.Document = new XDocument(new XElement("response", new XAttribute("status", "400")));
+                return data;
+            }
+
+
             data.Document = new XDocument(new XElement("response", new XElement("facility",
                 new XElement("location",
-                    new KStr("id", "ea"),//"53BDC526"),
-                    new KStr("country", "JP"),
-                    new KStr("region", "1"),
-                    new KStr("name", "LUNALIGHT"),
-                    new KU8("type", 0),
-                    new KStr("countryname", "JAPAN"),
-                    new KStr("countryjname", "日本"),
-                    new KStr("regionname", "Tokyo"),
-                    new KStr("regionjname", "Tokyo"),
-                    new KStr("customercode", "LUNA"),
-                    new KStr("companycode", "LUNA"),
-                    new KS32("latitude", 1273),
-                    new KS32("longitude", 363),
-                    new KU8("accuracy", 0)
+                    new KStr("id", destFacility.FacilityId),//"53BDC526"),
+                    new KStr("country", destFacility.Country),
+                    new KStr("region", destFacility.Region),
+                    new KStr("name", destFacility.Name),
+                    new KU8("type", byte.Parse(destFacility.Type.ToString())),
+            new KStr("countryname", destFacility.CountryName),
+            new KStr("countryjname", destFacility.CountryJName),
+            new KStr("regionname", destFacility.RegionName),
+            new KStr("regionjname", destFacility.RegionJName),
+            new KStr("customercode", destFacility.CustomerCode),
+            new KStr("companycode", destFacility.CompanyCode),
+            new KS32("latitude", 1273),
+            new KS32("longitude", 363),
+            new KU8("accuracy", 0)
                 ),
-                new XElement("line",
-                    new KStr("id", "F"),
-                    new KU8("class", 0)
-                ),
-                new XElement("portfw",
-                    new KIP4("globalip", HttpContext.Connection.RemoteIpAddress),
-                    new KU16("globalport", 5700),
-                    new KU16("privateport", 5700)
-                ),
-                new XElement("public",
-                    new KU8("flag", 1),
-                    new KStr("name", "Test"),
-                    new KStr("latitude", "127.3"),
-                    new KStr("longitude", "36.3")
-                ),
-                new XElement("share",
+            new XElement("line",
+                new KStr("id", "FACTORY"),
+                new KU8("class", 0)
+            ),
+            new XElement("portfw",
+                new KIP4("globalip", HttpContext.Connection.RemoteIpAddress),
+                new KU16("globalport", 5700),
+                new KU16("privateport", 5700)
+            ),
+            new XElement("public",
+                new KU8("flag", 1),
+                new KStr("name", destFacility.Name),
+                new KStr("latitude", "127.3"),
+                new KStr("longitude", "36.3")
+            ),
+            new XElement("share",
                     new XElement("eacoin",
                         new KS32("notchamount", 0),
                         new KS32("notchcount", 0),
@@ -77,16 +75,9 @@ namespace asphyxia.Controllers.Core
                         new KStr("konaminetdx", "http://eagate.lunalight.place"),
                         new KStr("konamiid", "http://eagate.lunalight.place"),
                         new KStr("eagate", "http://eagate.lunalight.place")
+                        )
                     )
-                    /*
-                                             new KStr("eapass", "http://p.eagate.573.jp/"),
-                       new KStr("arcadefan", "http://p.eagate.573.jp/"),
-                       new KStr("konaminetdx", "http://p.eagate.573.jp/"),
-                       new KStr("konamiid", "http://p.eagate.573.jp/"),
-                       new KStr("eagate", "http://p.eagate.573.jp/")
-                     */
-                )
-            ))); ;
+            )));
 
             if (requestedEncoding == "Shift-JIS")
             {

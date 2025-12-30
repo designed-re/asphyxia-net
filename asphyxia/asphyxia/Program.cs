@@ -37,8 +37,9 @@ var app = builder.Build();
 using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope())
 using (var context = serviceScope.ServiceProvider.GetRequiredService<AsphyxiaContext>())
 {
-    context.Database.EnsureCreated();
     context.Database.Migrate();
+
+    context.Database.EnsureCreated();
 }
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
