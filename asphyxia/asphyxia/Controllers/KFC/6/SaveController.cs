@@ -111,6 +111,14 @@ namespace asphyxia.Controllers.KFC._6
             profile.SortType = byte.Parse(gameElement.Element("sort_type").Value);
             profile.Headphone = byte.Parse(gameElement.Element("headphone").Value);
 
+            profile.DayCount++;
+            profile.PlayCount++;
+            profile.TodayCount++;
+            profile.WeekPlayCount++;
+
+            profile.Pcb += int.Parse(gameElement.Element("earned_gamecoin_block").Value);
+
+
             await _context.SaveChangesAsync();
 
             gameElement = new("game", new XAttribute("status", 0));
