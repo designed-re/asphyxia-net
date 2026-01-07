@@ -36,7 +36,7 @@ namespace asphyxia.Controllers.KFC._6
             }
 
             data.Document = new XDocument(new XElement("response",
-                new XElement("game", new XAttribute("status", 0),
+                new XElement("game", new XAttribute("status", "0"),
                     new KU8("result", 0),
                     new KStr("name", card.SvProfile.Name),
                     new KStr("code", card.SvProfile.Code),
