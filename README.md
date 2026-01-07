@@ -5,7 +5,7 @@
 <br/>
 This project inspired by <a href="https://github.com/asphyxia-core">asphyxia-core</a>
 <br/>
-deveploment paused for study
+deveploment paused for nebula
 </div>
 <br/>
 <details>
