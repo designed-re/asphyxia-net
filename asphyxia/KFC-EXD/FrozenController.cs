@@ -2,11 +2,12 @@
 using System.Xml.Linq;
 using asphyxia.Formatters;
 using asphyxia.Models;
+using asphyxia.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace asphyxia.Controllers.KFC._6
+namespace KFC_EXD
 {
     [Route("kfc/6")]
     [ApiController]

@@ -1,15 +1,27 @@
 using asphyxia;
 using asphyxia.Formatters;
 using asphyxia.Models;
+using asphyxia.Utils;
 using Formatters.Formatters;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
 // Add services to the container.
+
+string path = Path.Combine(Directory.GetCurrentDirectory(), "Modules");
+var files = Directory.GetFiles(path, "*.dll");
+
+foreach (var file in files)
+{
+    Console.WriteLine(file);
+    var assembly = Assembly.LoadFile(file);
+    builder.Services.AddControllers().AddApplicationPart(assembly);
+}
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

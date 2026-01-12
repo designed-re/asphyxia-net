@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace asphyxia
+namespace asphyxia.Utils
 {
     public class XrpcCallAttribute : Attribute
     {

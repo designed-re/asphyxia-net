@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
 using System.Xml.Linq;
-using asphyxia.Helpers;
 using asphyxia.Models;
+using asphyxia.Utils;
 using Microsoft.EntityFrameworkCore;
+using ByteArrayHelper = asphyxia.Helpers.ByteArrayHelper;
 
 namespace asphyxia.Controllers.Core
 {
@@ -110,7 +111,7 @@ namespace asphyxia.Controllers.Core
             Card card = new Card()
             {
                 CardId = cardId,
-                RefId = refId.ToHexString(),
+                RefId = ByteArrayHelper.ToHexString(refId),
                 CardNo = cardId,
                 Pass = passwd
             };

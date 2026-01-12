@@ -1,6 +1,7 @@
 ﻿using asphyxia.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
+using asphyxia.Utils;
 using eAmuseCore.KBinXML;
 
 namespace asphyxia.Controllers.Core

@@ -2,39 +2,23 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
+using asphyxia.Utils;
 using eAmuseCore.KBinXML;
 
-namespace asphyxia.Controllers.KFC._6
+namespace asphyxia.Controllers.Core
 {
-    [Route("kfc/6")]
+    [Route("core")]
     [ApiController]
     public class EventLogController : ControllerBase
     {
         [HttpPost, XrpcCall("eventlog.write")]
-        public ActionResult<EamuseXrpcData> EventLog([FromBody] EamuseXrpcData data)
+        public ActionResult<EamuseXrpcData> List([FromBody] EamuseXrpcData data)
         {
-            Console.WriteLine(data.Document);
-
-            Webhook.SendEmbed(Webhook.CreateEmbed("eventlog.write", data.Document.ToString(), data.Document.Element("call").Attribute("srcid").Value));
-
-            /*
-             *<?xml version="1.0" encoding="ASCII"?>
-               <response>
-                   <eventlog status="0">
-                       <gamesession __type="s64">1</gamesession>
-                       <logsendflg __type="s32">0</logsendflg>
-                       <logerrlevel __type="s32">0</logerrlevel>
-                       <evtidnosendflg __type="s32">0</evtidnosendflg>
-                   </eventlog>
-               </response>
-               
-             */
-
             XElement logElement = new XElement("eventlog", new XAttribute("status", "0"));
-            logElement.Add(new KS64("gamesession", 1));
-            logElement.Add(new KS32("logsendflg", 0));
-            logElement.Add(new KS32("logerrlevel", 0));
-            logElement.Add(new KS32("evtidnosendflg", 0));
+            logElement.Add(new XElement("gamesession", "1", new XAttribute("__type", "s64")));
+            logElement.Add(new XElement("logsendflg", "0", new XAttribute("__type", "s32")));
+            logElement.Add(new XElement("loggerrlevel", "0", new XAttribute("__type", "s32")));
+            logElement.Add(new XElement("evtidnosendflg", "0", new XAttribute("__type", "s32")));
             data.Document = new XDocument(new XElement("response", logElement));
             return data;
         }

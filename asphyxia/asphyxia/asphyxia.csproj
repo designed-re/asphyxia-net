@@ -20,8 +20,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\eAmuseCore\eAmuseCore.csproj" />
     <ProjectReference Include="..\Pomelo.EntityFrameworkCore.MySql\src\EFCore.MySql\EFCore.MySql.csproj" />
+    <ProjectReference Include="..\Utils\asphyxia.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Modules\readme.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
