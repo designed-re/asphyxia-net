@@ -17,6 +17,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KFC-EXD", "KFC-EXD\KFC-EXD.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "asphyxia.Utils", "Utils\asphyxia.Utils.csproj", "{5E8ECB72-326E-4401-83D1-57605B97EEF8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{26A7CE2E-52AD-4834-A817-39612EB40AF9}"
+	ProjectSection(SolutionItems) = preProject
+		runmigration.txt = runmigration.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
