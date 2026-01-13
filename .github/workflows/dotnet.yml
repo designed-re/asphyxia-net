@@ -22,6 +22,8 @@ jobs:
         dotnet-version: 10.0.x
     - name: Checkout submodule
       run: git submodule update --init
+    - name: Setting up environment
+      run: alias copy="cp"
     - name: Restore dependencies
       run: dotnet restore
       working-directory: /home/runner/work/asphyxia-net/asphyxia-net/asphyxia
