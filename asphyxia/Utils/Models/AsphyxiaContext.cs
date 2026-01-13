@@ -191,7 +191,7 @@ public partial class AsphyxiaContext : DbContext
                 .HasColumnType("int(11)")
                 .HasColumnName("id");
             entity.Property(e => e.Param)
-                .HasColumnType("int(11)")
+                .HasMaxLength(-1)
                 .HasColumnName("param");
             entity.Property(e => e.ParamCount)
                 .HasColumnType("int(11) unsigned")

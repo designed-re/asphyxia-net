@@ -16,7 +16,7 @@ public partial class SvParam
 
     public int ParamId { get; set; }
 
-    public int Param { get; set; }
+    public string Param { get; set; }
 
     public uint ParamCount { get; set; }
 

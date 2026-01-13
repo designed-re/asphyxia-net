@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using asphyxia.Models;
 
@@ -11,9 +12,11 @@ using asphyxia.Models;
 namespace asphyxia.Migrations
 {
     [DbContext(typeof(AsphyxiaContext))]
-    partial class AsphyxiaContextModelSnapshot : ModelSnapshot
+    [Migration("20260113140032_changeparams")]
+    partial class changeparams
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

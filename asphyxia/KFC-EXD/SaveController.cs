@@ -112,6 +112,76 @@ namespace KFC_EXD
             profile.SortType = byte.Parse(gameElement.Element("sort_type").Value);
             profile.Headphone = byte.Parse(gameElement.Element("headphone").Value);
 
+            // profile += byte.Parse(gameElement.Element("earned_gamecoin_packet").Value);
+            profile.Pcb += byte.Parse(gameElement.Element("earned_gamecoin_block").Value);
+            profile.BlasterEnergy += byte.Parse(gameElement.Element("earned_blaster_energy").Value);
+            profile.PlayCount++;
+            profile.DayCount++;
+            profile.TodayCount++;
+            profile.PlayChain++;
+            profile.MaxPlayChain++;
+            profile.WeekChain++;
+            profile.WeekCount++;
+            profile.WeekPlayCount++;
+            profile.MaxWeekChain++;
+
+
+            // var course = gameElement.Element("course");
+            // if (course is not null)
+            // {
+            //     var sid = int.Parse(course.Element("ssnid").Value);
+            //     var cid= int.Parse(course.Element("crsid").Value);
+            //     var stype = int.Parse(course.Element("st").Value);
+            //     var kacId= course.Element("kac_id").Value;
+            //
+            //     if (null is not null)
+            //     {
+            //         _context.SvCourseRecords.Upsert(0)
+            //     }
+            // }
+
+            var items = gameElement.Element("item").Elements("info");
+
+            foreach (var item in items)
+            {
+                var id = byte.Parse(item.Element("id").Value);
+                var itemType = byte.Parse(item.Element("type").Value);
+                var param = byte.Parse(item.Element("param").Value);
+
+                var record = await _context.SvItems.SingleOrDefaultAsync(x =>x.Profile == profile.Id&& x.ItemId == id && x.Type == itemType);
+
+                if (record is null)
+                {
+                    await _context.SvItems.AddAsync(new() { ItemId = id, Param = param, Type = itemType, Profile =profile.Id });
+                }
+                else
+                {
+                    _context.SvItems.Update(new() { Id = record.Id, ItemId = id, Param = param, Type = itemType, Profile = profile.Id });
+                }
+
+            }
+
+            var svParams = gameElement.Element("params").Elements("info");
+
+            foreach (var item in svParams)
+            {
+                var id = byte.Parse(item.Element("id").Value);
+                var itemType = byte.Parse(item.Element("type").Value);
+                var param1 = string.Join(' ',item.Element("param").Value.Split(' ').Select(int.Parse));
+
+                var record = await _context.SvParams.SingleOrDefaultAsync(x => x.Profile == profile.Id && x.ParamId == id && x.Type == itemType);
+
+                if (record is null)
+                {
+                    await _context.SvParams.AddAsync(new() { ParamId = id, Param = param1, Type = itemType, Profile = profile.Id });
+                }
+                else
+                {
+                    _context.SvParams.Update(new() { Id = record.Id, ParamId = id, Param = param1, Type = itemType, Profile = profile.Id });
+                }
+
+            }
+
             await _context.SaveChangesAsync();
 
             gameElement = new("game", new XAttribute("status", 0));
