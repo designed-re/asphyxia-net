@@ -171,16 +171,16 @@ namespace KFC_EXD
 
             }
 
-            var svParams = gameElement.Element("params").Elements("info");
+            var svParams = gameElement.Element("param").Elements("info");
 
             foreach (var item in svParams)
             {
                 var id = int.Parse(item.Element("id").Value);
                 var itemType = int.Parse(item.Element("type").Value);
                 var param1 = string.Join(' ',item.Element("param").Value.Split(' ').Select(int.Parse));
-
+            
                 var record = await _context.SvParams.SingleOrDefaultAsync(x => x.Profile == profile.Id && x.ParamId == id && x.Type == itemType);
-
+            
                 if (record is null)
                 {
                     await _context.SvParams.AddAsync(new() { ParamId = id, Param = param1, Type = itemType, Profile = profile.Id });
@@ -189,7 +189,7 @@ namespace KFC_EXD
                 {
                     _context.SvParams.Update(new() { Id = record.Id, ParamId = id, Param = param1, Type = itemType, Profile = profile.Id });
                 }
-
+            
             }       
             //todo save skill, arena, variant power
 
