@@ -1,14 +1,13 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using asphyxia.Formatters;
 using Microsoft.AspNetCore.Mvc.Formatters;
 
 using eAmuseCore.Compression;
 using eAmuseCore.Crypto;
 using eAmuseCore.KBinXML;
 
-namespace Formatters.Formatters
+namespace asphyxia.Utils.Formatters
 {
     public class EamuseXrpcOutputFormatter : OutputFormatter
     {

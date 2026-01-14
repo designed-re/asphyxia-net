@@ -1,5 +1,4 @@
-﻿using asphyxia.Formatters;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
 using System.Xml.Linq;
@@ -7,6 +6,7 @@ using asphyxia.Models;
 using asphyxia.Utils;
 using Microsoft.EntityFrameworkCore;
 using ByteArrayHelper = asphyxia.Helpers.ByteArrayHelper;
+using asphyxia.Utils.Formatters;
 
 namespace asphyxia.Controllers.Core
 {

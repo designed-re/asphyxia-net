@@ -11,9 +11,8 @@ using eAmuseCore.Compression;
 using eAmuseCore.Crypto;
 using eAmuseCore.KBinXML;
 using System.Text;
-using asphyxia.Formatters;
 
-namespace asphyxia.Formatters
+namespace asphyxia.Utils.Formatters
 {
     public class EamuseXrpcInputFormatter : InputFormatter
     {
@@ -116,6 +115,8 @@ namespace asphyxia.Formatters
 
             if (result == null)
                 return await InputFormatterResult.FailureAsync();
+
+            Console.WriteLine(result.Document);
 
             return await InputFormatterResult.SuccessAsync(new EamuseXrpcData()
             {

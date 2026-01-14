@@ -1,11 +1,11 @@
-﻿using asphyxia.Formatters;
-using eAmuseCore.KBinXML;
+﻿using eAmuseCore.KBinXML;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Xml.Linq;
 using asphyxia.Models;
 using asphyxia.Utils;
+using asphyxia.Utils.Formatters;
 
 namespace asphyxia.Controllers.Core
 {

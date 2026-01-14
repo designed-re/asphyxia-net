@@ -1,7 +1,7 @@
 ﻿using System.Xml.Linq;
-using asphyxia.Formatters;
 using asphyxia.Models;
 using asphyxia.Utils;
+using asphyxia.Utils.Formatters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -71,6 +71,7 @@ namespace KFC_EXD
             gameElement = new("game", new XAttribute("status", 0));
             responseElement.Add(gameElement);
             data.Document = new(responseElement);
+
             return data;
         }
 
@@ -79,7 +80,7 @@ namespace KFC_EXD
         {
             XElement gameElement = data.Document.Element("call").Element("game");
             XElement responseElement = new("response");
-
+            Console.WriteLine(gameElement);
             string refId = gameElement.Element("refid").Value;
             Card? card = await _context.Cards.Include(x=> x.SvProfile).SingleOrDefaultAsync(x => x.RefId == refId);
 
@@ -113,8 +114,8 @@ namespace KFC_EXD
             profile.Headphone = byte.Parse(gameElement.Element("headphone").Value);
 
             // profile += byte.Parse(gameElement.Element("earned_gamecoin_packet").Value);
-            profile.Pcb += byte.Parse(gameElement.Element("earned_gamecoin_block").Value);
-            profile.BlasterEnergy += byte.Parse(gameElement.Element("earned_blaster_energy").Value);
+            profile.Pcb += int.Parse(gameElement.Element("earned_gamecoin_block").Value);
+            profile.BlasterEnergy += uint.Parse(gameElement.Element("earned_blaster_energy").Value);
             profile.PlayCount++;
             profile.DayCount++;
             profile.TodayCount++;
@@ -138,15 +139,15 @@ namespace KFC_EXD
             //     {
             //         _context.SvCourseRecords.Upsert(0)
             //     }
-            // }
+            // } TODO LATER
 
             var items = gameElement.Element("item").Elements("info");
 
             foreach (var item in items)
             {
-                var id = byte.Parse(item.Element("id").Value);
+                var id = uint.Parse(item.Element("id").Value);
                 var itemType = byte.Parse(item.Element("type").Value);
-                var param = byte.Parse(item.Element("param").Value);
+                var param = uint.Parse(item.Element("param").Value);
 
                 var record = await _context.SvItems.SingleOrDefaultAsync(x =>x.Profile == profile.Id&& x.ItemId == id && x.Type == itemType);
 
@@ -165,8 +166,8 @@ namespace KFC_EXD
 
             foreach (var item in svParams)
             {
-                var id = byte.Parse(item.Element("id").Value);
-                var itemType = byte.Parse(item.Element("type").Value);
+                var id = int.Parse(item.Element("id").Value);
+                var itemType = int.Parse(item.Element("type").Value);
                 var param1 = string.Join(' ',item.Element("param").Value.Split(' ').Select(int.Parse));
 
                 var record = await _context.SvParams.SingleOrDefaultAsync(x => x.Profile == profile.Id && x.ParamId == id && x.Type == itemType);
@@ -180,7 +181,8 @@ namespace KFC_EXD
                     _context.SvParams.Update(new() { Id = record.Id, ParamId = id, Param = param1, Type = itemType, Profile = profile.Id });
                 }
 
-            }
+            }       
+            //todo save skill, arena, variant power
 
             await _context.SaveChangesAsync();
 

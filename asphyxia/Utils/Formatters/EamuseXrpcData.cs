@@ -1,7 +1,7 @@
 ﻿using System.Xml.Linq;
 using System.Text;
 
-namespace asphyxia.Formatters
+namespace asphyxia.Utils.Formatters
 {
     public class EamuseXrpcData
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
-using asphyxia.Formatters;
 using asphyxia.Models;
 using asphyxia.Utils;
 using Microsoft.Extensions.Options;
+using asphyxia.Utils.Formatters;
 
 namespace asphyxia.Controllers.Core
 {
@@ -22,8 +22,7 @@ namespace asphyxia.Controllers.Core
         [HttpPost, XrpcCall("services.get")]
         public ActionResult<EamuseXrpcData> Get([FromBody] EamuseXrpcData data, [FromQuery] string model)
         {
-            Console.WriteLine(data.Document);
-
+            
             var req = data.Document.Element("call");
             var pcbId = req.Attribute("srcid");
 

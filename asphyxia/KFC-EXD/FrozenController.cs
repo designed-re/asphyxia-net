@@ -1,8 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Xml.Linq;
-using asphyxia.Formatters;
 using asphyxia.Models;
 using asphyxia.Utils;
+using asphyxia.Utils.Formatters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

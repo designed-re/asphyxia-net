@@ -1,12 +1,11 @@
 using asphyxia;
-using asphyxia.Formatters;
 using asphyxia.Models;
 using asphyxia.Utils;
-using Formatters.Formatters;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Reflection;
+using asphyxia.Utils.Formatters;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
@@ -18,7 +17,7 @@ var files = Directory.GetFiles(path, "*.dll");
 
 foreach (var file in files)
 {
-    Console.WriteLine(file);
+    Console.WriteLine("Loading modules... {0}", Path.GetFileName(file));
     var assembly = Assembly.LoadFile(file);
     builder.Services.AddControllers().AddApplicationPart(assembly);
 }

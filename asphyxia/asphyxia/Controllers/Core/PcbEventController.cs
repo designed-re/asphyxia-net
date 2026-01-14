@@ -1,8 +1,8 @@
-﻿using asphyxia.Formatters;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 using asphyxia.Utils;
+using asphyxia.Utils.Formatters;
 
 namespace asphyxia.Controllers.Core
 {
@@ -14,7 +14,6 @@ namespace asphyxia.Controllers.Core
         public ActionResult<EamuseXrpcData> Put([FromBody] EamuseXrpcData data)
         {
             // TODO: log these, maybe?
-            Console.WriteLine(data.Document);
 
             data.Document = new XDocument(new XElement("response", new XElement("pcbevent")));
             return data;

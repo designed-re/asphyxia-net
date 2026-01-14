@@ -1,7 +1,7 @@
 ﻿using System.Xml.Linq;
-using asphyxia.Formatters;
 using asphyxia.Models;
 using asphyxia.Utils;
+using asphyxia.Utils.Formatters;
 using eAmuseCore.KBinXML;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,23 +11,15 @@ namespace KFC_EXD
 {
     [Route("kfc/6")]
     [ApiController]
-    public class LoadController : ControllerBase
+    public class LoadController(AsphyxiaContext context) : ControllerBase
     {
-
-        private readonly AsphyxiaContext _context;
-
-        public LoadController(AsphyxiaContext context)
-        {
-            _context = context;
-        }
-
         [HttpPost, XrpcCall("game.sv6_load")]
         public async Task<ActionResult<EamuseXrpcData>> DataLoad([FromBody] EamuseXrpcData data)
         {
             XElement gameElement = data.Document.Element("call").Element("game");
             string refid = gameElement.Element("refid").Value;
 
-            Card? card = await _context.Cards.Include(x=> x.SvProfile).SingleOrDefaultAsync(x =>
+            Card? card = await context.Cards.Include(x=> x.SvProfile).SingleOrDefaultAsync(x =>
                 x.RefId == refid);
             if (card.SvProfile?.Name is null)
             {
@@ -95,7 +87,7 @@ namespace KFC_EXD
             XElement gameElement = data.Document.Element("call").Element("game");
             string refid = gameElement.Element("refid").Value;
 
-            Card? card = await _context.Cards.Include(x => x.SvProfile).SingleOrDefaultAsync(x =>
+            Card? card = await context.Cards.Include(x => x.SvProfile).SingleOrDefaultAsync(x =>
                 x.RefId == refid);
             if (card.SvProfile is null)
             {
@@ -106,7 +98,7 @@ namespace KFC_EXD
 
             XElement musicElement = new ("music");
 
-            var scores = _context.SvScores.Where(x => x.Profile == card.SvProfile.Id);
+            var scores = context.SvScores.Where(x => x.Profile == card.SvProfile.Id);
             foreach (var score in scores)
             {
                 XElement infoElement = new("info",
