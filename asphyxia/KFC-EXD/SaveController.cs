@@ -65,7 +65,15 @@ namespace KFC_EXD
 
             record.Clear = Math.Max(clear_type, record.Clear);
             record.Grade = Math.Max(score_grade, record.Grade);
-            _context.SvScores.Add(record);
+
+            var record1 = await _context.SvScores.SingleOrDefaultAsync(x =>
+                x.Profile == card.SvProfile.Id && x.MusicId == musicId && x.Type == musicType);
+
+            if (record1 is null)
+                _context.SvScores.Add(record);
+            else
+                _context.SvScores.Update(record);
+
             await _context.SaveChangesAsync();
 
             gameElement = new("game", new XAttribute("status", 0));
@@ -125,6 +133,7 @@ namespace KFC_EXD
             profile.WeekCount++;
             profile.WeekPlayCount++;
             profile.MaxWeekChain++;
+            //todo null debug 
 
 
             // var course = gameElement.Element("course");
