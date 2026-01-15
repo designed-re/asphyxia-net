@@ -18,7 +18,7 @@ var files = Directory.GetFiles(path, "*.dll");
 foreach (var file in files)
 {
     Console.WriteLine("Loading modules... {0}", Path.GetFileName(file));
-    var assembly = Assembly.LoadFile(file);
+    var assembly = Assembly.Load(File.ReadAllBytes(file)); //LoadFile lock file.
     builder.Services.AddControllers().AddApplicationPart(assembly);
 }
 

@@ -26,6 +26,9 @@ foreach (var musicElement in musicElements)
     Console.WriteLine(data);
 
     File.AppendAllText("result.txt", data+Environment.NewLine, Encoding.UTF8);
+
+    if (context.SvMusics.Any(x => x.Id == id)) continue;
+
     context.SvMusics.Add(new()
     {
         Id = id, Artist = artist, ArtistYomigana = artist_yomi, Date = DateOnly.ParseExact(date, "yyyyMMdd"), Title = title,
