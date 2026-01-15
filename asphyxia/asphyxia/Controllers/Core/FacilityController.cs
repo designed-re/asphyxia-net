@@ -21,8 +21,6 @@ namespace asphyxia.Controllers.Core
             string requestedEncoding = facilityReq.Attribute("encoding").Value;
             string method = facilityReq.Attribute("method").Value;
 
-            Webhook.SendEmbed(Webhook.CreateEmbed("facility.get", data.Document.ToString(), pcbid));
-
             Facility? destFacility = context.Facilities.SingleOrDefault(x => x.PCBId == pcbid);
 
             if (destFacility is null)

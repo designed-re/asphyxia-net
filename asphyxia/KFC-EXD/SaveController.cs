@@ -158,7 +158,7 @@ namespace KFC_EXD
                 var itemType = byte.Parse(item.Element("type").Value);
                 var param = uint.Parse(item.Element("param").Value);
 
-                var record = await _context.SvItems.SingleOrDefaultAsync(x =>x.Profile == profile.Id&& x.ItemId == id && x.Type == itemType);
+                var record = await _context.SvItems.AsNoTracking().SingleOrDefaultAsync(x =>x.Profile == profile.Id && x.ItemId == id);// && x.Type == itemType);
 
                 if (record is null)
                 {
@@ -171,6 +171,7 @@ namespace KFC_EXD
 
             }
 
+
             var svParams = gameElement.Element("param").Elements("info");
 
             foreach (var item in svParams)
@@ -179,7 +180,7 @@ namespace KFC_EXD
                 var itemType = int.Parse(item.Element("type").Value);
                 var param1 = string.Join(' ',item.Element("param").Value.Split(' ').Select(int.Parse));
             
-                var record = await _context.SvParams.SingleOrDefaultAsync(x => x.Profile == profile.Id && x.ParamId == id && x.Type == itemType);
+                var record = await _context.SvParams.AsNoTracking().SingleOrDefaultAsync(x => x.Profile == profile.Id && x.ParamId == id && x.Type == itemType);
             
                 if (record is null)
                 {

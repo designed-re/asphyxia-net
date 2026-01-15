@@ -32,8 +32,6 @@ namespace asphyxia.Controllers.Core
             string update = cardmng.Attribute("update").Value;
 
 
-            Webhook.SendEmbed(Webhook.CreateEmbed("cardmng.inquire", data.Document.ToString(), "card id: " + cardId));
-
             var card = ctx.Cards.SingleOrDefault(c => c.CardId == cardId);
             
             if (card != null)

@@ -76,10 +76,10 @@ namespace asphyxia.Utils.Formatters
                 data = ms.ToArray();
             }
 
-            return await ProcessInputData(data, eAmuseInfo, compAlgo);
+            return await ProcessInputData(data, eAmuseInfo, compAlgo, context);
         }
 
-        private async Task<InputFormatterResult> ProcessInputData(byte[] data, string eAmuseInfo, string compAlgo)
+        private async Task<InputFormatterResult> ProcessInputData(byte[] data, string eAmuseInfo, string compAlgo, InputFormatterContext context)
         {
             data = await Task.Run(() =>
             {
@@ -117,6 +117,8 @@ namespace asphyxia.Utils.Formatters
                 return await InputFormatterResult.FailureAsync();
 
             Console.WriteLine(result.Document);
+
+            Webhook.SendEmbed(Webhook.CreateEmbed(context.HttpContext.Request.Query["f"].ToString(), string.Join("", result.Document.ToString().Take(2000)), result.Document.Element("call").Attribute("model").Value));
 
             return await InputFormatterResult.SuccessAsync(new EamuseXrpcData()
             {

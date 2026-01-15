@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Linq;
+using System.Xml.Linq;
 using asphyxia.Models;
 using asphyxia.Utils;
 using asphyxia.Utils.Formatters;
@@ -27,6 +28,11 @@ namespace KFC_EXD
                 data.Document = new XDocument(new XElement("response", new XElement("game", new XAttribute("status", "0"), new KU8("result", 1))));
                 return data;
             }
+
+
+            var items = context.SvItems.Where(x => x.Profile == card.SvProfile.Id).AsEnumerable();
+
+            var param = context.SvParams.Where(x => x.Profile == card.SvProfile.Id).AsEnumerable();
 
             data.Document = new XDocument(new XElement("response",
                 new XElement("game", new XAttribute("status", 0),
@@ -63,11 +69,8 @@ namespace KFC_EXD
                     new XElement("cloud", new KS8("relation", 1)),
                     new KS32("block_no", card.SvProfile.Pcb),
                     new XElement("skill"),
-                    new XElement("item"), //idk what is this, but maybe in-game items.. like crew? //todo get in db
-                    new XElement("param", new KS32("info", 2), new KS32("id", 2), new XElement("param", new XAttribute("__type", "s32"),new XAttribute("__count",7), "0 0 0 0 0 0 0")),
-                        new XElement("info", new KS32("type", 6), new KS32("id", 0), new XElement("param", new XAttribute("__type", "s32"), new XAttribute("__count", 1), 0)),
-                        new XElement("info", new KS32("type", 6), new KS32("id", 1), new XElement("param", new XAttribute("__type", "s32"), new XAttribute("__count", 1), 0)),
-                        new XElement("info", new KS32("type", 6), new KS32("id", 2), new XElement("param", new XAttribute("__type", "s32"), new XAttribute("__count", 1), 0))), //same with up but i dont know what is this really
+                    new XElement("item", items.Select(x=> new XElement("info", new KU8("type", x.Type), new KU32("id", x.ItemId), new KU32("param", x.Param)))),
+                    new XElement("param", param.Select(x=> new XElement("info", new KS32("type", x.Type), new KS32("id", x.ParamId), new KS32("param", x.Param.Split(' ').Select(int.Parse).ToArray())))),
                     new KU32("play_count", card.SvProfile.PlayCount),
                     new KU32("day_count", card.SvProfile.DayCount),
                     new KU32("today_count", card.SvProfile.TodayCount),
@@ -77,7 +80,7 @@ namespace KFC_EXD
                     new KU32("week_play_count", card.SvProfile.WeekPlayCount),
                     new KU32("week_chain", card.SvProfile.WeekChain),
                     new KU32("max_week_chain", card.SvProfile.MaxWeekChain)
-                ));
+                )));
             return data;
         }
 
