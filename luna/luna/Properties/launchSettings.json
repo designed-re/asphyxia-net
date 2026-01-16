@@ -7,7 +7,8 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5287"
+      "applicationUrl": "http://localhost:5287",
+      "workingDirectory": "C:\\Users\\seojunyun\\source\\repos\\luna\\luna\\luna\\bin\\Debug\\net10.0"
     },
     "IIS Express": {
       "commandName": "IISExpress",

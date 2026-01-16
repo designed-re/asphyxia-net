@@ -69,7 +69,7 @@ namespace asphyxia.Controllers.Core
                 // modelItems = new string[] { };
                 modelUrl = url + "/kfc/6";
             }
-            // else return NotFound();
+            else return NotFound();
 
             bool isAuthed;
 
@@ -89,7 +89,6 @@ namespace asphyxia.Controllers.Core
             if (!isAuthed)
             {
                 data.Document = new XDocument(new XElement("response", servicesElement));
-                Console.WriteLine(data.Document);
                 return data;
             }
 

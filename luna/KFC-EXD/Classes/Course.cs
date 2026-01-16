@@ -8,7 +8,7 @@ namespace KFC_EXD.Classes
     internal class Course
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -20,7 +20,7 @@ namespace KFC_EXD.Classes
         public long IsNew { get; set; }
 
         [JsonProperty("hasGod", NullValueHandling = NullValueHandling.Ignore)]
-        public long? HasGod { get; set; }
+        public short HasGod { get; set; }
 
         [JsonProperty("courses")]
         public CourseElement[] Courses { get; set; }
@@ -29,19 +29,19 @@ namespace KFC_EXD.Classes
     public partial class CourseElement
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public short Id { get; set; }
 
         [JsonProperty("type")]
-        public long Type { get; set; }
+        public short Type { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
 
         [JsonProperty("level")]
-        public long Level { get; set; }
+        public short Level { get; set; }
 
         [JsonProperty("nameID")]
-        public long NameId { get; set; }
+        public short NameId { get; set; }
 
         [JsonProperty("assist")]
         public long Assist { get; set; }

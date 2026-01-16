@@ -1,0 +1,102 @@
+﻿[
+  {
+    "id": 23,
+    "version": 20240318,
+    "str": "[img:info/240321_info_generator4.png:]"
+  },
+  {
+    "id": 24,
+    "version": 20240604,
+    "str": "[img:info/240606_watame.png:]"
+  },
+  {
+    "id": 25,
+    "version": 20240805,
+    "str": "[img:info/240807_toho2024.png:]"
+  },
+  {
+    "id": 26,
+    "version": 20240827,
+    "str": "[img:info/240829_info_generator5.png:]"
+  },
+  {
+    "id": 27,
+    "version": 20240924,
+    "str": "[img:info/240926_generator.png: 106, 0]"
+  },
+  {
+    "id": 28,
+    "version": 20240924,
+    "str": "[img:info/240926_re_generator.png: 106, 0]"
+  },
+  {
+    "id": 29,
+    "version": 20241008,
+    "str": "[img:info/241010_hexadiver.png:]"
+  },
+  {
+    "id": 30,
+    "version": 20241105,
+    "str": "[img:info/241108_paseli.png:]"
+  },
+  {
+    "id": 31,
+    "version": 20241105,
+    "str": "[img:info/241107_marine_info.png:]"
+  },
+  {
+    "id": 32,
+    "version": 20250212,
+    "str": "[img:info/250214_hinabita_meu.jpg:]"
+  },
+  {
+    "id": 33,
+    "version": 20250218,
+    "str": "[img:info/250220_generator_pekora.jpg:]"
+  },
+  {
+    "id": 34,
+    "version": 20250225,
+    "str": "[img:info/250303_paseli.png:]"
+  },
+  {
+    "id": 35,
+    "version": 20250324,
+    "str": "[img:info/250326_noah.jpg:]"
+  },
+  {
+    "id": 36,
+    "version": 20250422,
+    "str": "[img:info/250422_info_ichika.png:]"
+  },
+  {
+    "id": 37,
+    "version": 20250422,
+    "str": "[img:info/250501_info_cross_resonance.png:]"
+  },
+  {
+    "id": 38,
+    "version": 20250624,
+    "str": "[img:info/250626_info_generator6.png:]"
+  },
+  {
+    "id": 39,
+    "version": 20250624,
+    "str": "[img:info/250626_info_sumire.png:]"
+  },
+  {
+    "id": 40,
+    "version": 20250826,
+    "str": "[img:info/250828_info_sena.png:]"
+  },
+  {
+    "id": 41,
+    "version": 20250924,
+    "str": "[img:info/250926_info_cross_resonance.png:]"
+  },
+  {
+    "id": 42,
+    "version": 20250924,
+    "str": "[img:info/250929_info_regloss.png:]"
+  }
+] 

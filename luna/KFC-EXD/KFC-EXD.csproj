@@ -19,7 +19,7 @@
   </ItemGroup>
 	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)asphyxia\bin\Debug\net10.0\Modules\$(ProjectName).dll&quot;" />
+		<Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)luna\bin\Debug\net10.0\Modules\$(ProjectName).dll&quot;" />
 	</Target>
 
 </Project>
