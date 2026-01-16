@@ -1,4 +1,4 @@
-<h1 align="center">🎮 asphyxia-net</h1>
+<h1 align="center">🎮 Luna</h1>
 <div align="center">
   <img src="https://img.shields.io/badge/Language-C%23-brightgreen">
   <img src="https://img.shields.io/badge/Supports-KFC-brightgreen">
