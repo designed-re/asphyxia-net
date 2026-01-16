@@ -5,7 +5,7 @@
 <br/>
 This project inspired by <a href="https://github.com/asphyxia-core">asphyxia-core</a>
 <br/>
-deveploment paused for study
+
 </div>
 <br/>
 <details>
@@ -18,7 +18,7 @@ deveploment paused for study
     <tr>
         <td>Sound Voltex Exceed Gear</td>
         <td>6</td>
-        <td>KFC-2022-12-20</td>
+        <td>Final only (other versions may crash)</td>
     </tr>
   </table>
 </details>

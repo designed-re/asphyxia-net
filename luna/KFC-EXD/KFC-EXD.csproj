@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\eAmuseCore\eAmuseCore.csproj" />
-    <ProjectReference Include="..\Utils\asphyxia.Utils.csproj" />
+    <ProjectReference Include="..\luna.Utils\luna.Utils.csproj" />
   </ItemGroup>
 	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">

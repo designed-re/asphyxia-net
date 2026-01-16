@@ -30,7 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pomelo.EntityFrameworkCore.MySql\src\EFCore.MySql\EFCore.MySql.csproj" />
-    <ProjectReference Include="..\Utils\asphyxia.Utils.csproj" />
+    <ProjectReference Include="..\luna.Utils\luna.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>
