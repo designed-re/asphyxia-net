@@ -71,11 +71,9 @@ namespace luna.Controllers.Core
             }
             else return NotFound();
 
-            bool isAuthed;
-
             var fact = _context.Facilities.SingleOrDefault(x=> x.PCBId == pcbId.Value);
 
-            isAuthed = fact is not null;
+            var isAuthed = fact is not null || !_config.EnforcePCBId;
 
             XElement servicesElement = new XElement("services",
                 new XAttribute("expire", "600"),
@@ -103,7 +101,6 @@ namespace luna.Controllers.Core
 
             
             data.Document = new XDocument(new XElement("response", servicesElement));
-            Console.WriteLine(data.Document);
             return data;
         }
     }
