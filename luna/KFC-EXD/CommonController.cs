@@ -271,7 +271,7 @@ namespace KFC_EXD
                 new KS32("param_num_3", 0),
                 new KS32("param_num_4", 0),
                 new KS32("param_num_5", 0),
-                new KStr("param_str_1", $"[f:0] NOTIFICATION\nTHIS IS FREE SOFTWARE"),
+                new KStr("param_str_1", $"[f:0] NOTIFICATION\nTHIS IS FREE SOFTWARE\n{DateTime.Now:F}"),
                 new KStr("param_str_2", ""),
                 new KStr("param_str_3", ""),
                 new KStr("param_str_4", ""),

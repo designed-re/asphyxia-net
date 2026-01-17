@@ -4,6 +4,14 @@ using System.Xml.Linq;
 using MusicDB.Models;
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+if (!File.Exists("db.txt"))
+{
+    Console.WriteLine("Please enter connection string on db.txt");
+    Console.WriteLine("Press enter to exit");
+    Console.ReadLine();
+    Environment.Exit(0);
+}
+
 Console.WriteLine("Paste your music_db.xml location");
 string locate = Console.ReadLine();
 
