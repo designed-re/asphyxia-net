@@ -5,10 +5,10 @@
 <br/>
 This project inspired by <a href="https://github.com/asphyxia-core">asphyxia-core</a>
 <br/>
-1. edit appsettings.json (luna)
-2. run musicdb (edit connection string on source)
-3. input pcbid information on facility table
-4. play game
+1. edit appsettings.json (luna) <br/>
+2. run musicdb (edit connection string on source)<br/>
+3. input pcbid information on facility table<br/>
+4. play game<br/>
 </div>
 <br/>
 <details>
