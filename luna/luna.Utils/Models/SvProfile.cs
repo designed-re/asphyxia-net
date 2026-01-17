@@ -106,4 +106,6 @@ public partial class SvProfile
     public virtual ICollection<SvParam> SvParams { get; } = new List<SvParam>();
 
     public virtual ICollection<SvScore> SvScores { get; } = new List<SvScore>();
+
+    public virtual ICollection<SvCourseRecord> SvCourseRecords { get; } = new List<SvCourseRecord>();
 }

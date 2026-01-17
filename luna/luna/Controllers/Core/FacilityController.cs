@@ -6,12 +6,13 @@ using System.Xml.Linq;
 using luna.Models;
 using luna.Utils;
 using luna.Utils.Formatters;
+using Microsoft.Extensions.Options;
 
 namespace luna.Controllers.Core
 {
     [Route("core")]
     [ApiController]
-    public class FacilityController(AsphyxiaContext context) : ControllerBase
+    public class FacilityController(AsphyxiaContext context, IOptions<HostConfig> config) : ControllerBase
     {
         [HttpPost, XrpcCall("facility.get")]
         public ActionResult<EamuseXrpcData> Get([FromBody] EamuseXrpcData data)
@@ -23,10 +24,20 @@ namespace luna.Controllers.Core
 
             Facility? destFacility = context.Facilities.SingleOrDefault(x => x.PCBId == pcbid);
 
-            if (destFacility is null)
+            if (destFacility is null && config.Value.EnforcePCBId)
             {
                 data.Document = new XDocument(new XElement("response", new XAttribute("status", "400")));
                 return data;
+            }
+
+            if (destFacility is null)
+            {
+                destFacility = new Facility()
+                {
+                    FacilityId = "noid", Country = "JP", Region = "JP", Name = "GUEST", Type = 1, CompanyCode = "guest",
+                    CountryJName = "guest", CountryName = "guest", CustomerCode = "guest", RegionJName = "guest",
+                    RegionName = "guest"
+                };
             }
 
 

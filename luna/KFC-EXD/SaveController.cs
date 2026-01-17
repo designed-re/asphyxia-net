@@ -135,20 +135,46 @@ namespace KFC_EXD
             profile.MaxWeekChain++;
             //todo null debug 
 
+            var courseElement = gameElement.Element("course");
+            if (courseElement is not null)
+            {
+                if (int.TryParse(courseElement.Element("ssnid")?.Value, out int seriesId) &&
+                    int.TryParse(courseElement.Element("crsid")?.Value, out int courseId))
+                {
+                    int courseScore = int.Parse(courseElement.Element("sc")?.Value ?? "0");
+                    int courseClear = int.Parse(courseElement.Element("ct")?.Value ?? "0");
+                    int courseGrade = int.Parse(courseElement.Element("gr")?.Value ?? "0");
+                    int courseRate = int.Parse(courseElement.Element("ar")?.Value ?? "0");
 
-            // var course = gameElement.Element("course");
-            // if (course is not null)
-            // {
-            //     var sid = int.Parse(course.Element("ssnid").Value);
-            //     var cid= int.Parse(course.Element("crsid").Value);
-            //     var stype = int.Parse(course.Element("st").Value);
-            //     var kacId= course.Element("kac_id").Value;
-            //
-            //     if (null is not null)
-            //     {
-            //         _context.SvCourseRecords.Upsert(0)
-            //     }
-            // } TODO LATER
+                    var courseRecord = await _context.SvCourseRecords.SingleOrDefaultAsync(x =>
+                        x.Profile == profile.Id && x.SId == seriesId && x.CourseId == courseId);
+
+                    if (courseRecord is null)
+                    {
+                        _context.SvCourseRecords.Add(new()
+                        {
+                            Profile = profile.Id,
+                            SId = seriesId,
+                            CourseId = courseId,
+                            Version = 0,
+                            Score = courseScore,
+                            Clear = courseClear,
+                            Grade = courseGrade,
+                            Rate = courseRate,
+                            Count = 1
+                        });
+                    }
+                    else
+                    {
+                        courseRecord.Score = Math.Max(courseScore, courseRecord.Score);
+                        courseRecord.Clear = Math.Max(courseClear, courseRecord.Clear);
+                        courseRecord.Grade = Math.Max(courseGrade, courseRecord.Grade);
+                        courseRecord.Rate = Math.Max(courseRate, courseRecord.Rate);
+                        courseRecord.Count++;
+                        _context.SvCourseRecords.Update(courseRecord);
+                    }
+                }
+            }
 
             var items = gameElement.Element("item").Elements("info");
 
@@ -193,6 +219,82 @@ namespace KFC_EXD
             
             }       
             //todo save skill, arena, variant power
+
+            await _context.SaveChangesAsync();
+
+            gameElement = new("game", new XAttribute("status", 0));
+            responseElement.Add(gameElement);
+            data.Document = new(responseElement);
+            return data;
+        }
+
+        [HttpPost, XrpcCall("game.sv6_save_c")] //for course saving
+        public async Task<ActionResult<EamuseXrpcData>> SaveC([FromBody] EamuseXrpcData data)
+        {
+            XElement gameElement = data.Document.Element("call").Element("game");
+            XElement responseElement = new("response");
+
+            string refId = gameElement.Element("refid").Value;
+            Card? card = await _context.Cards.Include(x => x.SvProfile).SingleOrDefaultAsync(x => x.RefId == refId);
+
+            if (card is null)
+            {
+                gameElement = new("game", new XAttribute("status", 1));
+                responseElement.Add(gameElement);
+                data.Document = new(responseElement);
+                return data;
+            }
+
+            XElement? courseElement = gameElement.Element("course");
+            if (courseElement is null)
+            {
+                gameElement = new("game", new XAttribute("status", 1));
+                responseElement.Add(gameElement);
+                data.Document = new(responseElement);
+                return data;
+            }
+
+            if (!int.TryParse(courseElement.Element("ssnid")?.Value, out int seriesId) ||
+                !int.TryParse(courseElement.Element("crsid")?.Value, out int courseId))
+            {
+                gameElement = new("game", new XAttribute("status", 1));
+                responseElement.Add(gameElement);
+                data.Document = new(responseElement);
+                return data;
+            }
+
+            int score = int.Parse(courseElement.Element("sc")?.Value ?? "0");
+            int clear = int.Parse(courseElement.Element("ct")?.Value ?? "0");
+            int grade = int.Parse(courseElement.Element("gr")?.Value ?? "0");
+            int rate = int.Parse(courseElement.Element("ar")?.Value ?? "0");
+
+            var record = await _context.SvCourseRecords.SingleOrDefaultAsync(x =>
+                x.Profile == card.SvProfile.Id && x.SId == seriesId && x.CourseId == courseId);
+
+            if (record is null)
+            {
+                _context.SvCourseRecords.Add(new()
+                {
+                    Profile = card.SvProfile.Id,
+                    SId = seriesId,
+                    CourseId = courseId,
+                    Version = 0,
+                    Score = score,
+                    Clear = clear,
+                    Grade = grade,
+                    Rate = rate,
+                    Count = 1
+                });
+            }
+            else
+            {
+                record.Score = Math.Max(score, record.Score);
+                record.Clear = Math.Max(clear, record.Clear);
+                record.Grade = Math.Max(grade, record.Grade);
+                record.Rate = Math.Max(rate, record.Rate);
+                record.Count++;
+                _context.SvCourseRecords.Update(record);
+            }
 
             await _context.SaveChangesAsync();
 

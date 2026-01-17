@@ -37,6 +37,8 @@ public partial class AsphyxiaContext : DbContext
 
     public virtual DbSet<SvScore> SvScores { get; set; }
 
+    public virtual DbSet<SvCourseRecord> SvCourseRecords { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
     {
@@ -423,6 +425,51 @@ public partial class AsphyxiaContext : DbContext
                 .HasForeignKey(d => d.Profile)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_profile_to_profile(id)");
+        });
+
+        modelBuilder.Entity<SvCourseRecord>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("sv_course_records", tb => tb.HasComment("Data store(Course Records) for Sound Voltex"));
+
+            entity.HasIndex(e => e.Profile, "FK_course_profile_to_profile(id)");
+
+            entity.Property(e => e.Id)
+                .HasColumnType("int(11)")
+                .HasColumnName("id");
+            entity.Property(e => e.Profile)
+                .HasColumnType("int(11)")
+                .HasColumnName("profile");
+            entity.Property(e => e.SId)
+                .HasColumnType("int(11)")
+                .HasColumnName("series_id");
+            entity.Property(e => e.CourseId)
+                .HasColumnType("int(11)")
+                .HasColumnName("course_id");
+            entity.Property(e => e.Version)
+                .HasColumnType("int(11)")
+                .HasColumnName("version");
+            entity.Property(e => e.Score)
+                .HasColumnType("int(11)")
+                .HasColumnName("score");
+            entity.Property(e => e.Clear)
+                .HasColumnType("int(11)")
+                .HasColumnName("clear");
+            entity.Property(e => e.Grade)
+                .HasColumnType("int(11)")
+                .HasColumnName("grade");
+            entity.Property(e => e.Rate)
+                .HasColumnType("int(11)")
+                .HasColumnName("rate");
+            entity.Property(e => e.Count)
+                .HasColumnType("int(11)")
+                .HasColumnName("count");
+
+            entity.HasOne(d => d.ProfileNavigation).WithMany(p => p.SvCourseRecords)
+                .HasForeignKey(d => d.Profile)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_course_profile_to_profile(id)");
         });
 
         OnModelCreatingPartial(modelBuilder);
