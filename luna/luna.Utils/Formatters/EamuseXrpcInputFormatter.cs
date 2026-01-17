@@ -11,8 +11,9 @@ using eAmuseCore.Compression;
 using eAmuseCore.Crypto;
 using eAmuseCore.KBinXML;
 using System.Text;
+using luna.Utils.Formatters;
 
-namespace asphyxia.Utils.Formatters
+namespace luna.Utils.Formatters
 {
     public class EamuseXrpcInputFormatter : InputFormatter
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace asphyxia.Models;
+namespace luna.Models;
 
 public partial class Efmigrationshistory
 {

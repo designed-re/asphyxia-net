@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace asphyxia.Migrations
+namespace luna.Migrations
 {
     /// <inheritdoc />
     public partial class facilityId : Migration

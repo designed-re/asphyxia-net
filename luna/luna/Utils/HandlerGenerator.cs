@@ -1,6 +1,6 @@
-﻿using asphyxia.Models;
+﻿using luna.Models;
 
-namespace asphyxia.Utils
+namespace luna.Utils
 {
     public class HandlerGenerator
     {

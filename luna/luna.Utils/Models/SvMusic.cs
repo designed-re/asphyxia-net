@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace asphyxia.Models;
+namespace luna.Models;
 
 /// <summary>
 /// Data store(Music) for Sound Voltex

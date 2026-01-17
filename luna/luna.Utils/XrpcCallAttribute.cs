@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace asphyxia.Utils
+namespace luna.Utils
 {
     public class XrpcCallAttribute : Attribute
     {

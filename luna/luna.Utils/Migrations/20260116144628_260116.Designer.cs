@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using luna.Models;
@@ -12,8 +11,8 @@ using luna.Models;
 namespace luna.Migrations
 {
     [DbContext(typeof(AsphyxiaContext))]
-    [Migration("20260113140032_changeparams")]
-    partial class changeparams
+    [Migration("20260116144628_260116")]
+    partial class _260116
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,32 +20,27 @@ namespace luna.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .UseCollation("utf8mb4_general_ci")
-                .HasAnnotation("ProductVersion", "10.0.1")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("MySql:CharSet", "utf8mb4")
+                .HasAnnotation("ProductVersion", "10.0.2");
 
-            MySqlModelBuilderExtensions.HasCharSet(modelBuilder, "utf8mb4");
-            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
-            modelBuilder.Entity("asphyxia.Models.Card", b =>
+            modelBuilder.Entity("luna.Models.Card", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("CardId")
                         .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("char(16)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("card_id")
                         .IsFixedLength();
 
                     b.Property<string>("CardNo")
                         .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("char(16)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("card_no")
                         .IsFixedLength();
 
@@ -56,21 +50,21 @@ namespace luna.Migrations
 
                     b.Property<string>("PaseliSession")
                         .HasMaxLength(16)
-                        .HasColumnType("char(16)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("paseli_session")
                         .IsFixedLength();
 
                     b.Property<string>("Pass")
                         .IsRequired()
                         .HasMaxLength(4)
-                        .HasColumnType("char(4)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("pass")
                         .IsFixedLength();
 
                     b.Property<string>("RefId")
                         .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("char(16)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("ref_id")
                         .IsFixedLength()
                         .HasComment("same with dataid");
@@ -84,16 +78,16 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.Efmigrationshistory", b =>
+            modelBuilder.Entity("luna.Models.Efmigrationshistory", b =>
                 {
                     b.Property<string>("MigrationId")
                         .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ProductVersion")
                         .IsRequired()
                         .HasMaxLength(32)
-                        .HasColumnType("varchar(32)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("MigrationId")
                         .HasName("PRIMARY");
@@ -101,68 +95,66 @@ namespace luna.Migrations
                     b.ToTable("__efmigrationshistory", (string)null);
                 });
 
-            modelBuilder.Entity("asphyxia.Models.Facility", b =>
+            modelBuilder.Entity("luna.Models.Facility", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("CompanyCode")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("company_code");
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("country");
 
                     b.Property<string>("CountryJName")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("country_jname");
 
                     b.Property<string>("CountryName")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("country_name");
 
                     b.Property<string>("CustomerCode")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("customer_code");
 
                     b.Property<string>("FacilityId")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("facility_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.Property<string>("PCBId")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("pcb_id");
 
                     b.Property<string>("Region")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("region");
 
                     b.Property<string>("RegionJName")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("region_jname");
 
                     b.Property<string>("RegionName")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("region_name");
 
                     b.Property<int>("Type")
@@ -180,14 +172,12 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvItem", b =>
+            modelBuilder.Entity("luna.Models.SvItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
                         .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<uint>("ItemId")
                         .HasColumnType("int(10) unsigned")
@@ -216,41 +206,39 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvMusic", b =>
+            modelBuilder.Entity("luna.Models.SvMusic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Artist")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("artist");
 
                     b.Property<string>("ArtistYomigana")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("artist_yomigana");
 
                     b.Property<DateOnly>("Date")
-                        .HasColumnType("date")
+                        .HasColumnType("TEXT")
                         .HasColumnName("date");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("title");
 
                     b.Property<string>("TitleYomigana")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("title_yomigana");
 
                     b.HasKey("Id")
@@ -262,19 +250,17 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvParam", b =>
+            modelBuilder.Entity("luna.Models.SvParam", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Param")
                         .IsRequired()
                         .HasMaxLength(-1)
-                        .HasColumnType("longtext")
+                        .HasColumnType("TEXT")
                         .HasColumnName("param");
 
                     b.Property<uint>("ParamCount")
@@ -304,14 +290,12 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvProfile", b =>
+            modelBuilder.Entity("luna.Models.SvProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
                         .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<ushort>("AppealId")
                         .HasColumnType("smallint(5) unsigned")
@@ -348,7 +332,7 @@ namespace luna.Migrations
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("char(10)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("code")
                         .IsFixedLength();
 
@@ -394,7 +378,7 @@ namespace luna.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(8)
-                        .HasColumnType("varchar(8)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("kac_id")
                         .HasDefaultValueSql("'VOLTEX'");
 
@@ -422,7 +406,7 @@ namespace luna.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(8)
-                        .HasColumnType("varchar(8)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name")
                         .HasDefaultValueSql("'VOLTEX'");
 
@@ -511,14 +495,12 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvScore", b =>
+            modelBuilder.Entity("luna.Models.SvScore", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
                         .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ButtonRate")
                         .HasColumnType("int(11)")
@@ -573,9 +555,9 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvItem", b =>
+            modelBuilder.Entity("luna.Models.SvItem", b =>
                 {
-                    b.HasOne("asphyxia.Models.SvProfile", "ProfileNavigation")
+                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
                         .WithMany("SvItems")
                         .HasForeignKey("Profile")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -585,9 +567,9 @@ namespace luna.Migrations
                     b.Navigation("ProfileNavigation");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvParam", b =>
+            modelBuilder.Entity("luna.Models.SvParam", b =>
                 {
-                    b.HasOne("asphyxia.Models.SvProfile", "ProfileNavigation")
+                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
                         .WithMany("SvParams")
                         .HasForeignKey("Profile")
                         .IsRequired()
@@ -596,11 +578,11 @@ namespace luna.Migrations
                     b.Navigation("ProfileNavigation");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvProfile", b =>
+            modelBuilder.Entity("luna.Models.SvProfile", b =>
                 {
-                    b.HasOne("asphyxia.Models.Card", "CardNavigation")
+                    b.HasOne("luna.Models.Card", "CardNavigation")
                         .WithOne("SvProfile")
-                        .HasForeignKey("asphyxia.Models.SvProfile", "Card")
+                        .HasForeignKey("luna.Models.SvProfile", "Card")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_card_to_card(id)");
@@ -608,15 +590,15 @@ namespace luna.Migrations
                     b.Navigation("CardNavigation");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvScore", b =>
+            modelBuilder.Entity("luna.Models.SvScore", b =>
                 {
-                    b.HasOne("asphyxia.Models.SvMusic", "Music")
+                    b.HasOne("luna.Models.SvMusic", "Music")
                         .WithMany("SvScores")
                         .HasForeignKey("MusicId")
                         .IsRequired()
                         .HasConstraintName("FK_musicid_to_music(id)");
 
-                    b.HasOne("asphyxia.Models.SvProfile", "ProfileNavigation")
+                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
                         .WithMany("SvScores")
                         .HasForeignKey("Profile")
                         .IsRequired()
@@ -627,17 +609,17 @@ namespace luna.Migrations
                     b.Navigation("ProfileNavigation");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.Card", b =>
+            modelBuilder.Entity("luna.Models.Card", b =>
                 {
                     b.Navigation("SvProfile");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvMusic", b =>
+            modelBuilder.Entity("luna.Models.SvMusic", b =>
                 {
                     b.Navigation("SvScores");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvProfile", b =>
+            modelBuilder.Entity("luna.Models.SvProfile", b =>
                 {
                     b.Navigation("SvItems");
 

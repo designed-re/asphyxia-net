@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using asphyxia.Models;
+using luna.Models;
 
 #nullable disable
 
-namespace asphyxia.Migrations
+namespace luna.Migrations
 {
     [DbContext(typeof(AsphyxiaContext))]
     [Migration("20251230132642_facilityId")]

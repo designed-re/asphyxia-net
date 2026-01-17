@@ -1,7 +1,7 @@
-﻿using asphyxia.Models;
+﻿using luna.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace asphyxia.Utils
+namespace luna.Utils
 {
     public class CodeGenerator
     {
