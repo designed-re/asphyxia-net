@@ -26,10 +26,10 @@ jobs:
       run: alias copy="cp"
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: /home/runner/work/asphyxia-net/asphyxia-net/asphyxia
+      working-directory: /home/runner/work/luna/luna/luna
     - name: Build
       run: dotnet build --no-restore
-      working-directory: /home/runner/work/asphyxia-net/asphyxia-net/asphyxia
+      working-directory: /home/runner/work/luna/luna/luna
     - name: Test
       run: dotnet test --no-build --verbosity normal
-      working-directory: /home/runner/work/asphyxia-net/asphyxia-net/asphyxia
+      working-directory: /home/runner/work/luna/luna/luna
