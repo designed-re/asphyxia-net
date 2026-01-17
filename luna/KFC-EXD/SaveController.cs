@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using eAmuseCore.KBinXML;
 using luna.Models;
 using luna.Utils;
 using luna.Utils.Formatters;
@@ -138,23 +139,23 @@ namespace KFC_EXD
             var courseElement = gameElement.Element("course");
             if (courseElement is not null)
             {
-                if (int.TryParse(courseElement.Element("ssnid")?.Value, out int seriesId) &&
-                    int.TryParse(courseElement.Element("crsid")?.Value, out int courseId))
+                if (short.TryParse(courseElement.Element("ssnid")?.Value, out short seriesId) &&
+                    short.TryParse(courseElement.Element("crsid")?.Value, out short courseId))
                 {
                     int courseScore = int.Parse(courseElement.Element("sc")?.Value ?? "0");
-                    int courseClear = int.Parse(courseElement.Element("ct")?.Value ?? "0");
-                    int courseGrade = int.Parse(courseElement.Element("gr")?.Value ?? "0");
-                    int courseRate = int.Parse(courseElement.Element("ar")?.Value ?? "0");
+                    short courseClear = short.Parse(courseElement.Element("ct")?.Value ?? "0");
+                    short courseGrade = short.Parse(courseElement.Element("gr")?.Value ?? "0");
+                    short courseRate = short.Parse(courseElement.Element("ar")?.Value ?? "0");
 
                     var courseRecord = await _context.SvCourseRecords.SingleOrDefaultAsync(x =>
-                        x.Profile == profile.Id && x.SId == seriesId && x.CourseId == courseId);
+                        x.Profile == profile.Id && x.SeriesId == seriesId && x.CourseId == courseId);
 
                     if (courseRecord is null)
                     {
                         _context.SvCourseRecords.Add(new()
                         {
                             Profile = profile.Id,
-                            SId = seriesId,
+                            SeriesId = seriesId,
                             CourseId = courseId,
                             Version = 0,
                             Score = courseScore,
@@ -184,7 +185,7 @@ namespace KFC_EXD
                 var itemType = byte.Parse(item.Element("type").Value);
                 var param = uint.Parse(item.Element("param").Value);
 
-                var record = await _context.SvItems.AsNoTracking().SingleOrDefaultAsync(x =>x.Profile == profile.Id && x.ItemId == id);// && x.Type == itemType);
+                var record = await _context.SvItems.AsNoTracking().SingleOrDefaultAsync(x =>x.Profile == profile.Id && x.ItemId == id && x.Type == itemType);
 
                 if (record is null)
                 {
@@ -254,8 +255,8 @@ namespace KFC_EXD
                 return data;
             }
 
-            if (!int.TryParse(courseElement.Element("ssnid")?.Value, out int seriesId) ||
-                !int.TryParse(courseElement.Element("crsid")?.Value, out int courseId))
+            if (!short.TryParse(courseElement.Element("ssnid")?.Value, out short seriesId) ||
+                !short.TryParse(courseElement.Element("crsid")?.Value, out short courseId))
             {
                 gameElement = new("game", new XAttribute("status", 1));
                 responseElement.Add(gameElement);
@@ -264,19 +265,19 @@ namespace KFC_EXD
             }
 
             int score = int.Parse(courseElement.Element("sc")?.Value ?? "0");
-            int clear = int.Parse(courseElement.Element("ct")?.Value ?? "0");
-            int grade = int.Parse(courseElement.Element("gr")?.Value ?? "0");
-            int rate = int.Parse(courseElement.Element("ar")?.Value ?? "0");
+            short clear = short.Parse(courseElement.Element("ct")?.Value ?? "0");
+            short grade = short.Parse(courseElement.Element("gr")?.Value ?? "0");
+            short rate = short.Parse(courseElement.Element("ar")?.Value ?? "0");
 
             var record = await _context.SvCourseRecords.SingleOrDefaultAsync(x =>
-                x.Profile == card.SvProfile.Id && x.SId == seriesId && x.CourseId == courseId);
+                x.Profile == card.SvProfile.Id && x.SeriesId == seriesId && x.CourseId == courseId);
 
             if (record is null)
             {
                 _context.SvCourseRecords.Add(new()
                 {
                     Profile = card.SvProfile.Id,
-                    SId = seriesId,
+                    SeriesId = seriesId,
                     CourseId = courseId,
                     Version = 0,
                     Score = score,
@@ -300,6 +301,110 @@ namespace KFC_EXD
 
             gameElement = new("game", new XAttribute("status", 0));
             responseElement.Add(gameElement);
+            data.Document = new(responseElement);
+            return data;
+        }
+
+        [HttpPost, XrpcCall("game.sv6_save_valgene")] //for valgene item saving
+        public async Task<ActionResult<EamuseXrpcData>> SaveValgene([FromBody] EamuseXrpcData data)
+        {
+            XElement gameElement = data.Document.Element("call").Element("game");
+            XElement responseElement = new("response");
+
+            string refId = gameElement.Element("refid").Value;
+            Card? card = await _context.Cards.Include(x => x.SvProfile).SingleOrDefaultAsync(x => x.RefId == refId);
+
+            if (card is null)
+            {
+                gameElement = new("game", new XAttribute("status", 1));
+                responseElement.Add(gameElement);
+                data.Document = new(responseElement);
+                return data;
+            }
+
+            var itemElements = gameElement.Element("item")?.Elements("info");
+            if (itemElements is null)
+            {
+                gameElement = new("game", new XAttribute("status", 1));
+                responseElement.Add(gameElement);
+                data.Document = new(responseElement);
+                return data;
+            }
+
+            bool useTicket = gameElement.Element("use_ticket") is not null && 
+                           gameElement.Element("use_ticket").Value == "1";
+
+            var itemsToAdd = new List<(int type, uint id, uint param)>();
+
+            foreach (var itemElement in itemElements)
+            {
+                int type = int.Parse(itemElement.Element("type")?.Value ?? "0");
+                int id = int.Parse(itemElement.Element("id")?.Value ?? "0");
+                uint param = uint.Parse(itemElement.Element("param")?.Value ?? "0");
+
+                if (type == 17)
+                {
+                    // Special handling for stamp items: create 4 entries
+                    for (int stampId = (id * 4) - 3; stampId <= (id * 4); stampId++)
+                    {
+                        itemsToAdd.Add((type, Convert.ToUInt32(stampId), param));
+                    }
+                }
+                else
+                {
+                    itemsToAdd.Add((type, Convert.ToUInt32(id), param));
+                }
+            }
+
+            foreach (var (type, id, param) in itemsToAdd)
+            {
+                var item = await _context.SvItems.SingleOrDefaultAsync(x =>
+                    x.Profile == card.SvProfile.Id && x.ItemId == id && x.Type == type);
+
+                if (item is null)
+                {
+                    _context.SvItems.Add(new()
+                    {
+                        ItemId = id,
+                        Param = param,
+                        Type = (byte)type,
+                        Profile = card.SvProfile.Id
+                    });
+                }
+                else
+                {
+                    item.Param = param;
+                    _context.SvItems.Update(item);
+                }
+            }
+
+            if (useTicket)
+            {
+                var ticket = await _context.ValgeneTickets.SingleOrDefaultAsync(x =>
+                    x.Profile == card.SvProfile.Id);
+
+                if (ticket is not null)
+                {
+                    ticket.TicketNum--;
+                    _context.ValgeneTickets.Update(ticket);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            var resultTicket = await _context.ValgeneTickets.SingleOrDefaultAsync(x =>
+                x.Profile == card.SvProfile.Id);
+
+            var resultElement = new XElement("game", new XAttribute("status", 0),
+                new KS32("result", 1));
+
+            if (resultTicket is not null)
+            {
+                resultElement.Add(new KS32("ticket_num", resultTicket.TicketNum));
+                resultElement.Add(new KU64("limit_date", resultTicket.LimitDate));
+            }
+
+            responseElement.Add(resultElement);
             data.Document = new(responseElement);
             return data;
         }

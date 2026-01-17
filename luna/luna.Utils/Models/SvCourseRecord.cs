@@ -12,21 +12,21 @@ public partial class SvCourseRecord
 
     public int Profile { get; set; }
 
-    public int SId { get; set; }
+    public short SeriesId { get; set; }
 
-    public int CourseId { get; set; }
+    public short CourseId { get; set; }
 
     public int Version { get; set; }
 
     public int Score { get; set; }
 
-    public int Clear { get; set; }
+    public short Clear { get; set; }
 
-    public int Grade { get; set; }
+    public short Grade { get; set; }
 
-    public int Rate { get; set; }
+    public short Rate { get; set; }
 
-    public int Count { get; set; }
+    public short Count { get; set; }
 
     public virtual SvProfile ProfileNavigation { get; set; } = null!;
 }

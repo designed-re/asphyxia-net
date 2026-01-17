@@ -34,6 +34,11 @@ namespace KFC_EXD
 
             var param = context.SvParams.Where(x => x.Profile == card.SvProfile.Id).AsEnumerable();
 
+            var courses = context.SvCourseRecords.Where(x => x.Profile == card.SvProfile.Id).AsEnumerable();
+
+            var valgeneTicket = await context.ValgeneTickets.SingleOrDefaultAsync(x => 
+                x.Profile == card.SvProfile.Id);
+
             data.Document = new XDocument(new XElement("response",
                 new XElement("game", new XAttribute("status", 0),
                     new KU8("result", 0),
@@ -68,7 +73,19 @@ namespace KFC_EXD
                     new XElement("eaappli", new KS8("relation", 1)),
                     new XElement("cloud", new KS8("relation", 1)),
                     new KS32("block_no", card.SvProfile.Pcb),
-                    new XElement("skill"),
+                    new XElement("skill", courses.Select(x => 
+                        new XElement("course",
+                            new KS16("ssnid", x.SeriesId),
+                            new KS16("crsid", x.CourseId),
+                            new KS16("st", 0),
+                            new KS32("sc", x.Score),
+                            new KS32("ex", 0),
+                            new KS16("ct", x.Clear),
+                            new KS16("gr", x.Grade),
+                            new KS16("ar", x.Rate),
+                            new KS16("cnt", x.Count)
+                        )
+                    )),
                     new XElement("item", items.Select(x=> new XElement("info", new KU8("type", x.Type), new KU32("id", x.ItemId), new KU32("param", x.Param)))),
                     new XElement("param", param.Select(x=> new XElement("info", new KS32("type", x.Type), new KS32("id", x.ParamId), new KS32("param", x.Param.Split(' ').Select(int.Parse).ToArray())))),
                     new KU32("play_count", card.SvProfile.PlayCount),
@@ -79,7 +96,11 @@ namespace KFC_EXD
                     new KU32("week_count", card.SvProfile.WeekCount),
                     new KU32("week_play_count", card.SvProfile.WeekPlayCount),
                     new KU32("week_chain", card.SvProfile.WeekChain),
-                    new KU32("max_week_chain", card.SvProfile.MaxWeekChain)
+                    new KU32("max_week_chain", card.SvProfile.MaxWeekChain),
+                    valgeneTicket is not null ? new XElement("valgene_ticket",
+                        new KS32("ticket_num", valgeneTicket.TicketNum),
+                        new KU64("limit_date", valgeneTicket.LimitDate)
+                    ) : new XElement("valgene_ticket")
                 )));
             return data;
         }

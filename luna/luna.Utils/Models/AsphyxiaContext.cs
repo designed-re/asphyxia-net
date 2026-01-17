@@ -39,6 +39,8 @@ public partial class AsphyxiaContext : DbContext
 
     public virtual DbSet<SvCourseRecord> SvCourseRecords { get; set; }
 
+    public virtual DbSet<ValgeneTicket> ValgeneTickets { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
     {
@@ -441,7 +443,7 @@ public partial class AsphyxiaContext : DbContext
             entity.Property(e => e.Profile)
                 .HasColumnType("int(11)")
                 .HasColumnName("profile");
-            entity.Property(e => e.SId)
+            entity.Property(e => e.SeriesId)
                 .HasColumnType("int(11)")
                 .HasColumnName("series_id");
             entity.Property(e => e.CourseId)
@@ -470,6 +472,33 @@ public partial class AsphyxiaContext : DbContext
                 .HasForeignKey(d => d.Profile)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_course_profile_to_profile(id)");
+        });
+
+        modelBuilder.Entity<ValgeneTicket>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("sv_valgene_tickets", tb => tb.HasComment("Data store(Valgene Tickets) for Sound Voltex"));
+
+            entity.HasIndex(e => e.Profile, "FK_valgene_profile_to_profile(id)");
+
+            entity.Property(e => e.Id)
+                .HasColumnType("int(11)")
+                .HasColumnName("id");
+            entity.Property(e => e.Profile)
+                .HasColumnType("int(11)")
+                .HasColumnName("profile");
+            entity.Property(e => e.TicketNum)
+                .HasColumnType("int(11)")
+                .HasColumnName("ticket_num");
+            entity.Property(e => e.LimitDate)
+                .HasColumnType("bigint(20) unsigned")
+                .HasColumnName("limit_date");
+
+            entity.HasOne(d => d.ProfileNavigation).WithMany(p => p.ValgeneTickets)
+                .HasForeignKey(d => d.Profile)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_valgene_profile_to_profile(id)");
         });
 
         OnModelCreatingPartial(modelBuilder);
