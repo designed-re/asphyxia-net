@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
-namespace asphyxia.Models;
+namespace luna.Models;
 
 public partial class AsphyxiaContext : DbContext
 {
@@ -10,9 +11,15 @@ public partial class AsphyxiaContext : DbContext
     {
     }
 
+    private readonly IConfigurationRoot _config;
+    // public AsphyxiaContext(IConfigurationRoot config)
+    // {
+    //     _config = config;
+    // }
+
     public AsphyxiaContext(DbContextOptions<AsphyxiaContext> options)
         : base(options)
-    {
+    {   
     }
 
     public virtual DbSet<Card> Cards { get; set; }
@@ -33,7 +40,7 @@ public partial class AsphyxiaContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
     {
-        optionsBuilder.UseMySql("server=localhost;database=asphyxia;user id=asphyxia;password=rdgn", new MariaDbServerVersion("12.1.2-mariadb"));
+        
     }
 
 

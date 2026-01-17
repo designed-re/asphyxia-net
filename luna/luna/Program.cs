@@ -1,11 +1,11 @@
-using asphyxia;
-using asphyxia.Models;
-using asphyxia.Utils;
+using luna;
+using luna.Models;
+using luna.Utils;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Reflection;
-using asphyxia.Utils.Formatters;
+using luna.Utils.Formatters;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
@@ -26,9 +26,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.Configure<HostConfig>(builder.Configuration.GetSection("asphyxia.host"));
+builder.Services.Configure<HostConfig>(builder.Configuration.GetSection("luna.host"));
 builder.Services.AddDbContext<AsphyxiaContext>(options =>
 {
+        options.UseMySql(config.GetSection("ea.host")["mariadb_connstr"],
+            new MariaDbServerVersion("12.1.2-mariadb"));
+    
     options.EnableSensitiveDataLogging();
 });
 builder.Services.AddMvc(options =>
@@ -41,7 +44,8 @@ builder.Services.AddMvc(options =>
 });
 
 /* WebHost configuration */
-builder.WebHost.UseUrls(config.GetSection("asphyxia.host").GetValue<string>("host_url") ?? "http://+:8083");
+builder.WebHost.UseUrls(config.GetSection("ea.host").GetValue<string>("host_url") ?? "http://+:8083");
+builder.Services.AddSingleton(config);
 
 
 var app = builder.Build();

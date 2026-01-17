@@ -1,11 +1,14 @@
-<h1 align="center">🎮 Luna</h1>
+<h1 align="center">🎮 luna</h1>
 <div align="center">
   <img src="https://img.shields.io/badge/Language-C%23-brightgreen">
   <img src="https://img.shields.io/badge/Supports-KFC-brightgreen">
 <br/>
 This project inspired by <a href="https://github.com/asphyxia-core">asphyxia-core</a>
 <br/>
-
+1. edit appsettings.json (luna)
+2. run musicdb (edit connection string on source)
+3. input pcbid information on facility table
+4. play game
 </div>
 <br/>
 <details>

@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
 using System.Xml.Linq;
-using asphyxia.Models;
-using asphyxia.Utils;
+using luna.Models;
+using luna.Utils;
 using Microsoft.EntityFrameworkCore;
-using ByteArrayHelper = asphyxia.Helpers.ByteArrayHelper;
-using asphyxia.Utils.Formatters;
+using ByteArrayHelper = luna.Helpers.ByteArrayHelper;
+using luna.Utils.Formatters;
 
-namespace asphyxia.Controllers.Core
+namespace luna.Controllers.Core
 {
     [Route("core")]
     [ApiController]

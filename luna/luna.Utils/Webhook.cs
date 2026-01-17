@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Discord.Webhook;
 
-namespace asphyxia.Utils
+namespace luna.Utils
 {
     public class Webhook
     {

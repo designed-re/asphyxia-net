@@ -12,8 +12,8 @@ using luna.Models;
 namespace luna.Migrations
 {
     [DbContext(typeof(AsphyxiaContext))]
-    [Migration("20260113140032_changeparams")]
-    partial class changeparams
+    [Migration("20260116145544_260116-1")]
+    partial class _2601161
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,13 +21,13 @@ namespace luna.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .UseCollation("utf8mb4_general_ci")
-                .HasAnnotation("ProductVersion", "10.0.1")
+                .HasAnnotation("ProductVersion", "10.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.HasCharSet(modelBuilder, "utf8mb4");
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("asphyxia.Models.Card", b =>
+            modelBuilder.Entity("luna.Models.Card", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,7 +84,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.Efmigrationshistory", b =>
+            modelBuilder.Entity("luna.Models.Efmigrationshistory", b =>
                 {
                     b.Property<string>("MigrationId")
                         .HasMaxLength(150)
@@ -101,7 +101,7 @@ namespace luna.Migrations
                     b.ToTable("__efmigrationshistory", (string)null);
                 });
 
-            modelBuilder.Entity("asphyxia.Models.Facility", b =>
+            modelBuilder.Entity("luna.Models.Facility", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -180,7 +180,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvItem", b =>
+            modelBuilder.Entity("luna.Models.SvItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -216,7 +216,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvMusic", b =>
+            modelBuilder.Entity("luna.Models.SvMusic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -262,7 +262,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvParam", b =>
+            modelBuilder.Entity("luna.Models.SvParam", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -304,7 +304,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvProfile", b =>
+            modelBuilder.Entity("luna.Models.SvProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -511,7 +511,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvScore", b =>
+            modelBuilder.Entity("luna.Models.SvScore", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -573,9 +573,9 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvItem", b =>
+            modelBuilder.Entity("luna.Models.SvItem", b =>
                 {
-                    b.HasOne("asphyxia.Models.SvProfile", "ProfileNavigation")
+                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
                         .WithMany("SvItems")
                         .HasForeignKey("Profile")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -585,9 +585,9 @@ namespace luna.Migrations
                     b.Navigation("ProfileNavigation");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvParam", b =>
+            modelBuilder.Entity("luna.Models.SvParam", b =>
                 {
-                    b.HasOne("asphyxia.Models.SvProfile", "ProfileNavigation")
+                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
                         .WithMany("SvParams")
                         .HasForeignKey("Profile")
                         .IsRequired()
@@ -596,11 +596,11 @@ namespace luna.Migrations
                     b.Navigation("ProfileNavigation");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvProfile", b =>
+            modelBuilder.Entity("luna.Models.SvProfile", b =>
                 {
-                    b.HasOne("asphyxia.Models.Card", "CardNavigation")
+                    b.HasOne("luna.Models.Card", "CardNavigation")
                         .WithOne("SvProfile")
-                        .HasForeignKey("asphyxia.Models.SvProfile", "Card")
+                        .HasForeignKey("luna.Models.SvProfile", "Card")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_card_to_card(id)");
@@ -608,15 +608,15 @@ namespace luna.Migrations
                     b.Navigation("CardNavigation");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvScore", b =>
+            modelBuilder.Entity("luna.Models.SvScore", b =>
                 {
-                    b.HasOne("asphyxia.Models.SvMusic", "Music")
+                    b.HasOne("luna.Models.SvMusic", "Music")
                         .WithMany("SvScores")
                         .HasForeignKey("MusicId")
                         .IsRequired()
                         .HasConstraintName("FK_musicid_to_music(id)");
 
-                    b.HasOne("asphyxia.Models.SvProfile", "ProfileNavigation")
+                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
                         .WithMany("SvScores")
                         .HasForeignKey("Profile")
                         .IsRequired()
@@ -627,17 +627,17 @@ namespace luna.Migrations
                     b.Navigation("ProfileNavigation");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.Card", b =>
+            modelBuilder.Entity("luna.Models.Card", b =>
                 {
                     b.Navigation("SvProfile");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvMusic", b =>
+            modelBuilder.Entity("luna.Models.SvMusic", b =>
                 {
                     b.Navigation("SvScores");
                 });
 
-            modelBuilder.Entity("asphyxia.Models.SvProfile", b =>
+            modelBuilder.Entity("luna.Models.SvProfile", b =>
                 {
                     b.Navigation("SvItems");
 

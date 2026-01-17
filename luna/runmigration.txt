@@ -1,2 +1,2 @@
-dotnet ef migrations add changeparams --project Utils --startup-project asphyxia
-dotnet ef database update --project Utils --startup-project asphyxia
+dotnet ef migrations add changeparams --project luna.Utils --startup-project luna
+dotnet ef database update --project luna.Utils --startup-project luna

@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using eAmuseCore.Compression;
 using eAmuseCore.Crypto;
 using eAmuseCore.KBinXML;
+using luna.Utils.Formatters;
 
-namespace asphyxia.Utils.Formatters
+namespace luna.Utils.Formatters
 {
     public class EamuseXrpcOutputFormatter : OutputFormatter
     {

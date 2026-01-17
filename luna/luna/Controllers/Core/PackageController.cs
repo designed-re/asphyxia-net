@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
-using asphyxia.Utils;
-using asphyxia.Utils.Formatters;
+using luna.Utils;
+using luna.Utils.Formatters;
 
-namespace asphyxia.Controllers.Core
+namespace luna.Controllers.Core
 {
     [Route("core")]
     [ApiController]

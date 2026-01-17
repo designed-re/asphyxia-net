@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace asphyxia.Migrations
+namespace luna.Migrations
 {
     /// <inheritdoc />
     public partial class changeparams : Migration

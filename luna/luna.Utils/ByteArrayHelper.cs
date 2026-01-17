@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace asphyxia.Utils
+namespace luna.Utils
 {
     public static class ByteArrayHelper
     {

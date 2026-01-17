@@ -1,13 +1,17 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace asphyxia
+namespace luna
 {
     public class HostConfig
     {
         [JsonPropertyName("host_url")]
-        public required string HostUrl { get; set; }
+        public static string HostUrl { get; set; }
 
         [JsonPropertyName("keepalive")]
-        public required string KeepAlive { get; set; }
+        public static string KeepAlive { get; set; }
+
+
+        [JsonPropertyName("mariadb_connstr")]
+        public static string MariaDbConnectString { get; set; }
     }
 }
