@@ -34,7 +34,7 @@ namespace luna.Controllers.Core
             {
                 destFacility = new Facility()
                 {
-                    FacilityId = "noid", Country = "JP", Region = "JP", Name = "GUEST", Type = 1, CompanyCode = "guest",
+                    FacilityId = "guest", Country = "JP", Region = "JP", Name = "GUEST", Type = 1, CompanyCode = "guest",
                     CountryJName = "guest", CountryName = "guest", CustomerCode = "guest", RegionJName = "guest",
                     RegionName = "guest"
                 };
@@ -59,7 +59,7 @@ namespace luna.Controllers.Core
             new KU8("accuracy", 0)
                 ),
             new XElement("line",
-                new KStr("id", "FACTORY"),
+                new KStr("id", "LIGHTSPEED"),
                 new KU8("class", 0)
             ),
             new XElement("portfw",
