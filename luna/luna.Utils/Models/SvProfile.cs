@@ -109,5 +109,7 @@ public partial class SvProfile
 
     public virtual ICollection<SvCourseRecord> SvCourseRecords { get; } = new List<SvCourseRecord>();
 
-    public virtual ICollection<ValgeneTicket> ValgeneTickets { get; } = new List<ValgeneTicket>();
+    public virtual ICollection<SvValgeneTicket> SvValgeneTickets { get; } = new List<SvValgeneTicket>();
+
+    public virtual ICollection<SvMatchmaker> SvMatchmakers { get; } = new List<SvMatchmaker>();
 }

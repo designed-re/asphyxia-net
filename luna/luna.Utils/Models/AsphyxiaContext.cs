@@ -39,7 +39,9 @@ public partial class AsphyxiaContext : DbContext
 
     public virtual DbSet<SvCourseRecord> SvCourseRecords { get; set; }
 
-    public virtual DbSet<ValgeneTicket> ValgeneTickets { get; set; }
+    public virtual DbSet<SvValgeneTicket> SvValgeneTickets { get; set; }
+
+    public virtual DbSet<SvMatchmaker> SvMatchmakers { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -474,7 +476,7 @@ public partial class AsphyxiaContext : DbContext
                 .HasConstraintName("FK_course_profile_to_profile(id)");
         });
 
-        modelBuilder.Entity<ValgeneTicket>(entity =>
+        modelBuilder.Entity<SvValgeneTicket>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
@@ -495,10 +497,63 @@ public partial class AsphyxiaContext : DbContext
                 .HasColumnType("bigint(20) unsigned")
                 .HasColumnName("limit_date");
 
-            entity.HasOne(d => d.ProfileNavigation).WithMany(p => p.ValgeneTickets)
+            entity.HasOne(d => d.ProfileNavigation).WithMany(p => p.SvValgeneTickets)
                 .HasForeignKey(d => d.Profile)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_valgene_profile_to_profile(id)");
+        });
+
+        modelBuilder.Entity<SvMatchmaker>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("sv_matchmakers", tb => tb.HasComment("Data store(Matchmaker) for Sound Voltex global matching"));
+
+            entity.HasIndex(e => new { e.Version, e.Timestamp }, "idx_version_timestamp");
+            entity.HasIndex(e => new { e.Version, e.CVersion, e.Filter, e.Claim, e.EntryId }, "idx_matchmaker_search");
+
+            entity.Property(e => e.Id)
+                .HasColumnType("int(11)")
+                .HasColumnName("id");
+            entity.Property(e => e.Version)
+                .HasColumnType("int(11)")
+                .HasColumnName("version");
+            entity.Property(e => e.Timestamp)
+                .HasColumnType("bigint(20)")
+                .HasColumnName("timestamp");
+            entity.Property(e => e.CVersion)
+                .HasColumnType("int(11)")
+                .HasColumnName("c_version");
+            entity.Property(e => e.PlayerNum)
+                .HasColumnType("int(11)")
+                .HasColumnName("player_num");
+            entity.Property(e => e.PlayerRemaining)
+                .HasColumnType("int(11)")
+                .HasColumnName("player_remaining");
+            entity.Property(e => e.Filter)
+                .HasColumnType("int(11)")
+                .HasColumnName("filter");
+            entity.Property(e => e.MusicId)
+                .HasColumnType("int(11)")
+                .HasColumnName("music_id");
+            entity.Property(e => e.Seconds)
+                .HasColumnType("int(11)")
+                .HasColumnName("seconds");
+            entity.Property(e => e.Port)
+                .HasColumnType("int(11)")
+                .HasColumnName("port");
+            entity.Property(e => e.GlobalIp)
+                .HasMaxLength(15)
+                .HasColumnName("global_ip");
+            entity.Property(e => e.LocalIp)
+                .HasMaxLength(15)
+                .HasColumnName("local_ip");
+            entity.Property(e => e.Claim)
+                .HasColumnType("int(11)")
+                .HasColumnName("claim");
+            entity.Property(e => e.EntryId)
+                .HasColumnType("int(11)")
+                .HasColumnName("entry_id");
         });
 
         OnModelCreatingPartial(modelBuilder);

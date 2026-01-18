@@ -380,19 +380,19 @@ namespace KFC_EXD
 
             if (useTicket)
             {
-                var ticket = await _context.ValgeneTickets.SingleOrDefaultAsync(x =>
+                var ticket = await _context.SvValgeneTickets.SingleOrDefaultAsync(x =>
                     x.Profile == card.SvProfile.Id);
 
                 if (ticket is not null)
                 {
                     ticket.TicketNum--;
-                    _context.ValgeneTickets.Update(ticket);
+                    _context.SvValgeneTickets.Update(ticket);
                 }
             }
 
             await _context.SaveChangesAsync();
 
-            var resultTicket = await _context.ValgeneTickets.SingleOrDefaultAsync(x =>
+            var resultTicket = await _context.SvValgeneTickets.SingleOrDefaultAsync(x =>
                 x.Profile == card.SvProfile.Id);
 
             var resultElement = new XElement("game", new XAttribute("status", 0),

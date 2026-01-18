@@ -6,7 +6,7 @@ namespace luna.Models;
 /// <summary>
 /// Data store(Valgene Ticket) for Sound Voltex
 /// </summary>
-public partial class ValgeneTicket
+public partial class SvValgeneTicket
 {
     public int Id { get; set; }
 

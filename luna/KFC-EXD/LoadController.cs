@@ -36,7 +36,7 @@ namespace KFC_EXD
 
             var courses = context.SvCourseRecords.Where(x => x.Profile == card.SvProfile.Id).AsEnumerable();
 
-            var valgeneTicket = await context.ValgeneTickets.SingleOrDefaultAsync(x => 
+            var valgeneTicket = await context.SvValgeneTickets.SingleOrDefaultAsync(x => 
                 x.Profile == card.SvProfile.Id);
 
             data.Document = new XDocument(new XElement("response",

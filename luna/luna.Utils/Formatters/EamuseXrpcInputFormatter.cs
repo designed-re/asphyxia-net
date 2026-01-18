@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.IO;
-using System.Xml.Linq;
-
-using Microsoft.AspNetCore.Mvc.Formatters;
-
 using eAmuseCore.Compression;
 using eAmuseCore.Crypto;
 using eAmuseCore.KBinXML;
-using System.Text;
+using KbinXml.Net;
 using luna.Utils.Formatters;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace luna.Utils.Formatters
 {
@@ -101,11 +100,13 @@ namespace luna.Utils.Formatters
             if (data == null)
                 return await InputFormatterResult.FailureAsync();
 
-            KBinXML result = await Task.Run(() =>
+            XDocument result = await Task.Run(() =>
             {
                 try
                 {
-                    return new KBinXML(data);
+                    XDocument linqXml = KbinConverter.ReadXmlLinq(data);
+                    return linqXml;
+                    // return new KBinXML(data);
                 }
                 catch (Exception)
                 {
@@ -124,7 +125,7 @@ namespace luna.Utils.Formatters
             return await InputFormatterResult.SuccessAsync(new EamuseXrpcData()
             {
                 Document = result.Document,
-                Encoding = result.BinEncoding,
+                Encoding = Encoding.GetEncoding("SHIFT-JIS"),
                 EamuseInfo = eAmuseInfo
             });
         }

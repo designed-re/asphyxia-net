@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using eAmuseCore.Compression;
 using eAmuseCore.Crypto;
 using eAmuseCore.KBinXML;
+using KbinXml.Net;
 using luna.Utils.Formatters;
 
 namespace luna.Utils.Formatters
@@ -33,7 +34,7 @@ namespace luna.Utils.Formatters
             {
                 byte[] resData;
                 if (data.Encoding != null)
-                    resData = new KBinXML(data.Document, data.Encoding).Bytes;
+                    resData = KbinConverter.Write(data.Document, data.Encoding.ToKnownEncoding());//new KBinXML(data.Document, data.Encoding).Bytes;
                 else
                     resData = new KBinXML(data.Document).Bytes;
 
