@@ -8,6 +8,8 @@ using KFC_EXD.Classes;
 using luna.Utils.Formatters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -16,116 +18,19 @@ namespace KFC_EXD
 {
     [Route("kfc/6")]
     [ApiController]
-    public class CommonController(AsphyxiaContext context) : ControllerBase
+    public class CommonController(AsphyxiaContext context, HostConfig config) : ControllerBase
     {
-        private readonly string[] events = new[]
-        {
-            // "DEMOGAME_PLAY",
-            // "MATCHING_MODE",
-            // "MATCHING_MODE_FREE_IP",
-            // "LEVEL_LIMIT_EASING",
-            // "ACHIEVEMENT_ENABLE",
-            // "APICAGACHADRAW	30",
-            // "VOLFORCE_ENABLE",
-            // "AKANAME_ENABLE",
-            // "PAUSE_ONLINEUPDATE",
-            // "CONTINUATION",
-            // "TENKAICHI_MODE",
-            // "QC_MODE",
-            // "KAC_MODE",
-            // "APPEAL_CARD_GEN_PRICE	100",
-            // "APPEAL_CARD_GEN_NEW_PRICE	200",
-            // "APPEAL_CARD_UNLOCK	0,20170914,0,20171014,0,20171116,0,20180201,0,20180607,0,20181206,0,20200326,0,20200611,4,10140732,6,10150431",
-            // "FAVORITE_APPEALCARD_MAX	200",
-            // "FAVORITE_MUSIC_MAX	200",
-            // "EVENTDATE_APRILFOOL",
-            // "KONAMI_50TH_LOGO",
-            // "OMEGA_ARS_ENABLE",
-            // "DISABLE_MONITOR_ID_CHECK",
-            // "SKILL_ANALYZER_ABLE", //DISABLED FOR WHAT
-            // "BLASTER_ABLE",
-            // "STANDARD_UNLOCK_ENABLE",
-            // "PLAYERJUDGEADJ_ENABLE",
-            // "MIXID_INPUT_ENABLE",
-            // "EVENTDATE_ONIGO",
-            // "EVENTDATE_GOTT",
-            // "GENERATOR_ABLE",
-            // "CREW_SELECT_ABLE",
-            // "PREMIUM_TIME_ENABLE",
-            // "OMEGA_ENABLE	1,2,3,4,5,6,7,8,9",
-            // "HEXA_ENABLE	1,2,3,4,5",
-            // "MEGAMIX_ENABLE",
-            // "VALGENE_ENABLE",
-            // "ARENA_ENABLE",
-            // "DISP_PASELI_BANNER",
-
-
-
-             "DEMOGAME_PLAY",
-  "MATCHING_MODE",
-  "MATCHING_MODE_FREE_IP",
-  "LEVEL_LIMIT_EASING",
-  "ACHIEVEMENT_ENABLE",
-  "APICAGACHADRAW\t30",
-  "VOLFORCE_ENABLE",
-  "AKANAME_ENABLE",
-  "PAUSE_ONLINEUPDATE",
-  "CONTINUATION",
-  "TENKAICHI_MODE",
-  "QC_MODE",
-  "KAC_MODE",
-  "DISABLE_MONITOR_ID_CHECK",
-  "FAVORITE_APPEALCARD_MAX\t200",
-  "FAVORITE_MUSIC_MAX\t200",
-  "STANDARD_UNLOCK_ENABLE",
-  "PLAYERJUDGEADJ_ENABLE",
-  "MIXID_INPUT_ENABLE",
-  "DISP_PASELI_BANNER",
-  "CHARACTER_IGNORE_DISABLE\t122,123,131,139,140,143,149,160,162,163,164,167,170,174,175",
-  "STAMP_IGNORE_DISABLE\t273~312,773~820,993~1032,1245~1284,1469~1508,1585~1632,1633~1672,1737~1776,1777~1816,1897~1936",
-  "SUBBG_IGNORE_DISABLE\t166~185,281~346,369~381,419~438,464~482,515~552,595~616,660~673,714~727",
-  "BEGINNER_MUSIC_FOLDER\t56,78,80,86,87,91,111,128,134,275,278,180,697,770,769,779,842,948,940,1057,1056,1096,932,1136,1469,1480",
-  "BEGINNER_MUSIC_FOLDER\t1471,1758,1753,1739,1867,1866,1860,1857,1903,1904,1859,1863,1856,1864,1865,1916,1917,1914,1915,1918,1960",
-  "BEGINNER_MUSIC_FOLDER\t1961,1962,2029,2028,2030,2031,2035,2036,1905,1882,2058,2073,2070,2069,2074,2075,2067,2068,2066,2165,2166",
-  "BEGINNER_MUSIC_FOLDER\t2174,2175,2193,2195,2196,2213,2216,2214,2215,2205,2206,2224,2229,2228,2230,2241,2244,2243,2242,2245,2240",
-  "BEGINNER_MUSIC_FOLDER\t2251,2252,2220,2221,2289,2288,2291,2287,2290",
-  "OMEGA_ENABLE\t1,2,3,4,5,6,7,8,9",
-  "OMEGA_ARS_ENABLE",
-  "HEXA_ENABLE\t1,2,3,4,5,6,7,8,9,10,11,12",
-  "HEXA_OVERDRIVE_ENABLE\t8",
-  "SKILL_ANALYZER_ABLE",
-  "BLASTER_ABLE",
-  "PREMIUM_TIME_ENABLE",
-  "MEGAMIX_ENABLE",
-  "ARENA_ENABLE",
-  "ARENA_LOCAL_TO_ONLINE_ENABLE",
-  "ARENA_ALTER_MODE_WINDOW_ENABLE",
-  "ARENA_PASS_MATCH_WINDOW_ENABLE",
-  "ARENA_VOTE_MODE_ENABLE",
-  "ARENA_LOCAL_ULTIMATE_MATCH_ALWAYS",
-  "MEGAMIX_BATTLE_MATCH_ENABLE",
-  "DISABLED_MUSIC_IN_ARENA_ONLINE",
-  "SINGLE_BATTLE_ENABLE",
-  "GENERATOR_ABLE",
-  "CREW_SELECT_ABLE",
-  "VALGENE_ENABLE",
-  "PLAYER_RADAR_ENABLE",
-  "S_PUC_EFFECT_ENABLE",
-  "FAVORITE_CREW_ENABLE",
-  "TAMAADV_VALGENE_BONUS_ENABLE",
-  "DEMOLOOP_INFORMATION\tdemo_info/250220_generator_pekora_demo.png",
-  // "ULTIMATE_MATCH_PLAYABLE_ALWAYS", //todo this two flags leading to crash
-  // "OVER_POWER_ENABLE" //todo this two flags leading to crash
-        };
-
         [HttpPost, XrpcCall("game.sv6_common")]
         public async Task<ActionResult<EamuseXrpcData>> GetCommon([FromBody] EamuseXrpcData data)
         {
-            Console.WriteLine(data.Document);
             string model = data.Document.Element("call").Attribute("model").Value.Split(':')[4];
             Console.WriteLine($"Exceed common request: {model}");
 
-
+            // Load events from database
+            var enabledEvents = await context.SvEvents
+                .Where(e => e.Enabled)
+                .Select(e => e.Event)
+                .ToListAsync();
 
             // data preparation
             Valgene valgeneData = JsonConvert.DeserializeObject<Valgene>(
@@ -134,6 +39,12 @@ namespace KFC_EXD
                 System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "data", "exd_course.json")));
             JObject megamixData = JObject.Parse(
                 System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "data", "exd_megamix.json")));
+            CurrentArena currentArenaData = JsonConvert.DeserializeObject<CurrentArena>(
+                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "data",
+                    "current_arena.json")));
+            JObject arenaData = JObject.Parse(
+                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "data",
+                    "exd_arena.json")));
 
 
 
@@ -232,11 +143,66 @@ namespace KFC_EXD
 
 
             XElement eventElement = new XElement("event");
-            foreach (var @event in events)
+            foreach (var @event in enabledEvents)
             {
                 XElement infoElement = new XElement("info", new XElement("event_id", new XAttribute("__type", "str"), @event));
                 eventElement.Add(infoElement);
             }
+
+
+            XElement arenaElement = new XElement("arena");
+            if (config.ArenaOpen && currentVersion >= 20220425 && currentArenaData.Season != 0)
+            {
+                Console.WriteLine("!!! ARENA OPEN !!!");
+                arenaElement.Add(new KS32("season", currentArenaData.Season));
+                arenaElement.Add(new KS32("rule", currentArenaData.Rule));
+                arenaElement.Add(new KS32("rank_match_target", currentArenaData.RankMatchTarget));
+                arenaElement.Add(new KU64("time_start", (ulong)currentArenaData.TimeStart.ToUnixTimeMilliseconds()));
+                arenaElement.Add(new KU64("time_end", (ulong)currentArenaData.TimeEnd.ToUnixTimeMilliseconds()));
+                arenaElement.Add(new KU64("shop_start", (ulong)currentArenaData.ShopStart.ToUnixTimeMilliseconds()));
+                arenaElement.Add(new KU64("shop_end", (ulong)currentArenaData.ShopEnd.ToUnixTimeMilliseconds()));
+
+                bool isOpen = config.ArenaOpen && 
+                             DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() < (long)currentArenaData.TimeEnd.ToUnixTimeMilliseconds();
+                
+                bool shopOpen = config.ArenaOpen &&
+                               DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() >= (long)currentArenaData.ShopStart.ToUnixTimeMilliseconds() &&
+                               DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() < (long)currentArenaData.ShopEnd.ToUnixTimeMilliseconds();
+
+                arenaElement.Add(new KBool("is_open", isOpen));
+                arenaElement.Add(new KBool("is_shop", shopOpen));
+                // Process catalog if shop is open
+                if (shopOpen && config.ArenaSession != 0 && arenaData["Set "+config.ArenaSession] != null)
+                {
+                    var stationData = arenaData["Set " + config.ArenaSession];
+                    int stationVersion = stationData["version"]?.Value<int>() ?? 0;
+
+                    if (currentVersion >= stationVersion)
+                    {
+                        if (stationData["items"] is JArray items)
+                        {
+                            foreach (var itemArray in items)
+                            {
+                                if (itemArray is JArray { Count: >= 6 } itemElements)
+                                {
+                                    arenaElement.Add(new XElement("catalog",
+                                        new KS32("catalog_id", itemElements[0].Value<int>()),
+                                        new KS32("catalog_type", itemElements[1].Value<int>()),
+                                        new KS32("price", itemElements[2].Value<int>()),
+                                        new KS32("item_type", itemElements[3].Value<int>()),
+                                        new KS32("item_id", itemElements[4].Value<int>()),
+                                        new KS32("param", itemElements[5].Value<int>())
+                                    ));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            gameElement.Add(arenaElement);
+
+
             gameElement.Add(eventElement);
             XElement extendElement = new XElement("extend");
 

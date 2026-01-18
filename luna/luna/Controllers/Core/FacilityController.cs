@@ -12,7 +12,7 @@ namespace luna.Controllers.Core
 {
     [Route("core")]
     [ApiController]
-    public class FacilityController(AsphyxiaContext context, IOptions<HostConfig> config) : ControllerBase
+    public class FacilityController(AsphyxiaContext context, HostConfig config) : ControllerBase
     {
         [HttpPost, XrpcCall("facility.get")]
         public ActionResult<EamuseXrpcData> Get([FromBody] EamuseXrpcData data)
@@ -24,7 +24,7 @@ namespace luna.Controllers.Core
 
             Facility? destFacility = context.Facilities.SingleOrDefault(x => x.PCBId == pcbid);
 
-            if (destFacility is null && config.Value.EnforcePCBId)
+            if (destFacility is null && config.EnforcePCBId)
             {
                 data.Document = new XDocument(new XElement("response", new XAttribute("status", "400")));
                 return data;

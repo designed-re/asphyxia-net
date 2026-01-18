@@ -13,9 +13,9 @@ namespace luna.Controllers.Core
     {
         private readonly HostConfig _config;
         private readonly AsphyxiaContext _context;
-        public ServicesController(IOptions<HostConfig> config, AsphyxiaContext context)
+        public ServicesController(HostConfig config, AsphyxiaContext context)
         {
-            _config = config.Value;
+            _config = config;
             _context = context;
         }
 

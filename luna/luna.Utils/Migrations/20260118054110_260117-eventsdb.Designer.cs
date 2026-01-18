@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using luna.Models;
 
@@ -11,9 +12,11 @@ using luna.Models;
 namespace luna.Migrations
 {
     [DbContext(typeof(AsphyxiaContext))]
-    partial class AsphyxiaContextModelSnapshot : ModelSnapshot
+    [Migration("20260118054110_260117-eventsdb")]
+    partial class _260117eventsdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

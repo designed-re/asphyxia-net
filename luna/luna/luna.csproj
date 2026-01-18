@@ -33,6 +33,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Data\current_arena.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Data\exd_arena.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="Data\exd_course.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
