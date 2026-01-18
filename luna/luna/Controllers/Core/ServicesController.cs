@@ -27,7 +27,7 @@ namespace luna.Controllers.Core
             var pcbId = req.Attribute("srcid");
 
             // string url = "http://localhost:8083";
-            string url = Request.Scheme + "://" + Request.Host.Host + ":" + (Request.Host.Port ?? 8083);
+            string url = Request.Scheme + "://" + Request.Host.Host + ":" + (Request.Host.Port ?? 80);
             string coreUrl = url + "/core";
             string modelUrl = url + "/core";
             string[] modelItems = new string[]{};

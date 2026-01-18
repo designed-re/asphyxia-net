@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Reflection;
+using luna.Migrations;
 using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,8 +32,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<HostConfig>(builder.Configuration.GetSection("luna.host").Get<HostConfig>());
 builder.Services.AddDbContext<AsphyxiaContext>(options =>
 {
-        options.UseMySql(config.GetSection("luna.host")["mariadb_connstr"],
-            new MariaDbServerVersion("12.1.2-mariadb"));
+    var connstr = config.GetSection("luna.host")["mariadb_connstr"];
+        options.UseMySql(connstr,
+            MariaDbServerVersion.AutoDetect(connstr));
     
     options.EnableSensitiveDataLogging();
 });
