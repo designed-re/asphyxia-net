@@ -19,4 +19,10 @@
     <ProjectReference Include="..\Pomelo.EntityFrameworkCore.MySql\src\EFCore.MySql\EFCore.MySql.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="events.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
