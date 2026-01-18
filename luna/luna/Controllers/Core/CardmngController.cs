@@ -111,7 +111,8 @@ namespace luna.Controllers.Core
                 CardId = cardId,
                 RefId = ByteArrayHelper.ToHexString(refId),
                 CardNo = cardId,
-                Pass = passwd
+                Pass = passwd,
+                Paseli = 10000
             };
             ctx.Cards.Add(card);
 
