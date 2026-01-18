@@ -34,16 +34,16 @@ namespace KFC_EXD
 
             // data preparation
             Valgene valgeneData = JsonConvert.DeserializeObject<Valgene>(
-                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "data", "exd_valgene.json")));
+                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "Data", "exd_valgene.json")));
             Course[] courseData = JsonConvert.DeserializeObject<Course[]>(
-                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "data", "exd_course.json")));
+                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "Data", "exd_course.json")));
             JObject megamixData = JObject.Parse(
-                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "data", "exd_megamix.json")));
+                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "Data", "exd_megamix.json")));
             CurrentArena currentArenaData = JsonConvert.DeserializeObject<CurrentArena>(
-                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "data",
+                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "Data",
                     "current_arena.json")));
             JObject arenaData = JObject.Parse(
-                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "data",
+                System.IO.File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "Data",
                     "exd_arena.json")));
 
 
