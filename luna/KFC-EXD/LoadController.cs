@@ -136,13 +136,6 @@ namespace KFC_EXD
             return data;
         }
 
-        [HttpPost, XrpcCall("game.sv6_load_r")]
-        public async Task<ActionResult<EamuseXrpcData>> LoadR([FromBody] EamuseXrpcData data)
-        {
-            data.Document = new XDocument(new XElement("response",
-                new XElement("game", new XAttribute("status", 0))));
-            return data;
-        }
 
     }
 }
