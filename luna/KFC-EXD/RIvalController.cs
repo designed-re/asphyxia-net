@@ -16,6 +16,7 @@ namespace KFC_EXD
     [ApiController]
     public class RivalController(AsphyxiaContext context) : ControllerBase
     {
+        //TODO DEBUG
         [HttpPost, XrpcCall("game.sv6_load_r")]
         public async Task<ActionResult<EamuseXrpcData>> LoadRival([FromBody] EamuseXrpcData data)
         {
