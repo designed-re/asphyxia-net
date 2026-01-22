@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
-using luna.Models;
 using luna.Utils;
 using Microsoft.Extensions.Options;
 using luna.Utils.Formatters;
+using luna.Utils.Models;
 
 namespace luna.Controllers.Core
 {
@@ -53,12 +53,13 @@ namespace luna.Controllers.Core
             };
             if (model.StartsWith("KFC"))
             {
+                var version = VersionUtil.GetAbsoluteVersion(model, "");
                 modelItems = HandlerGenerator.GenerateHandlers("",
                     new[]
                     {
                         "local", "local2", "lobby", "lobby2"
                     });
-                modelItems = modelItems.Concat(HandlerGenerator.GenerateHandlers("game.sv6_",
+                modelItems = modelItems.Concat(HandlerGenerator.GenerateHandlers($"game.sv{version}_",
                     new[]
                     {
                         "common", "new", "load", "load_m", "save", "save_m", "save_c", "frozen", "buy", "print",
@@ -67,7 +68,7 @@ namespace luna.Controllers.Core
                     })).ToArray();
             
                 // modelItems = new string[] { };
-                modelUrl = url + "/kfc/6";
+                modelUrl = url + $"/kfc/{version}";
             }
             else return NotFound();
 

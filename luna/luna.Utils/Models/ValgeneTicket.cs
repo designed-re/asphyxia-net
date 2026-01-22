@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace luna.Models;
+namespace luna.Utils.Models;
 
 /// <summary>
 /// Data store(Valgene Ticket) for Sound Voltex

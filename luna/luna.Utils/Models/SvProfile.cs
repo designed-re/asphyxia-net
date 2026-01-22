@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace luna.Models;
+namespace luna.Utils.Models;
 
 /// <summary>
 /// Data store(Profile) for Sound Voltex
@@ -98,6 +98,8 @@ public partial class SvProfile
     public int StampC { get; set; }
 
     public int StampD { get; set; }
+
+    public int Version { get; set; }
 
     public virtual Card CardNavigation { get; set; } = null!;
 

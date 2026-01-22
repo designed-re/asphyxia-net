@@ -1,4 +1,4 @@
-﻿using luna.Models;
+﻿using luna.Utils.Models;
 
 namespace luna.Utils
 {

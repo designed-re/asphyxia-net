@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using luna.Models;
 using luna.Utils;
 using eAmuseCore.KBinXML;
 using luna.Utils.Formatters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using luna.Utils.Models;
 
 namespace KFC_EXD
 {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using eAmuseCore.KBinXML;
-using luna.Models;
 using luna.Utils;
 using luna.Utils.Formatters;
+using luna.Utils.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

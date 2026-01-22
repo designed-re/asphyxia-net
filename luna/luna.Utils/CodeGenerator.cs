@@ -1,4 +1,4 @@
-﻿using luna.Models;
+﻿using luna.Utils.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace luna.Utils

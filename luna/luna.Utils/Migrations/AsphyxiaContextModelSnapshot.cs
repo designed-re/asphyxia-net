@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using luna.Models;
+using luna.Utils.Models;
 
 #nullable disable
 
@@ -24,7 +24,7 @@ namespace luna.Migrations
             MySqlModelBuilderExtensions.HasCharSet(modelBuilder, "utf8mb4");
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("luna.Models.Card", b =>
+            modelBuilder.Entity("luna.Utils.Models.Card", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("luna.Models.Efmigrationshistory", b =>
+            modelBuilder.Entity("luna.Utils.Models.Efmigrationshistory", b =>
                 {
                     b.Property<string>("MigrationId")
                         .HasMaxLength(150)
@@ -98,7 +98,7 @@ namespace luna.Migrations
                     b.ToTable("__efmigrationshistory", (string)null);
                 });
 
-            modelBuilder.Entity("luna.Models.Facility", b =>
+            modelBuilder.Entity("luna.Utils.Models.Facility", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -177,7 +177,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("luna.Models.SvCourseRecord", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvCourseRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -233,7 +233,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("luna.Models.SvEvent", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvEvent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -251,6 +251,10 @@ namespace luna.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("event");
 
+                    b.Property<int>("Version")
+                        .HasColumnType("int(11)")
+                        .HasColumnName("version");
+
                     b.HasKey("Id")
                         .HasName("PRIMARY");
 
@@ -260,7 +264,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("luna.Models.SvItem", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -296,7 +300,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("luna.Models.SvMatchmaker", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvMatchmaker", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -379,7 +383,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("luna.Models.SvMusic", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvMusic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -425,7 +429,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("luna.Models.SvParam", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvParam", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -467,7 +471,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("luna.Models.SvProfile", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -650,6 +654,10 @@ namespace luna.Migrations
                         .HasColumnType("int(10) unsigned")
                         .HasColumnName("today_count");
 
+                    b.Property<int>("Version")
+                        .HasColumnType("int(11)")
+                        .HasColumnName("version");
+
                     b.Property<uint>("WeekChain")
                         .HasColumnType("int(10) unsigned")
                         .HasColumnName("week_chain");
@@ -674,7 +682,64 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("luna.Models.SvScore", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvRival", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int(11)")
+                        .HasColumnName("id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Mutual")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("mutual");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)")
+                        .HasColumnName("name");
+
+                    b.Property<int>("ProfileNavigationId")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("RefId")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("char(16)")
+                        .HasColumnName("ref_id")
+                        .IsFixedLength();
+
+                    b.Property<string>("RivalRefId")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("char(16)")
+                        .HasColumnName("rival_ref_id")
+                        .IsFixedLength();
+
+                    b.Property<int>("SdvxId")
+                        .HasColumnType("int(11)")
+                        .HasColumnName("sdvx_id");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("int(11)")
+                        .HasColumnName("version");
+
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
+
+                    b.HasIndex("ProfileNavigationId");
+
+                    b.HasIndex(new[] { "RefId", "Version" }, "idx_refid_version");
+
+                    b.ToTable("sv_rivals", null, t =>
+                        {
+                            t.HasComment("Data store(Rivals) for Sound Voltex");
+                        });
+                });
+
+            modelBuilder.Entity("luna.Utils.Models.SvScore", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -736,7 +801,7 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("luna.Models.SvValgeneTicket", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvValgeneTicket", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -768,9 +833,9 @@ namespace luna.Migrations
                         });
                 });
 
-            modelBuilder.Entity("luna.Models.SvCourseRecord", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvCourseRecord", b =>
                 {
-                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
+                    b.HasOne("luna.Utils.Models.SvProfile", "ProfileNavigation")
                         .WithMany("SvCourseRecords")
                         .HasForeignKey("Profile")
                         .IsRequired()
@@ -779,9 +844,9 @@ namespace luna.Migrations
                     b.Navigation("ProfileNavigation");
                 });
 
-            modelBuilder.Entity("luna.Models.SvItem", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvItem", b =>
                 {
-                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
+                    b.HasOne("luna.Utils.Models.SvProfile", "ProfileNavigation")
                         .WithMany("SvItems")
                         .HasForeignKey("Profile")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -791,16 +856,16 @@ namespace luna.Migrations
                     b.Navigation("ProfileNavigation");
                 });
 
-            modelBuilder.Entity("luna.Models.SvMatchmaker", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvMatchmaker", b =>
                 {
-                    b.HasOne("luna.Models.SvProfile", null)
+                    b.HasOne("luna.Utils.Models.SvProfile", null)
                         .WithMany("SvMatchmakers")
                         .HasForeignKey("SvProfileId");
                 });
 
-            modelBuilder.Entity("luna.Models.SvParam", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvParam", b =>
                 {
-                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
+                    b.HasOne("luna.Utils.Models.SvProfile", "ProfileNavigation")
                         .WithMany("SvParams")
                         .HasForeignKey("Profile")
                         .IsRequired()
@@ -809,11 +874,11 @@ namespace luna.Migrations
                     b.Navigation("ProfileNavigation");
                 });
 
-            modelBuilder.Entity("luna.Models.SvProfile", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvProfile", b =>
                 {
-                    b.HasOne("luna.Models.Card", "CardNavigation")
+                    b.HasOne("luna.Utils.Models.Card", "CardNavigation")
                         .WithOne("SvProfile")
-                        .HasForeignKey("luna.Models.SvProfile", "Card")
+                        .HasForeignKey("luna.Utils.Models.SvProfile", "Card")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_card_to_card(id)");
@@ -821,15 +886,26 @@ namespace luna.Migrations
                     b.Navigation("CardNavigation");
                 });
 
-            modelBuilder.Entity("luna.Models.SvScore", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvRival", b =>
                 {
-                    b.HasOne("luna.Models.SvMusic", "Music")
+                    b.HasOne("luna.Utils.Models.SvProfile", "ProfileNavigation")
+                        .WithMany()
+                        .HasForeignKey("ProfileNavigationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProfileNavigation");
+                });
+
+            modelBuilder.Entity("luna.Utils.Models.SvScore", b =>
+                {
+                    b.HasOne("luna.Utils.Models.SvMusic", "Music")
                         .WithMany("SvScores")
                         .HasForeignKey("MusicId")
                         .IsRequired()
                         .HasConstraintName("FK_musicid_to_music(id)");
 
-                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
+                    b.HasOne("luna.Utils.Models.SvProfile", "ProfileNavigation")
                         .WithMany("SvScores")
                         .HasForeignKey("Profile")
                         .IsRequired()
@@ -840,9 +916,9 @@ namespace luna.Migrations
                     b.Navigation("ProfileNavigation");
                 });
 
-            modelBuilder.Entity("luna.Models.SvValgeneTicket", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvValgeneTicket", b =>
                 {
-                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
+                    b.HasOne("luna.Utils.Models.SvProfile", "ProfileNavigation")
                         .WithMany("SvValgeneTickets")
                         .HasForeignKey("Profile")
                         .IsRequired()
@@ -851,17 +927,17 @@ namespace luna.Migrations
                     b.Navigation("ProfileNavigation");
                 });
 
-            modelBuilder.Entity("luna.Models.Card", b =>
+            modelBuilder.Entity("luna.Utils.Models.Card", b =>
                 {
                     b.Navigation("SvProfile");
                 });
 
-            modelBuilder.Entity("luna.Models.SvMusic", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvMusic", b =>
                 {
                     b.Navigation("SvScores");
                 });
 
-            modelBuilder.Entity("luna.Models.SvProfile", b =>
+            modelBuilder.Entity("luna.Utils.Models.SvProfile", b =>
                 {
                     b.Navigation("SvCourseRecords");
 

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 
-namespace luna.Models;
+namespace luna.Utils.Models;
 
 public partial class AsphyxiaContext : DbContext
 {
@@ -38,6 +38,8 @@ public partial class AsphyxiaContext : DbContext
     public virtual DbSet<SvScore> SvScores { get; set; }
 
     public virtual DbSet<SvEvent> SvEvents { get; set; }
+
+    public virtual DbSet<SvRival> SvRivals { get; set; }
 
     public virtual DbSet<SvCourseRecord> SvCourseRecords { get; set; }
 
@@ -371,6 +373,9 @@ public partial class AsphyxiaContext : DbContext
             entity.Property(e => e.WeekPlayCount)
                 .HasColumnType("int(10) unsigned")
                 .HasColumnName("week_play_count");
+            entity.Property(e => e.Version)
+                .HasColumnType("int(11)")
+                .HasColumnName("version");
 
             entity.HasOne(d => d.CardNavigation).WithOne(p => p.SvProfile)
                 .HasForeignKey<SvProfile>(d => d.Card)
@@ -447,6 +452,42 @@ public partial class AsphyxiaContext : DbContext
             entity.Property(e => e.Enabled)
                 .HasColumnType("tinyint(1)")
                 .HasColumnName("enabled");
+            entity.Property(e => e.Version)
+                .HasColumnType("int(11)")
+                .HasColumnName("version");
+        });
+
+        modelBuilder.Entity<SvRival>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("sv_rivals", tb => tb.HasComment("Data store(Rivals) for Sound Voltex"));
+
+            entity.HasIndex(e => new { e.RefId, e.Version }, "idx_refid_version");
+
+            entity.Property(e => e.Id)
+                .HasColumnType("int(11)")
+                .HasColumnName("id");
+            entity.Property(e => e.RefId)
+                .HasMaxLength(16)
+                .IsFixedLength()
+                .HasColumnName("ref_id");
+            entity.Property(e => e.RivalRefId)
+                .HasMaxLength(16)
+                .IsFixedLength()
+                .HasColumnName("rival_ref_id");
+            entity.Property(e => e.SdvxId)
+                .HasColumnType("int(11)")
+                .HasColumnName("sdvx_id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(8)
+                .HasColumnName("name");
+            entity.Property(e => e.Mutual)
+                .HasColumnType("tinyint(1)")
+                .HasColumnName("mutual");
+            entity.Property(e => e.Version)
+                .HasColumnType("int(11)")
+                .HasColumnName("version");
         });
 
         modelBuilder.Entity<SvCourseRecord>(entity =>

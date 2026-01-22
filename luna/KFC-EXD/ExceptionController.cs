@@ -12,7 +12,7 @@ namespace KFC_EXD
     [ApiController]
     public class ExceptionController : ControllerBase
     {
-        [HttpGet, XrpcCall("game.sv6_exception")]
+        [HttpPost, XrpcCall("game.sv6_exception")]
         public async Task<ActionResult<EamuseXrpcData>> Exception([FromBody] EamuseXrpcData data)
         {
             XElement responseElement = new("response");

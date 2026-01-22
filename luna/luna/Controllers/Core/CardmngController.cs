@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
 using System.Xml.Linq;
-using luna.Models;
 using luna.Utils;
 using Microsoft.EntityFrameworkCore;
 using ByteArrayHelper = luna.Helpers.ByteArrayHelper;
 using luna.Utils.Formatters;
+using luna.Utils.Models;
 
 namespace luna.Controllers.Core
 {

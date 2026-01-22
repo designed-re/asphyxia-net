@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Reflection.Metadata;
 using System.Xml.Linq;
-using luna.Models;
 using luna.Utils;
 using eAmuseCore.KBinXML;
 using KFC_EXD.Classes;
@@ -13,6 +12,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using luna.Utils.Models;
 
 namespace KFC_EXD
 {

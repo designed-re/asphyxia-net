@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Xml.Linq;
-using luna.Models;
 using luna.Utils;
 using luna.Utils.Formatters;
 using Microsoft.Extensions.Options;
+using luna.Utils.Models;
 
 namespace luna.Controllers.Core
 {

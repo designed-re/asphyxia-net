@@ -1,14 +1,9 @@
-using luna;
-using luna.Models;
 using luna.Utils;
 using luna.Utils.Formatters;
+using luna.Utils.Models;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System.Reflection;
-using luna.Migrations;
-using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
@@ -33,9 +28,9 @@ builder.Services.AddSingleton<HostConfig>(builder.Configuration.GetSection("luna
 builder.Services.AddDbContext<AsphyxiaContext>(options =>
 {
     var connstr = config.GetSection("luna.host")["mariadb_connstr"];
-        options.UseMySql(connstr,
-            MariaDbServerVersion.AutoDetect(connstr));
-    
+    options.UseMySql(connstr,
+        MariaDbServerVersion.AutoDetect(connstr));
+
     options.EnableSensitiveDataLogging();
 });
 builder.Services.AddMvc(options =>
@@ -74,7 +69,8 @@ app.Use(async (context, next) =>
     await next.Invoke();
 });
 
-app.UseStatusCodePages(async (StatusCodeContext context) => {
+app.UseStatusCodePages(async (StatusCodeContext context) =>
+{
     var response = context.HttpContext.Response;
     var request = context.HttpContext.Request;
 

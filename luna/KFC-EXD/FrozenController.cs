@@ -1,8 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Xml.Linq;
-using luna.Models;
 using luna.Utils;
 using luna.Utils.Formatters;
+using luna.Utils.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

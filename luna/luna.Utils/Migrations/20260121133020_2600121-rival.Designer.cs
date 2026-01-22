@@ -12,8 +12,8 @@ using luna.Utils.Models;
 namespace luna.Migrations
 {
     [DbContext(typeof(AsphyxiaContext))]
-    [Migration("20260118054110_260117-eventsdb")]
-    partial class _260117eventsdb
+    [Migration("20260121133020_2600121-rival")]
+    partial class _2600121rival
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -677,6 +677,63 @@ namespace luna.Migrations
                         });
                 });
 
+            modelBuilder.Entity("luna.Models.SvRival", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int(11)")
+                        .HasColumnName("id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Mutual")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("mutual");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)")
+                        .HasColumnName("name");
+
+                    b.Property<int>("ProfileNavigationId")
+                        .HasColumnType("int(11)");
+
+                    b.Property<string>("RefId")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("char(16)")
+                        .HasColumnName("ref_id")
+                        .IsFixedLength();
+
+                    b.Property<string>("RivalRefId")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("char(16)")
+                        .HasColumnName("rival_ref_id")
+                        .IsFixedLength();
+
+                    b.Property<int>("SdvxId")
+                        .HasColumnType("int(11)")
+                        .HasColumnName("sdvx_id");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("int(11)")
+                        .HasColumnName("version");
+
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
+
+                    b.HasIndex("ProfileNavigationId");
+
+                    b.HasIndex(new[] { "RefId", "Version" }, "idx_refid_version");
+
+                    b.ToTable("sv_rivals", null, t =>
+                        {
+                            t.HasComment("Data store(Rivals) for Sound Voltex");
+                        });
+                });
+
             modelBuilder.Entity("luna.Models.SvScore", b =>
                 {
                     b.Property<int>("Id")
@@ -822,6 +879,17 @@ namespace luna.Migrations
                         .HasConstraintName("FK_card_to_card(id)");
 
                     b.Navigation("CardNavigation");
+                });
+
+            modelBuilder.Entity("luna.Models.SvRival", b =>
+                {
+                    b.HasOne("luna.Models.SvProfile", "ProfileNavigation")
+                        .WithMany()
+                        .HasForeignKey("ProfileNavigationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProfileNavigation");
                 });
 
             modelBuilder.Entity("luna.Models.SvScore", b =>

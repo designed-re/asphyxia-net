@@ -1,6 +1,6 @@
 using System;
 
-namespace luna.Models;
+namespace luna.Utils.Models;
 
 /// <summary>
 /// Data store(Events) for Sound Voltex
@@ -12,4 +12,6 @@ public partial class SvEvent
     public string Event { get; set; } = null!;
 
     public bool Enabled { get; set; }
+
+    public int Version { get; set; }
 }
