@@ -18,5 +18,7 @@ public partial class SvItem
 
     public uint Param { get; set; }
 
+    public int Version { get; set; }
+
     public virtual SvProfile ProfileNavigation { get; set; } = null!;
 }

@@ -165,6 +165,10 @@ public partial class AsphyxiaContext : DbContext
             entity.Property(e => e.Type)
                 .HasColumnType("tinyint(3) unsigned")
                 .HasColumnName("type");
+            entity.Property(e => e.Version)
+                .HasColumnType("int(11)")
+                .HasColumnName("version")
+                .HasDefaultValue(6);
 
             entity.HasOne(d => d.ProfileNavigation).WithMany(p => p.SvItems)
                 .HasForeignKey(d => d.Profile)
@@ -193,6 +197,10 @@ public partial class AsphyxiaContext : DbContext
             entity.Property(e => e.TitleYomigana)
                 .HasMaxLength(200)
                 .HasColumnName("title_yomigana");
+            entity.Property(e => e.Version)
+                .HasColumnType("int(11)")
+                .HasColumnName("version")
+                .HasDefaultValue(6);
         });
 
         modelBuilder.Entity<SvParam>(entity =>
@@ -221,6 +229,10 @@ public partial class AsphyxiaContext : DbContext
             entity.Property(e => e.Type)
                 .HasColumnType("int(11)")
                 .HasColumnName("type");
+            entity.Property(e => e.Version)
+                .HasColumnType("int(11)")
+                .HasColumnName("version")
+                .HasDefaultValue(6);
 
             entity.HasOne(d => d.ProfileNavigation).WithMany(p => p.SvParams)
                 .HasForeignKey(d => d.Profile)
@@ -375,7 +387,8 @@ public partial class AsphyxiaContext : DbContext
                 .HasColumnName("week_play_count");
             entity.Property(e => e.Version)
                 .HasColumnType("int(11)")
-                .HasColumnName("version");
+                .HasColumnName("version")
+                .HasDefaultValue(6);
 
             entity.HasOne(d => d.CardNavigation).WithOne(p => p.SvProfile)
                 .HasForeignKey<SvProfile>(d => d.Card)
@@ -425,6 +438,10 @@ public partial class AsphyxiaContext : DbContext
             entity.Property(e => e.VolRate)
                 .HasColumnType("int(11)")
                 .HasColumnName("volRate");
+            entity.Property(e => e.Version)
+                .HasColumnType("int(11)")
+                .HasColumnName("version")
+                .HasDefaultValue(6);
 
             entity.HasOne(d => d.Music).WithMany(p => p.SvScores)
                 .HasForeignKey(d => d.MusicId)
@@ -454,7 +471,8 @@ public partial class AsphyxiaContext : DbContext
                 .HasColumnName("enabled");
             entity.Property(e => e.Version)
                 .HasColumnType("int(11)")
-                .HasColumnName("version");
+                .HasColumnName("version")
+                .HasDefaultValue(6);
         });
 
         modelBuilder.Entity<SvRival>(entity =>
@@ -487,7 +505,8 @@ public partial class AsphyxiaContext : DbContext
                 .HasColumnName("mutual");
             entity.Property(e => e.Version)
                 .HasColumnType("int(11)")
-                .HasColumnName("version");
+                .HasColumnName("version")
+                .HasDefaultValue(6);
         });
 
         modelBuilder.Entity<SvCourseRecord>(entity =>
@@ -512,7 +531,8 @@ public partial class AsphyxiaContext : DbContext
                 .HasColumnName("course_id");
             entity.Property(e => e.Version)
                 .HasColumnType("int(11)")
-                .HasColumnName("version");
+                .HasColumnName("version")
+                .HasDefaultValue(6);
             entity.Property(e => e.Score)
                 .HasColumnType("int(11)")
                 .HasColumnName("score");

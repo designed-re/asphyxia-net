@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using luna.Utils.Models;
 
@@ -11,9 +12,11 @@ using luna.Utils.Models;
 namespace luna.Migrations
 {
     [DbContext(typeof(AsphyxiaContext))]
-    partial class AsphyxiaContextModelSnapshot : ModelSnapshot
+    [Migration("20260122135626_2600122-versioning2")]
+    partial class _2600122versioning2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,9 +222,7 @@ namespace luna.Migrations
                         .HasColumnName("series_id");
 
                     b.Property<int>("Version")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
-                        .HasDefaultValue(6)
                         .HasColumnName("version");
 
                     b.HasKey("Id")
@@ -254,9 +255,7 @@ namespace luna.Migrations
                         .HasColumnName("event");
 
                     b.Property<int>("Version")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
-                        .HasDefaultValue(6)
                         .HasColumnName("version");
 
                     b.HasKey("Id")
@@ -294,9 +293,7 @@ namespace luna.Migrations
                         .HasColumnName("type");
 
                     b.Property<int>("Version")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
-                        .HasDefaultValue(6)
                         .HasColumnName("version");
 
                     b.HasKey("Id")
@@ -431,9 +428,7 @@ namespace luna.Migrations
                         .HasColumnName("title_yomigana");
 
                     b.Property<int>("Version")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
-                        .HasDefaultValue(6)
                         .HasColumnName("version");
 
                     b.HasKey("Id")
@@ -477,9 +472,7 @@ namespace luna.Migrations
                         .HasColumnName("type");
 
                     b.Property<int>("Version")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
-                        .HasDefaultValue(6)
                         .HasColumnName("version");
 
                     b.HasKey("Id")
@@ -677,9 +670,7 @@ namespace luna.Migrations
                         .HasColumnName("today_count");
 
                     b.Property<int>("Version")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
-                        .HasDefaultValue(6)
                         .HasColumnName("version");
 
                     b.Property<uint>("WeekChain")
@@ -747,9 +738,7 @@ namespace luna.Migrations
                         .HasColumnName("sdvx_id");
 
                     b.Property<int>("Version")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
-                        .HasDefaultValue(6)
                         .HasColumnName("version");
 
                     b.HasKey("Id")
@@ -811,9 +800,7 @@ namespace luna.Migrations
                         .HasColumnName("type");
 
                     b.Property<int>("Version")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int(11)")
-                        .HasDefaultValue(6)
                         .HasColumnName("version");
 
                     b.Property<int>("VolRate")

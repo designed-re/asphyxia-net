@@ -20,5 +20,7 @@ public partial class SvMusic
 
     public DateOnly Date { get; set; }
 
+    public int Version { get; set; }
+
     public virtual ICollection<SvScore> SvScores { get; } = new List<SvScore>();
 }

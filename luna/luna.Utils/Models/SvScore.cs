@@ -30,6 +30,8 @@ public partial class SvScore
 
     public int VolRate { get; set; }
 
+    public int Version { get; set; }
+
     public virtual SvMusic Music { get; set; } = null!;
 
     public virtual SvProfile ProfileNavigation { get; set; } = null!;

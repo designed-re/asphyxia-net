@@ -20,5 +20,7 @@ public partial class SvParam
 
     public uint ParamCount { get; set; }
 
+    public int Version { get; set; }
+
     public virtual SvProfile ProfileNavigation { get; set; } = null!;
 }
