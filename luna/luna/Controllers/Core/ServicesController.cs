@@ -70,6 +70,23 @@ namespace luna.Controllers.Core
                 // modelItems = new string[] { };
                 modelUrl = url + $"/kfc/{version}";
             }
+            else if (model.StartsWith("PIX"))
+            {
+                var version = VersionUtil.GetAbsoluteVersion(model, "");
+                modelItems = HandlerGenerator.GenerateHandlers("",
+                    new[]
+                    {
+                        "local", "local2", "lobby", "lobby2"
+                    });
+                modelItems = modelItems.Concat(HandlerGenerator.GenerateHandlers($"game.sv{version}_",
+                    new[]
+                    {
+                        "common", "new", "load", "load_m", "save", "save_m", "frozen", "hiscore", "lounge", "shop", "exception"
+                    })).ToArray();
+
+                // modelItems = new string[] { };
+                modelUrl = url + $"/pix/{version}";
+            }
             else return NotFound();
 
             var fact = _context.Facilities.SingleOrDefault(x=> x.PCBId == pcbId.Value);
