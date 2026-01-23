@@ -25,6 +25,7 @@ namespace luna.Utils
         [ConfigurationKeyName("arena_session")]
         public int ArenaSession { get; set; }
 
-
+        [ConfigurationKeyName("unlock_all_songs")]
+        public bool UnlockAllSongs { get; set; }
     }
 }

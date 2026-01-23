@@ -237,7 +237,7 @@ namespace KFC_EXD
                 new KS32("param_num_3", 0),
                 new KS32("param_num_4", 0),
                 new KS32("param_num_5", 0),
-                new KStr("param_str_1", $"[f:0] NOTIFICATION\nTHIS IS FREE SOFTWARE\n{DateTime.Now:F}"),
+                new KStr("param_str_1", $"[f:0] NOTIFICATION\nFREE SOFTWARE\n{DateTime.Now:s}"),
                 new KStr("param_str_2", ""),
                 new KStr("param_str_3", ""),
                 new KStr("param_str_4", ""),
@@ -252,43 +252,136 @@ namespace KFC_EXD
 
             int lastSongId = context.SvMusics.OrderBy(x=> x.Id).Last().Id;
 
-            for (int i = 1; i <= lastSongId; i++) //for unlock all songs
+            if (config.UnlockAllSongs)
             {
+                for (int i = 1; i <= lastSongId; i++) //for unlock all songs
+                {
 
-                XElement infoElement = new XElement("info",
-                    new XElement("music_id", new XAttribute("__type", "s32"), i),
-                    new XElement("music_type", new XAttribute("__type", "u8"), 0),
-                    new XElement("limited", new XAttribute("__type", "u8"), 3));
+                    XElement infoElement = new XElement("info",
+                        new XElement("music_id", new XAttribute("__type", "s32"), i),
+                        new XElement("music_type", new XAttribute("__type", "u8"), 0),
+                        new XElement("limited", new XAttribute("__type", "u8"), 3));
 
-                musicLimitedElement.Add(infoElement);
-                infoElement = new XElement("info",
-                    new XElement("music_id", new XAttribute("__type", "s32"), i),
-                    new XElement("music_type", new XAttribute("__type", "u8"), 1),
-                    new XElement("limited", new XAttribute("__type", "u8"), 3));
+                    musicLimitedElement.Add(infoElement);
+                    infoElement = new XElement("info",
+                        new XElement("music_id", new XAttribute("__type", "s32"), i),
+                        new XElement("music_type", new XAttribute("__type", "u8"), 1),
+                        new XElement("limited", new XAttribute("__type", "u8"), 3));
 
-                musicLimitedElement.Add(infoElement);
-                infoElement = new XElement("info",
-                    new XElement("music_id", new XAttribute("__type", "s32"), i),
-                    new XElement("music_type", new XAttribute("__type", "u8"), 2),
-                    new XElement("limited", new XAttribute("__type", "u8"), 3));
+                    musicLimitedElement.Add(infoElement);
+                    infoElement = new XElement("info",
+                        new XElement("music_id", new XAttribute("__type", "s32"), i),
+                        new XElement("music_type", new XAttribute("__type", "u8"), 2),
+                        new XElement("limited", new XAttribute("__type", "u8"), 3));
 
-                musicLimitedElement.Add(infoElement);
-                infoElement = new XElement("info",
-                    new XElement("music_id", new XAttribute("__type", "s32"), i),
-                    new XElement("music_type", new XAttribute("__type", "u8"), 3),
-                    new XElement("limited", new XAttribute("__type", "u8"), 3));
+                    musicLimitedElement.Add(infoElement);
+                    infoElement = new XElement("info",
+                        new XElement("music_id", new XAttribute("__type", "s32"), i),
+                        new XElement("music_type", new XAttribute("__type", "u8"), 3),
+                        new XElement("limited", new XAttribute("__type", "u8"), 3));
 
-                musicLimitedElement.Add(infoElement);
-                infoElement = new XElement("info",
-                    new XElement("music_id", new XAttribute("__type", "s32"), i),
-                    new XElement("music_type", new XAttribute("__type", "u8"), 4),
-                    new XElement("limited", new XAttribute("__type", "u8"), 3));
+                    musicLimitedElement.Add(infoElement);
+                    infoElement = new XElement("info",
+                        new XElement("music_id", new XAttribute("__type", "s32"), i),
+                        new XElement("music_type", new XAttribute("__type", "u8"), 4),
+                        new XElement("limited", new XAttribute("__type", "u8"), 3));
 
-                musicLimitedElement.Add(infoElement);
+                    musicLimitedElement.Add(infoElement);
 
+                }
+            }
+            else
+            {
+                var diffName = new[] { "novice", "advanced", "exhaust", "infinite", "maximum", "ultimate" };
+                var licensedSongs = new int[] {};
+                var valkyrieSongs = new int[] {};
+                
+                Console.WriteLine(lastSongId);
+                
+                for (int i = 0; i <= lastSongId; i++)
+                {
+                    var songData = context.SvMusics.FirstOrDefault(s => s.Id == i);
+                    
+                    if (songData != null)
+                    {
+                        int limitedNo = 2;
+                        
+                        if (Math.Abs(currentVersion) == 6)
+                        {
+                            // int songVersion = int.Parse(songData["info"]?["version"]?.Value<string>() ?? "0");
+                            // bool hasDistributionDate = songData["info"]?["distribution_date"] != null;
+                            //
+                            // if (songVersion <= 6 && hasDistributionDate)
+                            // {
+                            //     int distributionDate = int.Parse(songData["info"]["distribution_date"].Value<string>());
+                            //     int currentYMDDate = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
+                            //     if (distributionDate > currentYMDDate)
+                            //     {
+                            //         Console.WriteLine($"Unreleased song: {songData["info"]?["title_name"]}");
+                            //         continue;
+                            //     }
+                            // }
+                            
+                            limitedNo = 2;
+                            
+                            // if (songData["info"]?["version"]?.Value<string>() == "6" || true)
+                            // {
+                                if (licensedSongs.Contains(i))
+                                    limitedNo += 1;
+                                else if (valkyrieSongs.Contains(i) && !System.Text.RegularExpressions.Regex.IsMatch(cabType, @"^(G|H)$"))
+                                    limitedNo -= 1;
+                                
+                                if (i == 2034)
+                                    limitedNo = 2;
+                                
+                                for (int j = 0; j < 6; j++)
+                                {
+                                    // if (songData["difficulty"]?[diffName[j]]?.Value<string>() != "0")
+                                    // {
+                                        var infoElement = new XElement("info",
+                                            new XElement("music_id", new XAttribute("__type", "s32"), i),
+                                            new XElement("music_type", new XAttribute("__type", "u8"), j),
+                                            new XElement("limited", new XAttribute("__type", "u8"), limitedNo));
+                                        musicLimitedElement.Add(infoElement);
+                                    // }
+                                }
+                            // }
+                            // else if (songData["info"]?["inf_ver"]?.Value<string>() == "6")
+                            // {
+                            //     if (i == 469)
+                            //         limitedNo = 2;
+                            //     
+                            //     var infoElement = new XElement("info",
+                            //         new XElement("music_id", new XAttribute("__type", "s32"), i),
+                            //         new XElement("music_type", new XAttribute("__type", "u8"), 3),
+                            //         new XElement("limited", new XAttribute("__type", "u8"), limitedNo));
+                            //     musicLimitedElement.Add(infoElement);
+                            // }
+                        }
+                        
+                        // Licensed songs released prior to current version
+                        // if (int.Parse(songData["info"]?["version"]?.Value<string>() ?? "0") < Math.Abs(currentVersion) && licensedSongs.Contains(i))
+                        // {
+                        //     limitedNo += 1;
+                        //     for (int j = 0; j < 6; j++)
+                        //     {
+                        //         if (songData["difficulty"]?[diffName[j]]?.Value<string>() != "0")
+                        //         {
+                        //             var infoElement = new XElement("info",
+                        //                 new XElement("music_id", new XAttribute("__type", "s32"), i),
+                        //                 new XElement("music_type", new XAttribute("__type", "u8"), j),
+                        //                 new XElement("limited", new XAttribute("__type", "u8"), limitedNo));
+                        //             musicLimitedElement.Add(infoElement);
+                        //         }
+                        //     }
+                        // }
+                    }
+                }
             }
 
-            gameElement.Add(musicLimitedElement);
+
+
+                gameElement.Add(musicLimitedElement);
 
             XElement skillElement = new XElement("skill_course");
             XElement skillInfoElement = new XElement("info",
