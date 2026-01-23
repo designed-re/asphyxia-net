@@ -34,9 +34,9 @@ namespace luna.Controllers.Core
             {
                 destFacility = new Facility()
                 {
-                    FacilityId = "guest", Country = "JP", Region = "JP", Name = "GUEST", Type = 1, CompanyCode = "guest",
-                    CountryJName = "guest", CountryName = "guest", CustomerCode = "guest", RegionJName = "guest",
-                    RegionName = "guest"
+                    FacilityId = "luna", Country = "JP", Region = "JP", Name = "LUNALIGHT PLACE", Type = 1, CompanyCode = "LUNALIGHT",
+                    CountryJName = "LUNALIGHT", CountryName = "LUNALIGHT", CustomerCode = "LUNALIGHT", RegionJName = "LUNALIGHT",
+                    RegionName = "LUNA"
                 };
             }
 
