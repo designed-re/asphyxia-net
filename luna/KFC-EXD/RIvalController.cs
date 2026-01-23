@@ -20,7 +20,7 @@ namespace KFC_EXD
         [HttpPost, XrpcCall("game.sv6_load_r")]
         public async Task<ActionResult<EamuseXrpcData>> LoadRival([FromBody] EamuseXrpcData data)
         {
-            XElement entryElement = data.Document.Element("call").Element("entry");
+            XElement entryElement = data.Document.Element("call").Element("game");
             XElement responseElement = new("response");
 
             try
