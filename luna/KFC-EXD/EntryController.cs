@@ -7,6 +7,7 @@ using eAmuseCore.KBinXML;
 using luna.Utils;
 using luna.Utils.Formatters;
 using luna.Utils.Models;
+using luna.Utils.Models.sdvx;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -133,7 +134,7 @@ namespace KFC_EXD
                                 m.Claim == claim &&
                                 m.EntryId == entryId &&
                                 m.LocalIp != localIp)
-                    .ToListAsync();
+                    .ToListAsync(); //todo improve matching logic
 
                 Console.WriteLine($"[{localIp} | {globalIp}] Opponents: {opponents.Count}");
 

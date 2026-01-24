@@ -59,8 +59,8 @@ namespace luna.Controllers.Core
             new KU8("accuracy", 0)
                 ),
             new XElement("line",
-                new KStr("id", "LIGHTSPEED"),
-                new KU8("class", 0)
+                new KStr("id", "3"),
+                new KU8("class", 3)
             ),
             new XElement("portfw",
                 new KIP4("globalip", HttpContext.Connection.RemoteIpAddress),

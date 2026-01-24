@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace luna.Utils.Models;
+namespace luna.Utils.Models.sdvx;
 
 /// <summary>
 /// Data store(Items) for Sound Voltex

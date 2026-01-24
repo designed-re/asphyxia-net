@@ -1,6 +1,6 @@
 using System;
 
-namespace luna.Utils.Models;
+namespace luna.Utils.Models.sdvx;
 
 /// <summary>
 /// Data store(Matchmaker) for Sound Voltex global matching

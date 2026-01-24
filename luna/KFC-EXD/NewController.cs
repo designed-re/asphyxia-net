@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using luna.Utils.Models;
+using luna.Utils.Models.sdvx;
 
 namespace KFC_EXD
 {

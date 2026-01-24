@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using luna.Utils.Models.sdvx;
+using luna.Utils.Models.museca;
 
 namespace luna.Utils.Models;
 
@@ -46,6 +48,12 @@ public partial class AsphyxiaContext : DbContext
     public virtual DbSet<SvValgeneTicket> SvValgeneTickets { get; set; }
 
     public virtual DbSet<SvMatchmaker> SvMatchmakers { get; set; }
+
+    public virtual DbSet<MusecaProfile> MusecaProfiles { get; set; }
+
+    public virtual DbSet<MusecaItem> MusecaItems { get; set; }
+
+    public virtual DbSet<MusecaScore> MusecaScores { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -633,6 +641,161 @@ public partial class AsphyxiaContext : DbContext
             entity.Property(e => e.EntryId)
                 .HasColumnType("int(11)")
                 .HasColumnName("entry_id");
+        });
+
+        modelBuilder.Entity<MusecaProfile>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("museca_profile", tb => tb.HasComment("Data store(Profile) for Museca"));
+
+            entity.Property(e => e.Id)
+                .HasColumnType("int(11)")
+                .HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(8)
+                .HasColumnName("name");
+            entity.Property(e => e.HiddenParam)
+                .HasColumnType("longtext")
+                .HasColumnName("hidden_param");
+            entity.Property(e => e.PlayCount)
+                .HasColumnType("int(11)")
+                .HasColumnName("play_count");
+            entity.Property(e => e.DailyCount)
+                .HasColumnType("int(11)")
+                .HasColumnName("daily_count");
+            entity.Property(e => e.PlayChain)
+                .HasColumnType("int(11)")
+                .HasColumnName("play_chain");
+            entity.Property(e => e.Headphone)
+                .HasColumnType("tinyint(3) unsigned")
+                .HasColumnName("headphone");
+            entity.Property(e => e.AppealId)
+                .HasColumnType("int(11)")
+                .HasColumnName("appeal_id");
+            entity.Property(e => e.CommentId)
+                .HasColumnType("int(11)")
+                .HasColumnName("comment_id");
+            entity.Property(e => e.LastMusicId)
+                .HasColumnType("int(11)")
+                .HasColumnName("music_id");
+            entity.Property(e => e.LastMusicType)
+                .HasColumnType("tinyint(3) unsigned")
+                .HasColumnName("music_type");
+            entity.Property(e => e.SortType)
+                .HasColumnType("tinyint(3) unsigned")
+                .HasColumnName("sort_type");
+            entity.Property(e => e.NarrowDown)
+                .HasColumnType("tinyint(3) unsigned")
+                .HasColumnName("narrow_down");
+            entity.Property(e => e.GaugeOption)
+                .HasColumnType("tinyint(3) unsigned")
+                .HasColumnName("gauge_option");
+            entity.Property(e => e.BlasterEnergy)
+                .HasColumnType("int(10) unsigned")
+                .HasColumnName("blaster_energy");
+            entity.Property(e => e.BlasterCount)
+                .HasColumnType("int(10) unsigned")
+                .HasColumnName("blaster_count");
+            entity.Property(e => e.CreatorId)
+                .HasColumnType("int(11)")
+                .HasColumnName("creator_id");
+            entity.Property(e => e.SkillLevel)
+                .HasColumnType("smallint(6)")
+                .HasColumnName("skill_level");
+            entity.Property(e => e.SkillNameId)
+                .HasColumnType("smallint(6)")
+                .HasColumnName("skill_name_id");
+            entity.Property(e => e.GamecoinPacket)
+                .HasColumnType("int(11)")
+                .HasColumnName("gamecoin_packet");
+            entity.Property(e => e.GamecoinBlock)
+                .HasColumnType("int(11)")
+                .HasColumnName("gamecoin_block");
+            entity.Property(e => e.PacketBooster)
+                .HasColumnType("int(11)")
+                .HasColumnName("packet_booster");
+            entity.Property(e => e.BlockBooster)
+                .HasColumnType("int(11)")
+                .HasColumnName("block_booster");
+        });
+
+        modelBuilder.Entity<MusecaItem>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("museca_items", tb => tb.HasComment("Data store(Items) for Museca"));
+
+            entity.HasIndex(e => e.Profile, "FK_museca_profile_to_profile(id)");
+
+            entity.Property(e => e.Id)
+                .HasColumnType("int(11)")
+                .HasColumnName("id");
+            entity.Property(e => e.Profile)
+                .HasColumnType("int(11)")
+                .HasColumnName("profile");
+            entity.Property(e => e.ItemId)
+                .HasColumnType("int(11)")
+                .HasColumnName("item_id");
+            entity.Property(e => e.Type)
+                .HasColumnType("int(11)")
+                .HasColumnName("type");
+            entity.Property(e => e.Param)
+                .HasColumnType("int(11)")
+                .HasColumnName("param");
+
+            entity.HasOne(d => d.ProfileNavigation).WithMany(p => p.MusecaItems)
+                .HasForeignKey(d => d.Profile)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_museca_profile_to_profile(id)");
+        });
+
+        modelBuilder.Entity<MusecaScore>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("museca_scores", tb => tb.HasComment("Data store(Scores) for Museca"));
+
+            entity.HasIndex(e => e.Profile, "FK_museca_score_profile_to_profile(id)");
+
+            entity.Property(e => e.Id)
+                .HasColumnType("int(11)")
+                .HasColumnName("id");
+            entity.Property(e => e.Profile)
+                .HasColumnType("int(11)")
+                .HasColumnName("profile");
+            entity.Property(e => e.MusicId)
+                .HasColumnType("int(11)")
+                .HasColumnName("music_id");
+            entity.Property(e => e.Type)
+                .HasColumnType("int(11)")
+                .HasColumnName("type");
+            entity.Property(e => e.Score)
+                .HasColumnType("int(11)")
+                .HasColumnName("score");
+            entity.Property(e => e.Count)
+                .HasColumnType("int(11)")
+                .HasColumnName("count");
+            entity.Property(e => e.ClearType)
+                .HasColumnType("int(11)")
+                .HasColumnName("clear_type");
+            entity.Property(e => e.ScoreGrade)
+                .HasColumnType("int(11)")
+                .HasColumnName("score_grade");
+            entity.Property(e => e.ButtonRate)
+                .HasColumnType("int(11)")
+                .HasColumnName("btn_rate");
+            entity.Property(e => e.LongRate)
+                .HasColumnType("int(11)")
+                .HasColumnName("long_rate");
+            entity.Property(e => e.VolRate)
+                .HasColumnType("int(11)")
+                .HasColumnName("vol_rate");
+
+            entity.HasOne(d => d.ProfileNavigation).WithMany(p => p.MusecaScores)
+                .HasForeignKey(d => d.Profile)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_museca_score_profile_to_profile(id)");
         });
 
         OnModelCreatingPartial(modelBuilder);

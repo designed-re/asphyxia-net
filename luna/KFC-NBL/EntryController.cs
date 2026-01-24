@@ -7,6 +7,7 @@ using eAmuseCore.KBinXML;
 using luna.Utils;
 using luna.Utils.Formatters;
 using luna.Utils.Models;
+using luna.Utils.Models.sdvx;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
