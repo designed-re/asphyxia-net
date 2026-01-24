@@ -72,20 +72,19 @@ namespace luna.Controllers.Core
             }
             else if (model.StartsWith("PIX"))
             {
-                var version = VersionUtil.GetAbsoluteVersion(model, "");
                 modelItems = HandlerGenerator.GenerateHandlers("",
                     new[]
                     {
                         "local", "local2", "lobby", "lobby2"
                     });
-                modelItems = modelItems.Concat(HandlerGenerator.GenerateHandlers($"game.sv{version}_",
+                modelItems = modelItems.Concat(HandlerGenerator.GenerateHandlers($"game_3.",
                     new[]
                     {
                         "common", "new", "load", "load_m", "save", "save_m", "frozen", "hiscore", "lounge", "shop", "exception"
                     })).ToArray();
 
                 // modelItems = new string[] { };
-                modelUrl = url + $"/pix/{version}";
+                modelUrl = url + $"/pix";
             }
             else return NotFound();
 
@@ -111,7 +110,7 @@ namespace luna.Controllers.Core
             foreach (string coreItem in coreItems)
                 servicesElement.Add(new XElement("item", new XAttribute("name", coreItem), new XAttribute("url", coreUrl)));
 
-            if (model.StartsWith("KFC"))
+            if (modelItems.Length != 0)
             {
                 foreach (string modelItem in modelItems)
                     servicesElement.Add(new XElement("item", new XAttribute("name", modelItem), new XAttribute("url", modelUrl)));
