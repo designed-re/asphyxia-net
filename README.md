@@ -5,11 +5,6 @@
 <br/>
 This project inspired by <a href="https://github.com/asphyxia-core">asphyxia-core</a>
 <br/>
-<h2> Self-Hosting </h2>
-1. edit appsettings.json (luna) <br/>
-2. run musicdb (edit connection string on source)<br/>
-3. input pcbid information on facility table<br/>
-4. play game<br/>
 
 <br/>
 <br/>
@@ -21,12 +16,9 @@ All place shares data
 > Supported Games
 - Sound Voltex Exceed Gear (Final)
 
-## Asia
-- `http://icn.ea.lunalight.place/core` Seoul
+- `http://icn.ea.lunalight.place/core` Seoul</BR>
 - `http://nrt.ea.lunalight.place/core` Tokyo
 
-## North America
-- `http://na.ea.lunalight.place/core` New Jersey
 </div>
 <br/>
 <details>
