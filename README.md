@@ -14,10 +14,9 @@ This project inspired by <a href="https://github.com/asphyxia-core">asphyxia-cor
 All place shares data
 
 > Supported Games
-- Sound Voltex Exceed Gear (Final)
-
-- `http://icn.ea.lunalight.place/core` Seoul</BR>
-- `http://nrt.ea.lunalight.place/core` Tokyo
+> Sound Voltex Exceed Gear (Final)
+> `http://icn.ea.lunalight.place/core` Seoul</BR>
+> `http://nrt.ea.lunalight.place/core` Tokyo
 
 </div>
 <br/>
